@@ -1,0 +1,129 @@
+{
+  "audit_run_id": "bateria-2026-08-07",
+  "runtime": {
+    "engine": "ollama",
+    "engine_version": "0.32.5",
+    "image_digest": "sha256:96367c0305543e7ea17ecb30f7589602ebfc1ee48be3e3769333ce11d4d05a0e",
+    "model": "qwen3.6:27b-q4_K_M",
+    "model_digest": "a50eda8ed977ab48a12431878896b27ffd5cef552c17af3317d9623b939a7f1e",
+    "parameter_size": "27.8B",
+    "quantization": "Q4_K_M",
+    "format": "gguf",
+    "family": "qwen35",
+    "size_bytes": 16926501764,
+    "size_vram_bytes": 16926501764,
+    "fully_on_gpu": true,
+    "context_length": 16384,
+    "keep_alive": "infinito (expires_at 2318)",
+    "llama_server_flags": "-c 16384 -np 1 --cache-type-k q8_0 --cache-type-v q8_0 --flash-attn on -b 512 -ub 512 --context-shift --keep 4 --no-mmap --chat-template chatml"
+  },
+  "gpu": {
+    "model": "NVIDIA L4",
+    "driver": "580.159.03",
+    "vram_total_mib": 23034,
+    "vram_used_mib": 17418,
+    "proceso_llama_server_mib": 17410,
+    "inference_device_todas_las_llamadas": "full_gpu",
+    "cpu_fallback": false
+  },
+  "sampling": {
+    "temperature_primaria": 0.3,
+    "temperature_reparacion": 0.1,
+    "top_k": 20,
+    "top_p": 0.8,
+    "repeat_penalty": 1.0,
+    "seed": null,
+    "thinking": false,
+    "num_predict": 1280,
+    "num_predict_repair": 1024
+  },
+  "presupuesto_contexto": {
+    "num_ctx": 16384,
+    "max_input_tokens": 12000,
+    "history_limit": 12,
+    "rag_top_k": 3
+  },
+  "llamadas": {
+    "preguntas": 70,
+    "llamadas_llm": 133,
+    "llamadas_por_pregunta": 1.9,
+    "distribucion": {
+      "1": 36,
+      "3": 23,
+      "2": 8,
+      "4": 3
+    }
+  },
+  "tiempo_dentro_del_modelo_s": {
+    "prefill": 551,
+    "decode": 4241,
+    "load": 73,
+    "prefill_pct": 11.3,
+    "decode_pct": 87.2,
+    "load_pct": 1.5
+  },
+  "velocidad": {
+    "decode_tokens_por_segundo_mediana": 13.05,
+    "decode_tps_min": 12.59,
+    "decode_tps_max": 13.38,
+    "prefill_tokens_por_segundo_observado": "632-675"
+  },
+  "tokens": {
+    "input_mediana": 3882,
+    "output_mediana": 351,
+    "output_max": 1280,
+    "thinking_tokens": "0 — thinking=false en 133/133; eval_count coherente con el sobre JSON"
+  },
+  "validacion": {
+    "veredictos": {
+      "valid": 53,
+      "invalid": 57,
+      "repairable": 23
+    },
+    "motivos": {
+      "ok": 53,
+      "indirect_treatment_recommendation": 2,
+      "mandatory_diagnosis_boundary": 2,
+      "missing_evidence_attribution": 1,
+      "structured_schema_invalid": 24,
+      "definitive_diagnosis": 2,
+      "ambiguous_parameter_claim": 5,
+      "missing_required_clinical_facts": 21,
+      "unsupported_status_claim": 1,
+      "structured_patient_fact_not_materialized": 5,
+      "structured_patient_fact_id_required": 8,
+      "medical_refusal_contract": 1,
+      "limitation_claim_invalid": 2,
+      "structured_json_invalid": 2,
+      "unsupported_numeric_claim": 1,
+      "evidence_span_not_found": 1,
+      "evidence_claim_mismatch": 1,
+      "structured_policy_claim_type_invalid": 1
+    },
+    "finish_reason": {
+      "stop": 136,
+      "length": 2
+    }
+  },
+  "cache_prefijo": {
+    "activo": true,
+    "mecanismo": "restored context checkpoint (llama.cpp, modelo hibrido)",
+    "checkpoint_size_mib": 149.626,
+    "coste_prompt_cache_update_ms": "501-666",
+    "evidencia_hit": "task 157291: checkpoint n_past=1370 -> prompt eval 4 tokens; task 157527: n_past=3454 -> 417 tokens"
+  },
+  "cola": {
+    "queue_duration_ms_mediana": 0,
+    "queue_duration_ms_max": 1,
+    "num_parallel_runtime": 1
+  },
+  "repeticion_diagnostica": {
+    "n": 10,
+    "prompt_identico_tokens": 3871,
+    "primera_generacion_valida": 1,
+    "reparacion_corrige": 0,
+    "ultimo_recurso_salva": 4,
+    "desenlace_ok": 5,
+    "desenlace_fallo": 5
+  }
+}

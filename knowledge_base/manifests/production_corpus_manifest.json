@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "source_dir": "knowledge_base/expert_review/approved",
+  "collection_name": "hemovet_canine_hematology_v2",
+  "rag_schema_version": "hemovet-rag-v2",
+  "chunk_schema_version": "markdown-v4",
+  "source_manifest": "knowledge_base/manifests/sources_manifest.json",
+  "corpus_revision": "20bb18ffff6684dba53b9f09f38c37d578268fe6377cdb6c4ab70304e75e6736",
+  "document_count": 1250,
+  "expected_chunk_count": 4696,
+  "corpus_sha256": "d58b23f9684bb6e3f22c8ddd5a17dff4bc929fc56a436e3559ff2a5c89ddb8ef"
+}

@@ -1,0 +1,10 @@
+VIA 1 - artefactos historicos: response persistida en turnos failed
+  turnos failed: 17 | con response: 0
+VIA 2 - log del backend: texto clinico
+  coincidencias: 0
+VIA 3 - log de llama-server (--log-verbosity 4)
+  coincidencias: 0
+VIA 4 - volcado de envolturas rechazadas
+  CHAT_STRUCTURED_DEBUG_DIR en contenedor: (vacio) | /tmp/structured-debug: 0 ficheros
+VIA 5 - SSE capturado por el cliente
+  eventos delta/token: 0 en las 70 preguntas (t_primer_texto_s = null)

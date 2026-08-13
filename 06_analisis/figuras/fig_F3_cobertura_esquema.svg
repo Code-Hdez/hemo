@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="435.25125pt" height="210.606281pt" viewBox="0 0 435.25125 210.606281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:48.471982</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 210.606281 
+L 435.25125 210.606281 
+L 435.25125 -0 
+L 0 -0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 70.678815 
+L 25.100198 70.678815 
+L 25.100198 93.019081 
+L 7.2 93.019081 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 253.82495 72.650015 
+L 373.159604 72.650015 
+L 373.159604 85.134281 
+L 253.82495 85.134281 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: #0ca30c; opacity: 0.85"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 7.2 103.532148 
+L 25.100198 103.532148 
+L 25.100198 125.872415 
+L 7.2 125.872415 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 253.82495 105.503348 
+L 373.159604 105.503348 
+L 373.159604 117.987615 
+L 253.82495 117.987615 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: #0ca30c; opacity: 0.85"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 7.2 136.385481 
+L 25.100198 136.385481 
+L 25.100198 158.725748 
+L 7.2 158.725748 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 253.82495 138.356681 
+L 373.159604 138.356681 
+L 373.159604 150.840948 
+L 253.82495 150.840948 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: url(#h5bd2508b15); stroke: #d03b3b; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 7.2 169.238815 
+L 25.100198 169.238815 
+L 25.100198 191.579081 
+L 7.2 191.579081 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 253.82495 171.210015 
+L 373.159604 171.210015 
+L 373.159604 183.694281 
+L 253.82495 183.694281 
+z
+" clip-path="url(#pfa77d4f321)" style="fill: url(#h5bd2508b15); stroke: #d03b3b; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0ca30c" x="33.055842" y="81.327073" transform="rotate(-0 33.055842 81.327073)">SESIÓN</text>
+   </g>
+   <g id="text_2">
+    <text style="font-style: italic; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="33.055842" y="89.857753" transform="rotate(-0 33.055842 89.857753)">session_id, run_fingerprint, conversation_id</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="313.492277" y="80.970585" transform="rotate(-0 313.492277 80.970585)">6 registros</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0ca30c" x="33.055842" y="113.426305" transform="rotate(-0 33.055842 113.426305)">TURNO</text>
+   </g>
+   <g id="text_5">
+    <text style="font-style: italic; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="33.055842" y="122.711086" transform="rotate(-0 33.055842 122.711086)">e2e_ms, http_status, outcome, answer_hash</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="313.492277" y="113.823919" transform="rotate(-0 313.492277 113.823919)">115 registros</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #d03b3b" x="33.055842" y="146.279639" transform="rotate(-0 33.055842 146.279639)">LLAMADA</text>
+   </g>
+   <g id="text_8">
+    <text style="font-style: italic; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="33.055842" y="155.56442" transform="rotate(-0 33.055842 155.56442)">eval_count, eval_duration, prompt_eval_*, load_duration</text>
+   </g>
+   <g id="text_9">
+    <g id="patch_10">
+     <path d="M 297.347902 151.669127 
+L 329.636652 151.669127 
+L 329.636652 137.528502 
+L 297.347902 137.528502 
+z
+" style="fill: #fcfcfb"/>
+    </g>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="313.492277" y="147.347252" transform="rotate(-0 313.492277 147.347252)">VACÍO</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #d03b3b" x="33.055842" y="179.132972" transform="rotate(-0 33.055842 179.132972)">EVENTO</text>
+   </g>
+   <g id="text_11">
+    <text style="font-style: italic; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="33.055842" y="188.553753" transform="rotate(-0 33.055842 188.553753)">cronología de eventos SSE del turno</text>
+   </g>
+   <g id="text_12">
+    <g id="patch_11">
+     <path d="M 297.347902 184.52246 
+L 329.636652 184.52246 
+L 329.636652 170.381835 
+L 297.347902 170.381835 
+z
+" style="fill: #fcfcfb"/>
+    </g>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="313.492277" y="180.200585" transform="rotate(-0 313.492277 180.200585)">VACÍO</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #d03b3b" x="7.2" y="44.067615" transform="rotate(-0 7.2 44.067615)">2 de los 4 niveles del esquema quedan vacíos: la API pública no expone los crudos del motor.</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.998281" transform="rotate(-0 7.2 15.998281)">Qué niveles del esquema de trazas llegó a poblar la campaña</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pfa77d4f321">
+   <rect x="7.2" y="25.998281" width="401.76" height="177.408"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h5bd2508b15" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#fcfcfb"/>
+   <path d="M -36 36 
+L 36 -36 
+M -32 40 
+L 40 -32 
+M -28 44 
+L 44 -28 
+M -24 48 
+L 48 -24 
+M -20 52 
+L 52 -20 
+M -16 56 
+L 56 -16 
+M -12 60 
+L 60 -12 
+M -8 64 
+L 64 -8 
+M -4 68 
+L 68 -4 
+M 0 72 
+L 72 0 
+M 4 76 
+L 76 4 
+M 8 80 
+L 80 8 
+M 12 84 
+L 84 12 
+M 16 88 
+L 88 16 
+M 20 92 
+L 92 20 
+M 24 96 
+L 96 24 
+M 28 100 
+L 100 28 
+M 32 104 
+L 104 32 
+M 36 108 
+L 108 36 
+" style="fill: #d03b3b; stroke: #d03b3b; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

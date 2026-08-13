@@ -1,0 +1,199 @@
+# =============================================================================
+# HemoVet — Overlay de producción (aplicación, sin runtime LLM)
+# =============================================================================
+# Se combina únicamente con docker-compose.yml. El resultado contiene Caddy,
+# frontend, backend FastAPI, PostgreSQL, ChromaDB, RAG y datos de aplicación.
+# Ollama vive exclusivamente en la VM GPU y se consume mediante la URL privada
+# validada en OLLAMA_BASE_URL.
+#
+# Uso manual (no autoriza un despliegue):
+#   python3 backend/scripts/validate_deploy_env.py .env.production
+#   install -m 600 .env.production .env
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml config
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-build
+#
+# No combinar este archivo con docker-compose.local.yml ni
+# docker-compose.gpu.yml.
+# =============================================================================
+
+services:
+  # Migración idempotente para named volumes creados por imágenes antiguas que
+  # ejecutaban como root. Los servicios normales continúan sin privilegios.
+  volume_permissions:
+    image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+    user: "0:0"
+    restart: "no"
+    read_only: true
+    command:
+      - sh
+      - -ec
+      - >-
+        chown -R 10001:10001 /app/media /app/.cache/fastembed /app/.cache/entailment;
+        test "$$(stat -c '%u:%g' /app/media)" = "10001:10001";
+        test "$$(stat -c '%u:%g' /app/.cache/fastembed)" = "10001:10001";
+        test "$$(stat -c '%u:%g' /app/.cache/entailment)" = "10001:10001"
+    volumes:
+      - pet-media:/app/media
+      - embedding-cache:/app/.cache/fastembed
+      - entailment-cache:/app/.cache/entailment
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+
+  # La colección candidata se construye y valida antes del arranque. Este job
+  # solo comprueba la colección inmutable ya seleccionada por el entorno.
+  rag_ingest:
+    image: "${HEMOVET_BACKEND_IMAGE:?set-canonical-backend-image-by-digest}"
+    build: !reset null
+    command:
+      - python
+      - scripts/ingest_rag.py
+      - index
+      - --validate-only
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      RAG_COLLECTION_NAME: "${RAG_COLLECTION_NAME:?set-promoted-fingerprinted-RAG_COLLECTION_NAME}"
+    depends_on:
+      volume_permissions:
+        condition: service_completed_successfully
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  caddy:
+    image: caddy:2.11.4-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648
+    restart: unless-stopped
+    environment:
+      CADDY_SITE_ADDRESS: "${CADDY_SITE_ADDRESS:-hemovet.app}"
+      CADDY_WWW_ADDRESS: "${CADDY_WWW_ADDRESS:-www.hemovet.app}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "caddy", "validate", "--config", "/etc/caddy/Caddyfile"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  frontend:
+    image: "${HEMOVET_FRONTEND_IMAGE:?set-canonical-frontend-image-by-digest}"
+    build: !reset null
+    ports: !reset []
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  backend:
+    image: "${HEMOVET_BACKEND_IMAGE:?set-canonical-backend-image-by-digest}"
+    build: !reset null
+    ports: !reset []
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      BACKEND_WEB_CONCURRENCY: "${BACKEND_WEB_CONCURRENCY:-1}"
+      OTEL_ENABLED: "${OTEL_ENABLED:-1}"
+      OTEL_SERVICE_NAME: "${OTEL_SERVICE_NAME:-hemovet-backend}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT:?set-private-OTLP-HTTP-endpoint}"
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:-}"
+      OTEL_EXPORTER_OTLP_METRICS_ENDPOINT: "${OTEL_EXPORTER_OTLP_METRICS_ENDPOINT:-}"
+      OTEL_EXPORTER_OTLP_HEADERS: "${OTEL_EXPORTER_OTLP_HEADERS:-}"
+      OTEL_IDENTIFIER_HMAC_SECRET: "${OTEL_IDENTIFIER_HMAC_SECRET:?set-telemetry-HMAC-secret}"
+      OTEL_TRACES_SAMPLER: "${OTEL_TRACES_SAMPLER:-parentbased_traceidratio}"
+      OTEL_TRACES_SAMPLER_ARG: "${OTEL_TRACES_SAMPLER_ARG:-1.0}"
+      OTEL_FASTAPI_INSTRUMENTATION_ENABLED: "${OTEL_FASTAPI_INSTRUMENTATION_ENABLED:-1}"
+      CHAT_LLM_PROVIDER: "${CHAT_LLM_PROVIDER:-ollama}"
+      CHAT_SUMMARY_MAX_TOKENS: "${CHAT_SUMMARY_MAX_TOKENS:-800}"
+      CHAT_MAX_INPUT_TOKENS: "${CHAT_MAX_INPUT_TOKENS:-3200}"
+      CHAT_STRUCTURED_OUTPUT_ENABLED: "${CHAT_STRUCTURED_OUTPUT_ENABLED:-1}"
+      CHAT_REQUIRE_BROWSER_SESSION_ID: "${CHAT_REQUIRE_BROWSER_SESSION_ID:-1}"
+      # El tokenizador exacto de Qwen3.6 va dentro de la imagen (backend/app/
+      # assets/, vocab 248 070 medido). El presupuesto de contexto dejaba de
+      # estimarse con el factor trimodal (1,4/1,7/2,5) documentado en el
+      # informe del 9-ago. `:-` cubre tambien la variable VACIA del secreto
+      # de produccion; el sha va pineado y REQUIRED cierra al fallo: si el
+      # fichero no carga, el arranque falla y el deploy hace rollback, nunca
+      # se cae en silencio al estimador heuristico.
+      CHAT_TOKENIZER_JSON: "${CHAT_TOKENIZER_JSON:-/app/backend/app/assets/tokenizer_qwen3_6.json}"
+      CHAT_TOKENIZER_SHA256: "${CHAT_TOKENIZER_SHA256:-5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42}"
+      CHAT_TOKENIZER_REQUIRED: "${CHAT_TOKENIZER_REQUIRED:-1}"
+      # Verificador de entailment multilingüe (mDeBERTa-XNLI, ONNX sobre el
+      # onnxruntime que ya trae la imagen). Es lo único que hace viables las
+      # citas visibles: la verificación léxica español↔inglés rechaza
+      # paráfrasis legítimas por construcción (66/70 vs 46/70 en el banco
+      # bilingüe). Descarga 1,1 GB al primer arranque en su volumen; mientras
+      # calienta, los turnos caen a la regla léxica — nunca bloquea.
+      CHAT_CLAIM_ENTAILMENT_ENABLED: "${CHAT_CLAIM_ENTAILMENT_ENABLED:-1}"
+      # La lotería del validador vive en los caminos clínicos (38/70
+      # reparaciones en la batería rigurosa del 9-ago): menos varianza de
+      # redacción donde cada rechazo cuesta una regeneración de ~50-100 s.
+      # El chat general conserva OLLAMA_TEMPERATURE.
+      CHAT_PROFILE_SELECTED_TEMPERATURE: "${CHAT_PROFILE_SELECTED_TEMPERATURE:-0.15}"
+      CHAT_PROFILE_HISTORY_TEMPERATURE: "${CHAT_PROFILE_HISTORY_TEMPERATURE:-0.15}"
+      OLLAMA_BASE_URL: "${OLLAMA_BASE_URL:-}"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-qwen3:4b-instruct-2507-q4_K_M}"
+      OLLAMA_WARMUP_TIMEOUT_SECONDS: "${OLLAMA_WARMUP_TIMEOUT_SECONDS:-120}"
+      OPENAI_COMPATIBLE_BASE_URL: "${OPENAI_COMPATIBLE_BASE_URL:-}"
+      OPENAI_COMPATIBLE_MODEL: "${OPENAI_COMPATIBLE_MODEL:-qwen3:8b}"
+      OPENAI_COMPATIBLE_API_KEY: "${OPENAI_COMPATIBLE_API_KEY:-}"
+      RAG_COLLECTION_NAME: "${RAG_COLLECTION_NAME:?set-promoted-fingerprinted-RAG_COLLECTION_NAME}"
+      RAG_SCHEMA_VERSION: "${RAG_SCHEMA_VERSION:-hemovet-rag-v2}"
+      RAG_SOURCE_MANIFEST: "${RAG_SOURCE_MANIFEST:-knowledge_base/manifests/sources_manifest.json}"
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 8G
+        reservations:
+          memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  db:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  chroma:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  caddy-data:
+    name: caddy_data
+  caddy-config:
+    name: caddy_config

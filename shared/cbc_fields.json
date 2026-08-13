@@ -1,0 +1,218 @@
+[
+  {
+    "key": "WBC",
+    "label": "WBC / Leucocitos",
+    "unit": "K/uL",
+    "aliases": ["Leucocitos", "White Blood Cells"],
+    "required": true,
+    "group": "Serie blanca",
+    "order": 1
+  },
+  {
+    "key": "RBC",
+    "label": "RBC / Eritrocitos",
+    "unit": "M/uL",
+    "aliases": ["Eritrocitos", "Red Blood Cells"],
+    "required": true,
+    "group": "Serie roja",
+    "order": 2
+  },
+  {
+    "key": "HGB",
+    "label": "HGB / Hemoglobina",
+    "unit": "g/dL",
+    "aliases": ["HB", "Hemoglobin", "Hemoglobina"],
+    "required": true,
+    "group": "Serie roja",
+    "order": 3
+  },
+  {
+    "key": "HCT",
+    "label": "HCT / Hematocrito",
+    "unit": "%",
+    "aliases": ["HT", "PCV", "Hematocrit", "Hematocrito"],
+    "required": true,
+    "group": "Serie roja",
+    "order": 4
+  },
+  {
+    "key": "MCV",
+    "label": "MCV / VCM",
+    "unit": "fL",
+    "aliases": ["VCM"],
+    "required": false,
+    "group": "Serie roja",
+    "order": 5
+  },
+  {
+    "key": "MCH",
+    "label": "MCH / HCM",
+    "unit": "pg",
+    "aliases": ["HCM"],
+    "required": false,
+    "group": "Serie roja",
+    "order": 6
+  },
+  {
+    "key": "MCHC",
+    "label": "MCHC / CHCM",
+    "unit": "g/dL",
+    "aliases": ["CHCM"],
+    "required": false,
+    "group": "Serie roja",
+    "order": 7
+  },
+  {
+    "key": "RDW",
+    "label": "RDW / ADE",
+    "unit": "%",
+    "aliases": ["ADE"],
+    "required": false,
+    "group": "Serie roja",
+    "order": 8
+  },
+  {
+    "key": "Reticulocytes_pct",
+    "label": "Reticulocitos %",
+    "unit": "%",
+    "aliases": ["% Reticulocytes", "RETIC %"],
+    "required": false,
+    "group": "Serie roja",
+    "order": 9
+  },
+  {
+    "key": "Reticulocytes",
+    "label": "Reticulocitos",
+    "unit": "K/uL",
+    "aliases": ["RETIC"],
+    "required": false,
+    "group": "Serie roja",
+    "order": 10
+  },
+  {
+    "key": "Platelets",
+    "label": "PLT / Plaquetas",
+    "unit": "K/uL",
+    "aliases": ["PLT", "Plaquetas", "Thrombocytes"],
+    "required": true,
+    "group": "Plaquetas",
+    "order": 11
+  },
+  {
+    "key": "MPV",
+    "label": "MPV / VPM",
+    "unit": "fL",
+    "aliases": ["VPM"],
+    "required": false,
+    "group": "Plaquetas",
+    "order": 12
+  },
+  {
+    "key": "PDW",
+    "label": "PDW",
+    "unit": "%",
+    "aliases": ["Platelet Distribution Width"],
+    "required": false,
+    "group": "Plaquetas",
+    "order": 13
+  },
+  {
+    "key": "PCT",
+    "label": "PCT / Plaquetocrito",
+    "unit": "%",
+    "aliases": ["Plateletcrit", "Plaquetocrito"],
+    "required": false,
+    "group": "Plaquetas",
+    "order": 14
+  },
+  {
+    "key": "Neutrophils",
+    "label": "NEU / Neutrofilos",
+    "unit": "K/uL",
+    "aliases": ["NEU", "NEUT", "Neutrofilos", "Neutrophils"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 15
+  },
+  {
+    "key": "Neutrophils_pct",
+    "label": "NEU %",
+    "unit": "%",
+    "aliases": ["% Neutrophils", "NEU %", "Neutrofilos %"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 16
+  },
+  {
+    "key": "Lymphocytes",
+    "label": "LYM / Linfocitos",
+    "unit": "K/uL",
+    "aliases": ["LYM", "LYMPH", "Linfocitos", "Lymphocytes"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 17
+  },
+  {
+    "key": "Lymphocytes_pct",
+    "label": "LYM %",
+    "unit": "%",
+    "aliases": ["% Lymphocytes", "LYM %", "Linfocitos %"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 18
+  },
+  {
+    "key": "Monocytes",
+    "label": "MONO / Monocitos",
+    "unit": "K/uL",
+    "aliases": ["MON", "MONO", "Monocitos", "Monocytes"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 19
+  },
+  {
+    "key": "Monocytes_pct",
+    "label": "MONO %",
+    "unit": "%",
+    "aliases": ["% Monocytes", "MONO %", "Monocitos %"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 20
+  },
+  {
+    "key": "Eosinophils",
+    "label": "EOS / Eosinofilos",
+    "unit": "K/uL",
+    "aliases": ["EOS", "Eosinofilos", "Eosinophils"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 21
+  },
+  {
+    "key": "Eosinophils_pct",
+    "label": "EOS %",
+    "unit": "%",
+    "aliases": ["% Eosinophils", "EOS %", "Eosinofilos %"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 22
+  },
+  {
+    "key": "Basophils",
+    "label": "BASO / Basofilos",
+    "unit": "K/uL",
+    "aliases": ["BASO", "Basofilos", "Basophils"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 23
+  },
+  {
+    "key": "Basophils_pct",
+    "label": "BASO %",
+    "unit": "%",
+    "aliases": ["% Basophils", "BASO %", "Basofilos %"],
+    "required": false,
+    "group": "Serie blanca",
+    "order": 24
+  }
+]

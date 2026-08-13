@@ -1,0 +1,34 @@
+{
+  "front_matter_patterns": [
+    "\\bthis page intentionally left blank\\b",
+    "\\bpreface\\b",
+    "\\backnowledg(?:ment|ments)?\\b",
+    "\\bcontents\\b",
+    "\\btable of contents\\b",
+    "\\bcopyright\\b",
+    "\\blibrary of congress\\b",
+    "\\ball rights reserved\\b",
+    "\\bbibliograph(?:y|ies)?\\b",
+    "\\breferences\\b",
+    "\\bindex\\b",
+    "\\bpublisher\\b"
+  ],
+  "therapy_risk_patterns": [
+    "\\bdoxycycline\\b",
+    "\\bminocycline\\b",
+    "\\bamoxicillin\\b",
+    "\\bprednisone\\b",
+    "\\bdose(?:s|d)?\\b",
+    "\\bdosage\\b",
+    "\\bmg/?kg\\b",
+    "\\btreatment\\b",
+    "\\btherapy\\b",
+    "\\bdrug formulary\\b",
+    "\\bantimicrobial\\b",
+    "\\badminister(?:ed|ing)?\\b"
+  ],
+  "table_hint_patterns": [
+    "\\btable\\s+\\d+",
+    "\\bfig(?:ure)?\\.\\s*\\d+"
+  ]
+}

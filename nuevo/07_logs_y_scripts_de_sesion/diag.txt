@@ -1,0 +1,38 @@
+=== UNIDADES HEMOVET ===
+  hemovet-gpu-failure-shutdown.service                                                                                     loaded    inactive   dead             Power off HemoVet GPU VM after a failed bootstrap
+  hemovet-gpu.service                                                                                                      loaded    inactive   dead       start HemoVet GPU runtime boot reconciler
+=== TIMERS ===
+NEXT                            LEFT LAST                         PASSED UNIT                            ACTIVATES
+Sat 2026-08-08 19:28:43 UTC 4min 33s -                                 - update-notifier-download.timer  update-notifier-download.service
+Sat 2026-08-08 19:30:00 UTC     5min -                                 - sysstat-collect.timer           sysstat-collect.service
+Sat 2026-08-08 19:33:53 UTC     9min Sat 2026-08-08 19:23:53 UTC 16s ago gce-workload-cert-refresh.timer gce-workload-cert-refresh.service
+Sat 2026-08-08 19:38:42 UTC    14min -                                 - systemd-tmpfiles-clean.timer    systemd-tmpfiles-clean.service
+Sat 2026-08-08 23:12:42 UTC 3h 48min Sat 2026-08-08 18:22:54 UTC       - motd-news.timer                 motd-news.service
+Sun 2026-08-09 00:00:00 UTC 4h 35min Sat 2026-08-08 00:00:07 UTC       - dpkg-db-backup.timer            dpkg-db-backup.service
+Sun 2026-08-09 00:00:00 UTC 4h 35min Sat 2026-08-08 00:00:07 UTC       - logrotate.timer                 logrotate.service
+=== SHUTDOWN EN JOURNAL ===
+Aug 08 19:24:09 hemovet-llm-gpu dockerd[1025]: time="2026-08-08T19:24:09.296049121Z" level=info msg="Restoring containers: start."
+Aug 08 19:24:09 hemovet-llm-gpu dockerd[1025]: time="2026-08-08T19:24:09.390330086Z" level=info msg="Deleting nftables IPv4 rules" error="running nft: /dev/stdin:1:17-30: Error: Could not process rule: No such file or directory\ndelete table ip docker-bridges\n                ^^^^^^^^^^^^^^\n exit status 1"
+Aug 08 19:24:09 hemovet-llm-gpu dockerd[1025]: time="2026-08-08T19:24:09.398461649Z" level=info msg="Deleting nftables IPv6 rules" error="running nft: /dev/stdin:1:18-31: Error: Could not process rule: No such file or directory\ndelete table ip6 docker-bridges\n                 ^^^^^^^^^^^^^^\n exit status 1"
+Aug 08 19:24:09 hemovet-llm-gpu kernel: Initializing XFRM netlink socket
+Aug 08 19:24:09 hemovet-llm-gpu kernel: bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+Aug 08 19:24:09 hemovet-llm-gpu networkd-dispatcher[686]: WARNING:Unknown index 3 seen, reloading interface list
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1265, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1268, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd-networkd[626]: br-2b1e2009fa87: Link UP
+Aug 08 19:24:09 hemovet-llm-gpu networkd-dispatcher[686]: WARNING:Unknown index 4 seen, reloading interface list
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1294, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1301, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd-networkd[626]: br-68e71c24d60c: Link UP
+Aug 08 19:24:09 hemovet-llm-gpu networkd-dispatcher[686]: WARNING:Unknown index 5 seen, reloading interface list
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1320, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1325, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd-networkd[626]: br-6b9dac5cd7ef: Link UP
+Aug 08 19:24:09 hemovet-llm-gpu networkd-dispatcher[686]: WARNING:Unknown index 6 seen, reloading interface list
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1346, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd[1]: networkd-dispatcher.service: Got notification message from PID 1352, but reception only permitted for main PID 686
+Aug 08 19:24:09 hemovet-llm-gpu systemd-networkd[626]: docker0: Link UP
+Aug 08 19:24:09 hemovet-llm-gpu dockerd[1025]: time="2026-08-08T19:24:09.885951394Z" level=warning msg="Security options with `:` as a separator are deprecated and will be completely unsupported in 17.04, use `=` instead."
+Aug 08 19:24:10 hemovet-llm-gpu containerd[795]: time="2026-08-08T19:24:10.000945303Z" level=info msg="connecting to shim 1ad44d907b1f00a8e223323da48a6c306a84041241acb8e9bba2398112cef89b" address="unix:///run/containerd/s/44cc224e5e2afe07621ff562dc0184288fe5d65459f518c0bffabcfac8a28f5a" namespace=moby protocol=ttrpc version=3
+Aug 08 19:24:10 hemovet-llm-gpu sudo[1527]:    matel : PWD=/home/matel ; USER=root ; COMMAND=/usr/bin/journalctl -b --no-pager
+Aug 08 19:24:10 hemovet-llm-gpu sudo[1527]: pam_unix(sudo:session): session opened for user root(uid=0) by matel(uid=1004)

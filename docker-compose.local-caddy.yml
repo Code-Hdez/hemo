@@ -1,0 +1,37 @@
+# =============================================================================
+# HemoVet — Overlay local con Caddy HTTP-only
+# =============================================================================
+# Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml \
+#     -f docker-compose.local-caddy.yml up -d --build
+#
+# Este perfil es solo para probar el reverse proxy local en una URL unica.
+# No usa dominios publicos, no expone 443 y no solicita certificados ACME.
+# Entrar por http://localhost:8080.
+# =============================================================================
+
+services:
+
+  caddy:
+    image: caddy:2.11.4-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./deploy/Caddyfile.local:/etc/caddy/Caddyfile:ro
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "caddy", "validate", "--config", "/etc/caddy/Caddyfile"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    ports: !reset []
+
+  backend:
+    ports: !reset []

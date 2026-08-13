@@ -1,0 +1,12 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#000000', 'primaryTextColor': '#000000', 'lineColor': '#666666'}}}%%
+flowchart LR
+  USER["Usuario"] --> FE["Frontend"]
+  FE -->|"envía mensaje"| API["FastAPI\n/api/v1/chat"]
+  API -->|"verifica sesión"| AUTH["Auth:\nverifica sesión"]
+  AUTH --> ORQ["Orquestador\ndeterminístico"]
+  FE -.->|"respuesta/mensaje"| ORQ
+  ORQ -->|"recupera contexto"| RAG["ChromaDB\nrecuperación"]
+  RAG -->|"contexto + prompt"| LLM["Ollama\ngeneración"]
+  LLM -->|"respuesta"| VAL["Validador\nde salida"]
+  VAL -->|"guarda historial"| DB["PostgreSQL\npersistencia"]
+  VAL -.->|"respuesta final"| FE

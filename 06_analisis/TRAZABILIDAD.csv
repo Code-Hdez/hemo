@@ -1,0 +1,59 @@
+figura;titulo;fichero_fuente;sha256_fuente;n;marca
+E4;La puerta de aceptación: coincidencia de identificadores de fallo;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;70;MEDIDO
+D7;Tasa de alucinación numérica y su intervalo de confianza;02_fixtures/verdad.json;ca7b67f9bc05c788870c4e040005286ca18cd44ccc1aadc4790a9d03f2ddd69b;9;DERIVADO
+D7;Tasa de alucinación numérica y su intervalo de confianza;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;9;DERIVADO
+A1;Ventanas de GPU: lo que el log registra y lo que sólo consta en las trazas;99_operacion/log_instancia.md;a5391a8814e278f426fa9439fa1f5ecab0b286dbae5f79ceb18e2e2fb09970cb;6;MEDIDO
+A1;Ventanas de GPU: lo que el log registra y lo que sólo consta en las trazas;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;6;MEDIDO
+A1;Ventanas de GPU: lo que el log registra y lo que sólo consta en las trazas;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;6;MEDIDO
+A2;Composición del corpus de evidencia previa;01_auditoria_previa/inventario.ndjson;f2f499786bccbed44c948c451669cac8d2b24a10648099aca9552c0cfa8f2a60;208;MEDIDO
+A4;Reconstrucción del protocolo del 7-ago: semáforo de las quince preguntas;01_auditoria_previa/protocolo_antiguo_reconstruido.md;;15;MEDIDO
+A5;Veredicto doble de comparabilidad;01_auditoria_previa/veredicto_comparabilidad.md;;2;DERIVADO
+B1;Ficha de identidad del sistema medido;06_analisis/fase2_canario_y_ic.json;08270059d459b5d06b516dd5e3079af0c3440c6c2686e82dd9c946e89fada7db;8;MEDIDO
+B3;Verificación de identidad de modelo en cada respuesta;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;115;MEDIDO
+B3;Verificación de identidad de modelo en cada respuesta;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;115;MEDIDO
+B4;Modelos presentes en el servidor de producción;06_analisis/fase2_canario_y_ic.json;08270059d459b5d06b516dd5e3079af0c3440c6c2686e82dd9c946e89fada7db;2;MEDIDO
+C1;Techos de decodificación y rendimiento medido;05_derivados/tpot_serie_n100.json;0c6d93387d16c273327e4308f997e6c19f412183f9b1fc70efc1eab26eabf94c;100;DERIVADO
+C2;Distribución del tiempo por token de salida (TPOT);05_derivados/tpot_serie_n100.json;0c6d93387d16c273327e4308f997e6c19f412183f9b1fc70efc1eab26eabf94c;100;MEDIDO
+C4;Utilización del ancho de banda de memoria (MBU) en contexto;05_derivados/tpot_serie_n100.json;0c6d93387d16c273327e4308f997e6c19f412183f9b1fc70efc1eab26eabf94c;100;DERIVADO
+C6;Lo predicho frente a lo medido: la sobrecarga de gramática;05_derivados/ablacion_gramatica.json;6692afac459491e53449a01084b4fa2aa7dcccbac2e22fff4a464e8f45167e55;60;MEDIDO
+C8;Prefill y decodificación sobre el mismo eje;06_analisis/fase2_canario_y_ic.json;08270059d459b5d06b516dd5e3079af0c3440c6c2686e82dd9c946e89fada7db;100;MEDIDO
+D1;Desenlace de los turnos por modo;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;45;MEDIDO
+D2;Latencia por posición de turno y modo;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;45;MEDIDO
+D3;Distribución de latencia por modo;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;45;MEDIDO
+D9;El hemograma de referencia;02_fixtures/fixture_hemograma.json;77afa8d748db2e1d32d14a1e3d088b9a625825f3d23ae81f27e46229646af2cf;18;MEDIDO
+E1;Latencia por caso: L4 → A100;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;64;MEDIDO
+E2;Distribución de las diferencias pareadas;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;64;DERIVADO
+E3;Función de distribución acumulada de la latencia;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;64;MEDIDO
+E5;Naturaleza de los fallos: dos fenómenos distintos;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;23;MEDIDO
+F1;Tablero de las diez hipótesis pre-registradas;03_hipotesis/preregistro.md;5d6a0a71081e385e19c11948cee31e03d1da73d40555668c5bf90cfda26057d8;10;DERIVADO
+F1;Tablero de las diez hipótesis pre-registradas;07_informes/INFORME_RECARACTERIZACION_A100.md;26c0bd5ce851df58b1f32b76c0be32f93089ebd42c15daf73078384bc70a7359;10;DERIVADO
+F4;Potencia del diseño;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;6;DERIVADO
+A3;Qué registra cada instrumento: cobertura comparada;01_auditoria_previa/copia/bateria_latencias_2026-08-07.jsonl;;17;MEDIDO
+A3;Qué registra cada instrumento: cobertura comparada;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;17;MEDIDO
+B2;Las limitaciones declaradas y en qué momento se declararon;07_informes/LIMITACIONES.md;;17;MEDIDO
+C3;Distribución bootstrap de la mediana del TPOT;05_derivados/tpot_serie_n100.json;0c6d93387d16c273327e4308f997e6c19f412183f9b1fc70efc1eab26eabf94c;100;DERIVADO
+C5;Ablación de la gramática: los dos brazos por separado;05_derivados/ablacion_gramatica.json;6692afac459491e53449a01084b4fa2aa7dcccbac2e22fff4a464e8f45167e55;60;MEDIDO
+C7;Determinismo intra-máquina: 20 prompts × 5 repeticiones;06_analisis/fase2_canario_y_ic.json;08270059d459b5d06b516dd5e3079af0c3440c6c2686e82dd9c946e89fada7db;100;DERIVADO
+D4;La frontera de la ventana, turno a turno y modo a modo;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;9;MEDIDO
+D5;Qué responde el sistema al preguntarle por el principio de la conversación;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;3;MEDIDO
+D6;Verificación mecánica contra la tabla de verdad sellada;02_fixtures/verdad.json;ca7b67f9bc05c788870c4e040005286ca18cd44ccc1aadc4790a9d03f2ddd69b;9;MEDIDO
+D6;Verificación mecánica contra la tabla de verdad sellada;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;9;MEDIDO
+D8;Cobertura real de la rúbrica de cinco ejes;07_informes/LIMITACIONES.md;;5;MEDIDO
+D8;Cobertura real de la rúbrica de cinco ejes;02_fixtures/criterios.md;;5;MEDIDO
+D8;Cobertura real de la rúbrica de cinco ejes;03_hipotesis/preregistro.md;5d6a0a71081e385e19c11948cee31e03d1da73d40555668c5bf90cfda26057d8;5;MEDIDO
+E6;Proporción de turnos sin respuesta, con intervalo de confianza;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;70;DERIVADO
+F2;Los cinco efectos medidos, cada uno en su escala;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;5;DERIVADO
+F2;Los cinco efectos medidos, cada uno en su escala;05_derivados/ablacion_gramatica.json;6692afac459491e53449a01084b4fa2aa7dcccbac2e22fff4a464e8f45167e55;5;DERIVADO
+F2;Los cinco efectos medidos, cada uno en su escala;02_fixtures/verdad.json;ca7b67f9bc05c788870c4e040005286ca18cd44ccc1aadc4790a9d03f2ddd69b;5;DERIVADO
+F3;Qué niveles del esquema de trazas llegó a poblar la campaña;04_trazas/turns.ndjson;f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1;115;MEDIDO
+F3;Qué niveles del esquema de trazas llegó a poblar la campaña;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916;115;MEDIDO
+F3;Qué niveles del esquema de trazas llegó a poblar la campaña;07_informes/LIMITACIONES.md;;115;MEDIDO
+X1;Descomposición prefill/decode por turno;(ausencia);;;AUSENCIA
+X2;Crecimiento del prefill a lo largo de los 15 turnos;(ausencia);;;AUSENCIA
+X3;ttft_per_1k_in por posición de turno;(ausencia);;;AUSENCIA
+X4;Relojes, temperatura y potencia durante la medición;(ausencia);;;AUSENCIA
+X5;Comparación de decode, MBU o TPOT entre L4 y A100;(ausencia);;;AUSENCIA
+X6;Verificación de identidad de modelo entre corridas;(ausencia);;;AUSENCIA
+X7;Canario de equivalencia inter-máquina;(ausencia);;;AUSENCIA
+X8;Tendencia de parámetros en el historial;(ausencia);;;AUSENCIA
+X9;Radar completo de los cinco ejes de la rúbrica;(ausencia);;;AUSENCIA

@@ -1,0 +1,189 @@
+{
+ "turnos_baterias": {
+  "ruta": "04_trazas/turns.ndjson",
+  "sha256": "f29d72e1867b7e9b9ae0d4eae53d7b09b5bafc74b65dac317ddc5f5937ad4ad1",
+  "bytes": 53325,
+  "n_registros": 45,
+  "columnas": [
+   "answer_chars",
+   "answer_hash",
+   "answer_preview",
+   "calls_in_turn",
+   "conversation_id",
+   "e2e_ms",
+   "expects_truth",
+   "failure_class",
+   "history_messages_count",
+   "http_status",
+   "outcome",
+   "question_class",
+   "question_hash",
+   "question_id",
+   "question_text",
+   "run_fingerprint",
+   "schema_version",
+   "session_id",
+   "ts_start",
+   "turn_id",
+   "turn_index"
+  ],
+  "cargado_en": "2026-08-12T03:12:36.296198+00:00"
+ },
+ "sesiones": {
+  "ruta": "04_trazas/sessions.ndjson",
+  "sha256": "3d78f1d2be0aa460ba3ecc25eaaa2c1b214039de1828da7d7fad7e5329e48d3c",
+  "bytes": 1691,
+  "n_registros": 3,
+  "columnas": [
+   "arm",
+   "calls_total",
+   "campaign",
+   "e2e_total_ms",
+   "fixture_id",
+   "mode",
+   "notes",
+   "replica_index",
+   "run_fingerprint",
+   "schema_version",
+   "session_id",
+   "ts_start",
+   "turns_executed",
+   "turns_failed",
+   "turns_ok",
+   "turns_planned",
+   "window_pairs_declared"
+  ],
+  "cargado_en": "2026-08-12T03:12:36.296331+00:00"
+ },
+ "replica": {
+  "ruta": "04_trazas/turns_replica_estricta.ndjson",
+  "sha256": "974aa50f16bb3e77fa7166d39b5b74b7da99085af49e0c3524e7139ac4322916",
+  "bytes": 82966,
+  "n_registros": 70,
+  "columnas": [
+   "answer_chars",
+   "answer_hash",
+   "answer_preview",
+   "calls_in_turn",
+   "context_scope",
+   "conversation_id",
+   "e2e_ms",
+   "expects_truth",
+   "failure_class",
+   "failure_ids",
+   "fallo_viejo",
+   "history_messages_count",
+   "http_status",
+   "latencia_vieja_s",
+   "outcome",
+   "question_class",
+   "question_hash",
+   "question_id",
+   "question_text",
+   "reparaciones_vieja",
+   "run_fingerprint",
+   "schema_version",
+   "session_id",
+   "ts_start",
+   "turn_id",
+   "turn_index"
+  ],
+  "cargado_en": "2026-08-12T03:12:36.297150+00:00"
+ },
+ "tpot_n100": {
+  "ruta": "05_derivados/tpot_serie_n100.json",
+  "sha256": "0c6d93387d16c273327e4308f997e6c19f412183f9b1fc70efc1eab26eabf94c",
+  "bytes": 1987,
+  "n_registros": 5,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:36.297282+00:00"
+ },
+ "ablacion": {
+  "ruta": "05_derivados/ablacion_gramatica.json",
+  "sha256": "6692afac459491e53449a01084b4fa2aa7dcccbac2e22fff4a464e8f45167e55",
+  "bytes": 615,
+  "n_registros": 7,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:36.297364+00:00"
+ },
+ "canario_ic": {
+  "ruta": "06_analisis/fase2_canario_y_ic.json",
+  "sha256": "08270059d459b5d06b516dd5e3079af0c3440c6c2686e82dd9c946e89fada7db",
+  "bytes": 693,
+  "n_registros": 9,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:36.297441+00:00"
+ },
+ "fixture": {
+  "ruta": "02_fixtures/fixture_hemograma.json",
+  "sha256": "77afa8d748db2e1d32d14a1e3d088b9a625825f3d23ae81f27e46229646af2cf",
+  "bytes": 8715,
+  "n_registros": 8,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:36.297760+00:00"
+ },
+ "verdad": {
+  "ruta": "02_fixtures/verdad.json",
+  "sha256": "ca7b67f9bc05c788870c4e040005286ca18cd44ccc1aadc4790a9d03f2ddd69b",
+  "bytes": 1192,
+  "n_registros": 14,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:36.297831+00:00"
+ },
+ "inventario": {
+  "ruta": "01_auditoria_previa/inventario.ndjson",
+  "sha256": "f2f499786bccbed44c948c451669cac8d2b24a10648099aca9552c0cfa8f2a60",
+  "bytes": 147169,
+  "n_registros": 208,
+  "columnas": [
+   "bytes",
+   "contiene_secretos",
+   "extension",
+   "lineas",
+   "mtime_utc",
+   "muestreo",
+   "primeras",
+   "ruta_relativa",
+   "sha256",
+   "tipo",
+   "ultimas"
+  ],
+  "cargado_en": "2026-08-12T03:12:36.298947+00:00"
+ },
+ "registros_creados": {
+  "ruta": "99_operacion/registros_creados.ndjson",
+  "sha256": "0be3cfb35426954ac5b7bf1d7698f083a3c00c58eccd3862d84a6d1a1c0b7c82",
+  "bytes": 14347,
+  "n_registros": 107,
+  "columnas": [
+   "id",
+   "tipo",
+   "ts"
+  ],
+  "cargado_en": "2026-08-12T03:12:36.299156+00:00"
+ },
+ "log_instancia": {
+  "ruta": "99_operacion/log_instancia.md",
+  "sha256": "a5391a8814e278f426fa9439fa1f5ecab0b286dbae5f79ceb18e2e2fb09970cb",
+  "bytes": 4425,
+  "n_registros": 1,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:37.337828+00:00"
+ },
+ "preregistro": {
+  "ruta": "03_hipotesis/preregistro.md",
+  "sha256": "5d6a0a71081e385e19c11948cee31e03d1da73d40555668c5bf90cfda26057d8",
+  "bytes": 5507,
+  "n_registros": 1,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:42.945758+00:00"
+ },
+ "informe": {
+  "ruta": "07_informes/INFORME_RECARACTERIZACION_A100.md",
+  "sha256": "26c0bd5ce851df58b1f32b76c0be32f93089ebd42c15daf73078384bc70a7359",
+  "bytes": 8344,
+  "n_registros": 1,
+  "columnas": [],
+  "cargado_en": "2026-08-12T03:12:42.945803+00:00"
+ }
+}

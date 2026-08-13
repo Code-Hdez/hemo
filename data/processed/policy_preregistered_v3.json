@@ -1,0 +1,32 @@
+{
+  "version": "3.0.0",
+  "generated_at": "2026-05-25T02:09:23.588460+00:00",
+  "official_labels": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA",
+    "PATRON_ANEMIA_REGENERATIVA"
+  ],
+  "qc_rules": {
+    "QC_AGREGADOS_PLAQUETARIOS": "agregad|platelet.?clump|recuento.+plaquetas.+mayor",
+    "QC_INTERFERENCIA_GR": "GR.?no.?lisad|unlysed.?red|gl[oó]bulos?.?roj[oa]s?.?no.?lisad"
+  },
+  "excluded_labels": [
+    "QC_UNIDAD_NO_CONVERTIDA"
+  ],
+  "threshold_objectives": {
+    "source_split": "val",
+    "selection_policy": "Thresholds seleccionados sobre validation.",
+    "model": "xgb_v3_reticulocytes"
+  },
+  "clinical_acceptance": {
+    "must_not_diagnose": true,
+    "must_refer_to_veterinarian": true,
+    "citizen_facing_scope": "Explicacion orientativa de patrones hematologicos caninos."
+  },
+  "model_metadata_version": "3.0.0",
+  "label_policy_version": "3.0.0"
+}

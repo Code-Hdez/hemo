@@ -1,0 +1,16 @@
+{
+  "component": "inference.predictor.predict",
+  "note": "Latencia in-process del motor ML. Excluye HTTP, auth, DB y RAG.",
+  "model_version": "2.0.0",
+  "n_requests": 1000,
+  "warmup": 50,
+  "latency_ms": {
+    "min": 9.98,
+    "p50": 27.93,
+    "p95": 33.9,
+    "p99": 137.95,
+    "max": 196.99,
+    "mean": 28.73,
+    "stdev": 16.19
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "version": "3.0.0",
+  "nb05b_timestamp": "2026-05-25T02:09:23.490519+00:00",
+  "n_model_labels": 7,
+  "n_rule_labels": 2,
+  "n_excluded_labels": 1,
+  "official_model_labels": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA",
+    "PATRON_ANEMIA_REGENERATIVA"
+  ],
+  "rule_labels": [
+    "QC_AGREGADOS_PLAQUETARIOS",
+    "QC_INTERFERENCIA_GR"
+  ],
+  "excluded_labels": [
+    "QC_UNIDAD_NO_CONVERTIDA"
+  ],
+  "prauc_macro_model": 0.9529235354039882,
+  "reticulocyte_features": [
+    "Reticulocytes",
+    "Reticulocytes_pct",
+    "flag_reticulocytosis_pct_gt2",
+    "flag_reticulocytopenia_abs_lt10",
+    "flag_regen_anemia_proxy"
+  ],
+  "regen_promotion_gate": {
+    "criteria": {
+      "min_test_pr_auc": 0.7,
+      "min_test_f1": 0.45,
+      "min_test_recall": 0.65,
+      "min_val_pr_auc": 0.8
+    },
+    "metrics": {
+      "pr_auc": 0.886,
+      "roc_auc": 0.994,
+      "f1_optimal_thresh": 0.5,
+      "precision_optimal_thresh": 0.3571,
+      "recall_optimal_thresh": 0.8333,
+      "threshold_used": 0.3795106112957001,
+      "n_positive_test": 6,
+      "val_pr_auc": 0.9419,
+      "val_f1_threshold": 0.875,
+      "val_precision_threshold": 0.8235,
+      "val_recall_threshold": 0.9333,
+      "brier_val": 0.011897441931068897,
+      "brier_test": 0.02103082649409771
+    },
+    "checks": {
+      "test_pr_auc": true,
+      "test_f1": true,
+      "test_recall": true,
+      "val_pr_auc": true
+    },
+    "passed": true
+  },
+  "label_details": {
+    "QC_REQUIERE_FROTIS": {
+      "output_method": "model",
+      "status": "official",
+      "pr_auc_test": 0.8605,
+      "note": "Salida oficial del modelo XGBoost v3.",
+      "rule_pattern": null
+    },
+    "PATRON_INFLAMATORIO": {
+      "output_method": "model",
+      "status": "official",
+      "pr_auc_test": 0.9936,
+      "note": "Salida oficial del modelo XGBoost v3.",
+      "rule_pattern": null
+    },
+    "PATRON_LEUCOGRAMA_ESTRES": {
+      "output_method": "model",
+      "status": "official",
+      "pr_auc_test": 0.9861,
+      "note": "Salida oficial del modelo XGBoost v3.",
+      "rule_pattern": null
+    },
+    "PATRON_ANEMIA_NO_REGENERATIVA": {
+      "output_method": "model",
+      "status": "official",
+      "pr_auc_test": 0.9853,
+      "note": "Salida oficial del modelo XGBoost v3.",
+      "rule_pattern": null
+    },
+    "PATRON_HEMOLISIS_MCHC": {
+      "output_method": "model_with_postprocessing",
+      "status": "official",
+      "pr_auc_test": 0.9924,
+      "note": "Salida oficial del modelo XGBoost v3.",
+      "rule_pattern": null
+    },
+    "PATRON_POLICITEMIA": {
+      "output_method": "model",
+      "status": "official_promoted",
+      "pr_auc_test": 1.0,
+      "note": "Soporte bajo-moderado; interpretar junto con contexto clinico.",
+      "rule_pattern": null
+    },
+    "PATRON_ANEMIA_REGENERATIVA": {
+      "output_method": "model",
+      "status": "official_low_support",
+      "pr_auc_test": 0.886,
+      "note": "Promovida por incorporar Reticulocytes y Reticulocytes_pct; n_test=6, reportar siempre con advertencia de bajo soporte.",
+      "rule_pattern": null
+    },
+    "QC_AGREGADOS_PLAQUETARIOS": {
+      "output_method": "deterministic_rule",
+      "status": "rule_based",
+      "pr_auc_test": null,
+      "note": "Se conserva como regex sobre idexx_comments; PDW no generalizo para agregados.",
+      "rule_pattern": "agregad|platelet.?clump|recuento.+plaquetas.+mayor"
+    },
+    "QC_INTERFERENCIA_GR": {
+      "output_method": "deterministic_rule",
+      "status": "rule_based",
+      "pr_auc_test": null,
+      "note": "Regla deterministica por texto del analizador.",
+      "rule_pattern": "GR.?no.?lisad|unlysed.?red|gl[oó]bulos?.?roj[oa]s?.?no.?lisad"
+    },
+    "QC_UNIDAD_NO_CONVERTIDA": {
+      "output_method": "excluded",
+      "status": "documented_limitation",
+      "pr_auc_test": null,
+      "note": "Error historico/no recurrente; no se entrena como salida oficial.",
+      "rule_pattern": null
+    }
+  }
+}

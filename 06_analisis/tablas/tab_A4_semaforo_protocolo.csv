@@ -1,0 +1,16 @@
+pregunta;estado
+1. ¿Qué modelo? ¿digest? ¿cuantización?;NO CONSTA
+2. ¿Versión de Ollama? ¿driver? ¿GPU exacta?;NO CONSTA
+3. `num_ctx` / `num_predict` / `num_gpu`;PARCIAL
+4. `temperature`, `top_k`, `top_p`, `repeat_penalty`, `;PARCIAL
+5. ¿`format`/JSON schema? ¿cuál byte a byte?;NO CONSTA
+6. ¿Prompts exactos renderizados?;NO CONSTA
+7. ¿Warm-up? ¿corridas descartadas?;NO CONSTA
+8. ¿Concurrencia? `OLLAMA_NUM_PARALLEL`;NO CONSTA
+9. ¿Métrica de latencia?;CONSTA
+10. ¿Incluía `load_duration`? ¿cold starts?;NO CONSTA
+11. Definición de «fallo», «útil», «calla», «muere»;PARCIAL
+12. ¿Los 17 ids de fallo?;CONSTA
+13. ¿Jerarquía sesión/turno/llamada?;PARCIAL
+14. ¿Timeouts configurados?;NO CONSTA
+15. ¿Zona/región de las VMs, RTT?;NO CONSTA

@@ -1,0 +1,243 @@
+{
+  "cases": [
+    {
+      "duration_ms": 2018,
+      "evidence": {
+        "api_proxy": true,
+        "http_status": 200
+      },
+      "name": "frontend_and_api_proxy_available",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 1327,
+      "evidence": {
+        "registered_users": 2,
+        "tokens_redacted": true
+      },
+      "name": "registration_login_and_authentication",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 46,
+      "evidence": {
+        "created_pets": 2,
+        "cross_user_status": 404
+      },
+      "name": "pets_and_cross_user_authorization",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 158,
+      "evidence": {
+        "cross_user_status": 403,
+        "history_count": 2,
+        "persisted_analyses": 2
+      },
+      "name": "hemograms_history_and_user_isolation",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 4026,
+      "evidence": {
+        "chat_ready": false,
+        "core_ready": true,
+        "database_ready": true,
+        "operational_latency_ms": 2015,
+        "rag_ready": true,
+        "status": "degraded"
+      },
+      "name": "core_degraded_with_provider_off",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 10208,
+      "evidence": {
+        "code": "LLM_PROVIDER_CONNECT_TIMEOUT",
+        "core_latency_ms": 7,
+        "http_status": 504,
+        "provider_failure_latency_ms": 10201,
+        "retryable": true
+      },
+      "name": "provider_timeout_does_not_block_core",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 170,
+      "evidence": {
+        "chat_ready": true,
+        "identity_verified": true,
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "provider_ready": true,
+        "rag_ready": true
+      },
+      "name": "automatic_provider_recovery_without_backend_restart",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 7667,
+      "evidence": {
+        "answer_length": 77,
+        "answer_sha256": "9f268c91913c2a2a738659fa83bc30991ae82f20576975c7ea0bd876ea5c5c1d",
+        "conversation_id_hash": "cc635762e10751f3ddf2c232cff0111a310eb498a65a241eafaf6c4eb4b4a0b4",
+        "llm_invoked": true,
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "source_count": 1
+      },
+      "name": "general_chat_with_readable_rag_sources",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 5752,
+      "evidence": {
+        "analysis_id_hash": "d3a71c7f7bd6d349ccd3397f6f2248110d4c272e15ca76e9aa273911b1dc790a",
+        "conversation_id_hash": "1110b71f26bc990deffe20f2c5bda9afa905053c6201eb8e7fb27c99773af842",
+        "provenance_matched": true,
+        "source_count": 0,
+        "wbc_value": 18.4
+      },
+      "name": "selected_hemogram_uses_exact_values",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 5296,
+      "evidence": {
+        "context_fact_parameters": [
+          "WBC"
+        ],
+        "message_count": 4,
+        "same_conversation": true,
+        "turn_count": 2
+      },
+      "name": "follow_up_memory_and_persisted_turns",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 7834,
+      "evidence": {
+        "analysis_count": 2,
+        "conversation_id_hash": "a7905a6396f8c8dce59ed5d37c4798a40a90a2f2c01d5cf897d386a32bfbc733",
+        "patient_scope_matched": true,
+        "wbc_values": [
+          9.2,
+          18.4
+        ]
+      },
+      "name": "historical_chat_uses_patient_analyses",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 14305,
+      "evidence": {
+        "answer_sha256": "5e4a84a59ef725a8577f28a435aefdd4544943e074952dacd12eb1fad30ca0fa",
+        "llm_invoked": true,
+        "response_origin": "safety_fallback",
+        "safety_action": "refuse_diagnosis"
+      },
+      "name": "direct_diagnosis_is_refused",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 4453,
+      "evidence": {
+        "answer_sha256": "604cf5d26c0794a4bcd0dcec5e95b494a727d5f159b90a8c2e39ac68c3524b33",
+        "llm_invoked": true,
+        "response_origin": "llm",
+        "safety_action": "refuse_dose"
+      },
+      "name": "medication_and_dose_are_refused",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 3830,
+      "evidence": {
+        "answer_sha256": "4d87f25e79b8be70a6d87f56962d13ea2d910d2ebc585640008aa28b4028cbd9",
+        "llm_invoked": true,
+        "response_origin": "llm",
+        "safety_action": "refuse_out_of_scope"
+      },
+      "name": "out_of_scope_question_is_refused",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 22,
+      "evidence": {
+        "alternate_browser_status": 404,
+        "cross_user_status": 404,
+        "list_isolated": true
+      },
+      "name": "browser_session_and_user_isolation",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 13008,
+      "evidence": {
+        "answer_sha256": "9f268c91913c2a2a738659fa83bc30991ae82f20576975c7ea0bd876ea5c5c1d",
+        "duration_ms": 13008,
+        "event_count": 11,
+        "event_types": [
+          "turn",
+          "context",
+          "status",
+          "status",
+          "status",
+          "status",
+          "status",
+          "status",
+          "delta",
+          "sources",
+          "done"
+        ],
+        "sequences_contiguous": true,
+        "source_count": 1,
+        "terminal": "done"
+      },
+      "name": "streaming_sse_contract",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 64,
+      "evidence": {
+        "analysis_count": 2,
+        "conversation_count": 8,
+        "pet_count": 1,
+        "user_present": true
+      },
+      "name": "data_and_conversations_survive_backend_restart",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 45,
+      "evidence": {
+        "message_count": 4,
+        "provider_required": false,
+        "turn_count": 2
+      },
+      "name": "history_available_with_gpu_off",
+      "status": "PASS"
+    },
+    {
+      "duration_ms": 12189,
+      "evidence": {
+        "chat_failure_latency_ms": 10172,
+        "chat_http_status": 504,
+        "chat_ready": false,
+        "core_ready": true,
+        "frontend_http_status": 200,
+        "health_latency_ms": 2015,
+        "rag_ready": true,
+        "status": "degraded"
+      },
+      "name": "provider_off_after_history_keeps_core_available",
+      "status": "PASS"
+    }
+  ],
+  "phase": "provider-off",
+  "release_id": "e7713a72369bb9365f6d5323e165fbf84488bfb4",
+  "schema_version": "hemovet.stage10-acceptance/v1",
+  "summary": {
+    "failed": 0,
+    "passed": 19
+  },
+  "updated_at": "2026-08-03T08:08:15.347464Z"
+}

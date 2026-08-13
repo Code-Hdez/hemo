@@ -1,0 +1,30 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#000000', 'primaryTextColor': '#000000', 'lineColor': '#666666', 'clusterBkg': '#ffffff', 'clusterBorder': '#999999'}}}%%
+flowchart TB
+  USER["Usuario\nNavegador web"] --> DOMAIN["Dominio / HTTPS\nhemovet.app"]
+  DOMAIN --> PROXY["Caddy o Nginx\nproxy y TLS"]
+
+  subgraph COMPOSE["Docker Compose"]
+    PROXY -->|"/app"| FE["Frontend nginx\nReact build"]
+    PROXY -->|"/api/v1/*"| BE["Backend FastAPI\nUvicorn app.main:app"]
+    RAGI["rag_ingest\nindexación offline"]
+    OLLAMA["Ollama\nmodelo LLM"]
+    CHROMA["ChromaDB\nchroma data"]
+    PG["PostgreSQL\nvolumen persistente"]
+    ML["Artefactos ML\nmodelos, umbrales, calibradores"]
+
+    RAGI -.->|"verifica modelo"| OLLAMA
+    OLLAMA --> CHROMA
+    BE --> CHROMA
+    BE --> PG
+    BE --> ML
+  end
+
+  EXT["OpenRouter / Gemini\nservicios externos opcionales"]
+  BE -.-> EXT
+
+  classDef ext fill:#ffe6cc,stroke:#d79b00
+  class ML,EXT ext
+  classDef entry fill:#dae8fc,stroke:#6c8ebf
+  class USER entry
+  classDef domain fill:#d5e8d4,stroke:#82b366
+  class DOMAIN domain

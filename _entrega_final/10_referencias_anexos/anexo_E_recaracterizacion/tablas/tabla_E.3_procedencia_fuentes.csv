@@ -1,0 +1,14 @@
+Conjunto de datos;Ruta del artefacto;Compendio SHA-256;Bytes;Registros;Columnas
+Turnos de las baterías;04_trazas/turns.ndjson;f29d72e1867b7e9b…;53 325;45;21
+Sesiones de la campaña;04_trazas/sessions.ndjson;3d78f1d2be0aa460…;1 691;3;17
+Turnos de la réplica estricta;04_trazas/turns_replica_estricta.ndjson;974aa50f16bb3e77…;82 966;70;26
+Serie de tiempo por token (n = 100);05_derivados/tpot_serie_n100.json;0c6d93387d16c273…;1 987;5;—
+Ablación de gramática;05_derivados/ablacion_gramatica.json;6692afac459491e5…;615;7;—
+Canario ic;06_analisis/fase2_canario_y_ic.json;08270059d459b5d0…;693;9;—
+Hemograma de referencia (fixture de prueba);02_fixtures/fixture_hemograma.json;77afa8d748db2e1d…;8 715;8;—
+Tabla de verdad de las preguntas verificables;02_fixtures/verdad.json;ca7b67f9bc05c788…;1 192;14;—
+Inventario de evidencia previa;01_auditoria_previa/inventario.ndjson;f2f499786bccbed4…;147 169;208;11
+Registros creados;99_operacion/registros_creados.ndjson;0be3cfb35426954a…;14 347;107;3
+Registro de operación de la instancia;99_operacion/log_instancia.md;a5391a8814e278f4…;4 425;1;—
+Pre-registro de hipótesis;03_hipotesis/preregistro.md;5d6a0a71081e385e…;5 507;1;—
+Informe de la campaña;07_informes/INFORME_RECARACTERIZACION_A100.md;26c0bd5ce851df58…;8 344;1;—

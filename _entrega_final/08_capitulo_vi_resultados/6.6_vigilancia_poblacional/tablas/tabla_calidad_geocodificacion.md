@@ -1,0 +1,13 @@
+# Tabla 6.16. Comprobaciones de calidad de la geocodificación.
+
+> Tabla lista para pegar. Datos verificados contra el artefacto de origen.
+> **Fuente:** `outputs/gate_geocoding_quality_v1.json`
+
+| Comprobación | Resultado | Detalle |
+| :--- | :--- | :--- |
+| Metadata geografica disponible | aprobada | analysis_metadata.csv esta disponible. |
+| Tasa geocodificada IDEXX suficiente | aprobada | geocoded_rate IDEXX=1.000. |
+| Concentracion geografica documentada | no aprobada | La cohorte esta casi completamente concentrada en una ubicacion (top_location_share=1.000); documentar sesgo. |
+| Registros evaluados | 2 454 | Corpus clínico IDEXX |
+
+*Tabla 6.16. Comprobaciones de calidad de la geocodificación.*

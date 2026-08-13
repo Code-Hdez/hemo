@@ -1,0 +1,37 @@
+{
+  "schema_version": "hemovet.artifacts/v1",
+  "release_id": "515d343ac805779f94be9277376bdadf5516154d",
+  "source": {
+    "github_sha": "515d343ac805779f94be9277376bdadf5516154d",
+    "repository": "xPshycho/hemogramas-proyectoICC",
+    "created_at": "2026-08-02T18:36:24Z"
+  },
+  "registry_repository": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images",
+  "images": [
+    {
+      "package": "backend",
+      "source_revision": "515d343ac805779f94be9277376bdadf5516154d",
+      "tag": "sha-515d343ac805779f94be9277376bdadf5516154d",
+      "tagged_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/backend:sha-515d343ac805779f94be9277376bdadf5516154d",
+      "canonical_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/backend@sha256:c20b932993c97d6078d04033f72d2de132381f6a6a06580dc65be74d52b5191f",
+      "digest": "sha256:c20b932993c97d6078d04033f72d2de132381f6a6a06580dc65be74d52b5191f"
+    },
+    {
+      "package": "frontend",
+      "source_revision": "515d343ac805779f94be9277376bdadf5516154d",
+      "tag": "sha-515d343ac805779f94be9277376bdadf5516154d",
+      "tagged_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/frontend:sha-515d343ac805779f94be9277376bdadf5516154d",
+      "canonical_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/frontend@sha256:55b82e9e868247fc71d764f932610f0849db93fbe88b60261683f7894d305d7f",
+      "digest": "sha256:55b82e9e868247fc71d764f932610f0849db93fbe88b60261683f7894d305d7f"
+    },
+    {
+      "package": "ollama-runtime",
+      "source_revision": "515d343ac805779f94be9277376bdadf5516154d",
+      "tag": "sha-515d343ac805779f94be9277376bdadf5516154d",
+      "tagged_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/ollama-runtime:sha-515d343ac805779f94be9277376bdadf5516154d",
+      "canonical_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/ollama-runtime@sha256:b526b1d4bc30d0cc641e0d2a186034b327c97de0171b1a47ce1c917d79604e5f",
+      "digest": "sha256:b526b1d4bc30d0cc641e0d2a186034b327c97de0171b1a47ce1c917d79604e5f",
+      "upstream_reference": "docker.io/ollama/ollama:0.30.10@sha256:bfc9c6d53cc6989aa5131a6fde6b162b2802d4d337657f3253b5f69579bddeee"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#000000', 'primaryTextColor': '#000000', 'lineColor': '#666666'}}}%%
+flowchart TD
+  INICIO(["Inicio"]) --> CARGA["Carga de PDF, CSV\no imagen"]
+  CARGA --> SESION["Validación de sesión\ny pertenencia del recurso"]
+  SESION --> EXTRACCION["Extracción asistida\nGemma → Nemotron → Gemini\n→ fallback local"]
+  EXTRACCION --> REVISION["Revisión de valores\ny correcciones del usuario"]
+  REVISION --> NORMALIZACION["Normalización, unidades\ny validación de entrada"]
+  NORMALIZACION --> FEATURES["Construcción de 43\ncaracterísticas"]
+  FEATURES --> INFERENCIA["Inferencia XGBoost v3\nprobabilidades por etiqueta"]
+  INFERENCIA --> REGLAS["Reglas determinísticas\nQC y postprocesamiento"]
+  REGLAS --> PERSISTENCIA["Persistencia en PostgreSQL\nanálisis, valores y predicciones"]
+  PERSISTENCIA --> RESULTADO["Resultado orientativo\nvisualización ciudadana"]
+  RESULTADO --> FIN(["Fin"])
+  RESULTADO -.->|"si el usuario pregunta"| CONSULTA["Consulta opcional al\nasistente LLM/RAG"]
+  CONSULTA -.->|"pregunta/respuesta/fuentes"| PERSISTENCIA
+
+  classDef terminal fill:#d5e8d4,stroke:#82b366
+  class INICIO,FIN terminal

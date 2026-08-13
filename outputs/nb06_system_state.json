@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "nb": "06_validacion_externa_dap",
+  "status": "READY_FOR_PRODUCTION",
+  "model_file": "models/best_model_v2.pkl",
+  "policy_file": "data/processed/final_label_policy.json",
+  "thresholds_file": "data/processed/decision_thresholds_v2.json",
+  "prauc_macro_official": 0.9495,
+  "n_official_labels": 6,
+  "n_rule_labels": 2,
+  "n_excluded_labels": 2,
+  "external_validation": {
+    "dataset": "Dog Aging Project",
+    "n_records": 1301,
+    "domain_shift": {
+      "Monocytes": "SEVERO (d=0.81)",
+      "RDW": "SEVERO (d=1.55)"
+    },
+    "coherence_check": "PASS -- tasas de activacion coherentes con poblacion sana"
+  }
+}

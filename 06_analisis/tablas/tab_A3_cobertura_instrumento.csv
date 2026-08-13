@@ -1,0 +1,18 @@
+capacidad;poblado_7ago;poblado_campana
+latencia extremo a extremo;70/70;45/45
+tiempo hasta el primer byte;70/70;ausente
+etapas y su duración;70/70;ausente
+recuento de eventos SSE;70/70;ausente
+reparaciones del generador;70/70;ausente
+código HTTP;70/70;45/45
+código de error;17/70;2/45
+texto íntegro de la respuesta;70/70;ausente
+hash de la respuesta;ausente;45/45
+hash de la pregunta;ausente;45/45
+sello de corrida (modelo·GPU);ausente;45/45
+id de sesión por turno;ausente;45/45
+id de conversación;70/70;43/45
+clase de pregunta;70/70;45/45
+marca de verificabilidad;ausente;45/45
+mensajes en la ventana;ausente;0/45
+crudos de Ollama (eval_*);ausente;ausente

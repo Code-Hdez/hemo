@@ -1,0 +1,17 @@
+=== CALIBRACION ===
+  chars/token (mediana de 25 obs con envelope_chars y eval_count): 3.46
+  APROXIMACION declarada: no hay tokenizer local; se usa esta razon empirica
+
+=== TOKEN TAX (n=53 turnos que entregaron respuesta) ===
+  tokens generados por turno   : mediana    457
+  tokens VISIBLES por turno    : mediana     85
+  tokens de ANDAMIAJE          : mediana    377
+  ratio visible                :  18.5 %
+
+  a 13.05 tok/s:
+    segundos por turno en texto visible :    6.5 s
+    segundos por turno en ANDAMIAJE     :   28.9 s
+    total decode mediano                :   35.0 s
+
+  AGREGADO: 28441 tokens de andamiaje = 2179 s en 53 turnos
+  (y esto afecta al 100 % de las llamadas, no solo al 48,6 % que repara)

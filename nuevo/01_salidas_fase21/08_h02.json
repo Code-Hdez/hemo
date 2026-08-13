@@ -1,0 +1,88 @@
+{
+  "schema": "hemovet.fase22.h02/v1",
+  "fecha": "2026-08-08",
+  "hallazgo": "H-02",
+  "test": "backend/tests/llm_chat/test_structured_send_chat_message.py::test_transition_claim_cannot_carry_a_number",
+  "sintoma": "Failed: DID NOT RAISE ChatRuntimeUnavailable",
+  "veredicto": "(b) — la comprobación está intacta; el test vigilaba el mecanismo de entrega, no la regla",
+  "no_es_a": "La guarda no desapareció ni se debilitó. Sigue en send_chat_message.py:4848.",
+  "no_es_c": "El test no está roto como instrumento ni el fixture cambió de forma: pasó en el commit donde nació y el commit culpable no tocó ningún test.",
+  "diagnostico": {
+    "1_el_test_paso_alguna_vez": {
+      "si": true,
+      "nacio_en": "88bc1a0a  feat(chat): let a clinical answer be written as an answer, not a table",
+      "el_fixture_nacio_en": "88bc1a0a (el mismo commit)",
+      "verificado": "worktree en 88bc1a0a: 1 passed"
+    },
+    "2_commit_culpable": {
+      "sha": "bd70e0d8",
+      "titulo": "feat(chat): salvage the envelope, and make the facts callable",
+      "fecha": "2026-08-06",
+      "metodo": "git bisect run sobre los 15 commits entre 88bc1a0a y 21f18fd8",
+      "toco_tests": false,
+      "ficheros": [
+        "application/services/clinical_toolbox.py (+333)",
+        "application/use_cases/send_chat_message.py (+437/-194)",
+        "domain/entities.py (+56)",
+        "infrastructure/llm/openai_compatible_client.py (+93)"
+      ]
+    },
+    "3_que_cambio_exactamente": "La consecuencia de rechazar un claim, no la regla. `671483f9` (give the turn a floor instead of an error page) y `bd70e0d8` (salvage the envelope) sustituyeron a proposito «claim rechazado -> muere el turno» por «claim rechazado -> se descarta y se entrega el resto». El test exigia ChatRuntimeUnavailable: generation_repair_failed, que era la forma de morir, no la regla.",
+    "la_guarda_hoy": {
+      "fichero": "backend/app/modules/llm_chat/application/use_cases/send_chat_message.py:4848",
+      "codigo": "if re.search(r'\\\\d', claim.text) and (authorized_codes or claim.claim_type is ClaimType.TRANSITION): raise StructuredResponseError('structured_numeric_support_required')",
+      "identica_a_88bc1a0a": true
+    }
+  },
+  "prueba_empirica": {
+    "metodo": "cuatro sondas por el caso de uso real, observando lo que recibiria el lector",
+    "resultados": [
+      {
+        "transition": "Vamos con el MCHC, que está en 40.2 g/dL.",
+        "cifra": "40.2 (real del hecho)",
+        "texto_sobrevive": false,
+        "cifra_en_respuesta": true,
+        "nota": "la cifra que queda es el relleno determinista desde un hecho autorizado y citado —«El MCHC es 40.2 g/dL.»—, no el texto del claim descartado; el test hermano ya la exige en verde"
+      },
+      {
+        "transition": "Vamos con el MCHC, que está en 99.9 g/dL.",
+        "cifra": "99.9 (inventada)",
+        "texto_sobrevive": false,
+        "cifra_en_respuesta": false
+      },
+      {
+        "transition": "Ojo que los leucocitos están en 45.7 mil/uL.",
+        "cifra": "45.7 (inventada, otro analito)",
+        "texto_sobrevive": false,
+        "cifra_en_respuesta": false
+      },
+      {
+        "transition": "Vamos con el MCHC, que es el que llama la atención aquí.",
+        "cifra": null,
+        "texto_sobrevive": true,
+        "nota": "sin cifra el mismo claim pasa y encabeza la respuesta: el dígito es el discriminador"
+      }
+    ],
+    "conclusion": "La regla esta intacta, discrimina, y no hay fuga de cifras sin respaldo."
+  },
+  "agujero_de_validacion_clinica": false,
+  "en_produccion": "Ninguna cifra sin respaldo llega al lector por esta via. No hay nada que restaurar.",
+  "rama_que_lo_arregla": {
+    "nombre": "fix/h02-transition-digit-test",
+    "commit": "bc0e1722",
+    "base": "main (21f18fd8)",
+    "que_hace": "el test pasa a exigir el invariante clinico —el texto ofensivo y su cifra no llegan al lector— en vez de la forma de morir",
+    "mas_fuerte_que_antes": "El original solo probaba la cifra real del hecho. El nuevo anade dos casos inventados —99.9 y 45.7—, que son el riesgo clinico autentico y no estaban cubiertos.",
+    "falsificado": "Desactivando la guarda con `if False and ...`, los tres casos fallan; restaurandola, pasan. El test vigila la regla, no el comportamiento.",
+    "no_relaja_nada": "Lo prohibido era cambiar el test para que aceptase el comportamiento actual. Esto comprueba una condicion que el comportamiento actual satisface y que una regresion romperia, que es lo contrario.",
+    "resultado": "tests/llm_chat: 930 passed, 1 skipped, 0 failed"
+  },
+  "para_poner_main_en_verde": {
+    "orden": [
+      "fix/ruff-unused-guardaction (07433c3a) — quita el F401 del paso de estáticos",
+      "fix/h02-transition-digit-test (bc0e1722) — deja tests/llm_chat sin fallos"
+    ],
+    "despues": "fix/warmup-runner-realignment (b63c221e) — el poller de M-15, 4 ficheros, +382, 0 conflictos",
+    "nota": "un push verde a main despliega por si solo; por eso el orden importa"
+  }
+}

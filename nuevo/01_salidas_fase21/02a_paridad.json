@@ -1,0 +1,238 @@
+{
+ "schema_version": "hemovet.fase22.paridad/v1",
+ "generado_en": "2026-08-09T00:04:58Z",
+ "commit": "c187ed4a976368dfff3b9337e7640d258278e609",
+ "rama": "fix/last-resort-policy-rule-id",
+ "hallazgo": "DOCE divergencias local-vs-produccion, no seis. Seis eran nuevas: context_length, keep_alive, model, repair_num_predict, y los cuatro de muestreo (temperature, top_k, top_p, repeat_penalty). Escribir la lista a mano habria dejado escapar los cuatro que deciden que texto sale.",
+ "divergencias": {
+  "valor": [
+   {
+    "campo": "context_length",
+    "env": "OLLAMA_CONTEXT_LENGTH",
+    "local": 4096,
+    "produccion": 16384,
+    "decide_el_texto": false
+   },
+   {
+    "campo": "keep_alive",
+    "env": "OLLAMA_KEEP_ALIVE",
+    "local": "30m",
+    "produccion": "-1",
+    "decide_el_texto": false
+   },
+   {
+    "campo": "max_input_tokens",
+    "env": "CHAT_MAX_INPUT_TOKENS",
+    "local": 3200,
+    "produccion": 12000,
+    "decide_el_texto": false
+   },
+   {
+    "campo": "model",
+    "env": "OLLAMA_MODEL",
+    "local": "qwen3:4b-instruct-2507-q4_K_M",
+    "produccion": "qwen3.6:27b-q4_K_M",
+    "decide_el_texto": true
+   },
+   {
+    "campo": "num_predict",
+    "env": "OLLAMA_NUM_PREDICT",
+    "local": 384,
+    "produccion": 1280,
+    "decide_el_texto": false
+   },
+   {
+    "campo": "repair_num_predict",
+    "env": "CHAT_REPAIR_NUM_PREDICT",
+    "local": 512,
+    "produccion": 1024,
+    "decide_el_texto": false
+   },
+   {
+    "campo": "repeat_penalty",
+    "env": "OLLAMA_REPEAT_PENALTY",
+    "local": 1.1,
+    "produccion": 1.0,
+    "decide_el_texto": true
+   },
+   {
+    "campo": "generation_timeout_seconds",
+    "env": "OLLAMA_TIMEOUT_SECONDS",
+    "local": 90.0,
+    "produccion": 120,
+    "decide_el_texto": false
+   },
+   {
+    "campo": "queue_timeout_seconds",
+    "env": "CHAT_QUEUE_TIMEOUT_SECONDS",
+    "local": 20.0,
+    "produccion": 60,
+    "decide_el_texto": false
+   },
+   {
+    "campo": "temperature",
+    "env": "OLLAMA_TEMPERATURE",
+    "local": 0.1,
+    "produccion": 0.3,
+    "decide_el_texto": true
+   },
+   {
+    "campo": "top_k",
+    "env": "OLLAMA_TOP_K",
+    "local": 40,
+    "produccion": 20,
+    "decide_el_texto": true
+   },
+   {
+    "campo": "top_p",
+    "env": "OLLAMA_TOP_P",
+    "local": 0.9,
+    "produccion": 0.8,
+    "decide_el_texto": true
+   }
+  ],
+  "unidad": "parametros",
+  "estado": "MEDIDA",
+  "instrumento": "reflexion con dataclasses.fields sobre GenerationProfileSettings real, aplanado recursivo, contra docker exec printenv del contenedor desplegado. NO lee ningun .env del repositorio.",
+  "n": 12
+ },
+ "los_cuatro_peores": {
+  "cuales": [
+   "temperature",
+   "top_k",
+   "top_p",
+   "repeat_penalty"
+  ],
+  "por_que": "los otros ocho cambian CUANTO CABE o CUANTO SE ESPERA. Estos cuatro cambian QUE TEXTO SALE. Son los unicos que pueden impedir que la puerta de calibracion se reproduzca incluso con el sembrado perfecto.",
+  "consecuencia_de_varianza": "produccion es mas estocastica que el local (T=0,3 vs 0,1): mas varianza entre corridas. Una sola cuenta local subestima la varianza que hay que reproducir."
+ },
+ "septimo_instrumento": {
+  "cual": "llm.health() como guarda del modelo",
+  "por_que_no_protege": {
+   "valor": true,
+   "unidad": "qwen3:4b-instruct-2507-q4_K_M ESTA instalado en el Ollama de produccion",
+   "estado": "MEDIDA",
+   "instrumento": "GET /api/tags por el tunel",
+   "n": 1
+  },
+  "consecuencia": "una corrida que olvide OLLAMA_ACCEPTANCE_MODEL pasa la guarda, carga el 4B, y produce una tabla completa y falsa. Y seria MAS RAPIDA, asi que la leeriamos como mejora.",
+  "ya_disparo": {
+   "valor": false,
+   "unidad": "los cinco brazos corrieron con el 27B",
+   "estado": "MEDIDA",
+   "instrumento": "el reloj: 673 s/5 = 135 s por corrida = 92 % de la base 27B verificada (146 s) y 6,8x lo que habria costado el 4B (~20 s a 88,8 tok/s proyectados)",
+   "n": 5
+  },
+  "nota": "la conclusion no depende del supuesto de tok/s del 4B: 135 s son varias veces cualquier estimacion razonable."
+ },
+ "preflight": {
+  "fichero": "validacion_llm/scripts/preflight_paridad.py",
+  "diseno": [
+   "comprueba EN EL CABLE, no en la configuracion: siete veces la divergencia estuvo entre lo que un fichero declara y lo que el proceso envia",
+   "ABORTA, no avisa: un warning en 6,4 h desatendidas no lo lee nadie",
+   "corre ANTES del primer caso: abortar en el caso 1 cuesta un minuto, descubrirlo en el informe cuesta la corrida",
+   "'sin comprobar' NO es 'igual': aborta con rc=3 si algun campo no se pudo comparar"
+  ],
+  "control_positivo": {
+   "valor": {
+    "comprobados": 12,
+    "divergentes": 0,
+    "sin_comprobar": 0,
+    "rc": 0
+   },
+   "unidad": "campos",
+   "estado": "MEDIDA",
+   "instrumento": "cable de produccion contra su propio entorno + perfil",
+   "n": 12
+  },
+  "control_negativo_muestreo": {
+   "valor": {
+    "divergentes": 2,
+    "rc": 1
+   },
+   "unidad": "campos falseados: num_predict y temperature",
+   "estado": "MEDIDA",
+   "instrumento": "entorno falseado",
+   "n": 2
+  },
+  "control_negativo_perfil": {
+   "valor": {
+    "divergentes": 1,
+    "rc": 1
+   },
+   "unidad": "campo falseado: max_input_tokens",
+   "estado": "MEDIDA",
+   "instrumento": "perfil falseado",
+   "n": 1
+  },
+  "agujero_que_encontro_en_si_mismo": "la primera version imprimia '(ausente)' para max_input_tokens y history_limit, que SI estan en produccion (12000 y 12). Estaban sin comprobar y se leian como iguales: el mismo mecanismo que deja pasar el 4B. Corregido: ahora aborta con rc=3.",
+  "limitacion_declarada": "el control positivo compara el cable de produccion contra su propio entorno: es consistencia interna, NO contraste entre entornos. El preflight nunca ha visto una divergencia real."
+ },
+ "primera_tarea_de_la_sesion_siguiente": {
+  "1_falsificacion_de_los_doce": "el control negativo prueba que caza 2, no 12. Falsificar cada uno de los doce por separado (12 corridas, sin GPU, segundos cada una) y confirmar 12 abortos. Mas una decimotercera con los doce mal a la vez, para verificar que los reporta TODOS y no solo el primero.",
+  "2_criterio_de_aceptacion_del_preflight": "CRITERIO, no expectativa: la primera vez que el aparato local arranque, el preflight debe reportar EXACTAMENTE LAS DOCE divergencias conocidas. Ni once ni trece. Si reporta diez, le faltan dos. Si reporta doce, esta validado contra el caso real y no contra uno sintetico.",
+  "3_orden": "preflight de doce -> puerta de kappa -> sembrado -> calibracion -> cinco brazos"
+ },
+ "puerta_de_calibracion_CORREGIDA": {
+  "por_que_cambia": "la de +-3 estaba mal calculada. Con 17/70 la desviacion binomial es 3,59, asi que +-3 es 0,84 sigma: una corrida identica del mismo sistema caeria fuera el 33 % de las veces por azar.",
+  "principal": "ACUERDO DE IDS: >=14 de los 17 ids que fallaron el 7-ago, Y kappa >= 0,75",
+  "secundario": "recuento dentro de [10, 24] (+-7, falsa alarma 3,5 %)",
+  "regla_dura": "si el recuento cuadra y los ids NO coinciden, el aparato NO sirve aunque el numero sea perfecto. Y por debajo de kappa 0,75 no reproduce el mecanismo aunque el recuento caiga dentro de [10,24].",
+  "tabla_kappa": {
+   "valor": {
+    "17/0": 1.0,
+    "16/1": 0.922,
+    "15/2": 0.845,
+    "14/3": 0.767,
+    "13/4": 0.689,
+    "12/5": 0.612
+   },
+   "unidad": "kappa por (coincidencias/nuevos)",
+   "estado": "MEDIDA",
+   "instrumento": "kappa de Cohen sobre 70 casos con 17 fallos",
+   "n": 70
+  }
+ },
+ "patron_asercion_sin_prevencion": {
+  "forma": "se comprueba una condicion NECESARIA y se trata como SUFICIENTE",
+  "no_es": "una lista de descuidos. Es un habito de diseno, y nombrarlo asi permite buscar la septima en vez de esperar a tropezarla.",
+  "instancias": [
+   {
+    "se_comprueba": "el driver ES 580.159.03",
+    "necesario_para": "que sea el correcto",
+    "no_impide": "que apt lo cambie"
+   },
+   {
+    "se_comprueba": "el test codifica los criterios",
+    "necesario_para": "que se evaluen",
+    "no_impide": "que la CI no lo ejecute"
+   },
+   {
+    "se_comprueba": "existe CHAT_TOKENIZER_REQUIRED",
+    "necesario_para": "que se pueda exigir",
+    "no_impide": "que este a False"
+   },
+   {
+    "se_comprueba": "el validador exige la regla",
+    "necesario_para": "que el claim la lleve",
+    "no_impide": "que el llamante la quite"
+   },
+   {
+    "se_comprueba": "el modelo esta instalado",
+    "necesario_para": "que se pueda usar",
+    "no_impide": "que se use el otro"
+   },
+   {
+    "se_comprueba": "los campos presentes coinciden",
+    "necesario_para": "que haya paridad",
+    "no_impide": "que falten campos por comprobar"
+   }
+  ]
+ },
+ "que_contradijo_este_trabajo": [
+  "Seis divergencias contadas -> son DOCE. La comparacion automatica encontro el doble.",
+  "La puerta de calibracion de +-3 era 0,84 sigma: 33 % de falsa alarma. Corregida a acuerdo de ids + kappa.",
+  "llm.health() no protege del modelo equivocado: el 4B esta instalado en produccion.",
+  "El propio preflight firmaba habiendo comprobado 10 de 12 campos."
+ ]
+}

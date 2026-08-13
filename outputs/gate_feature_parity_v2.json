@@ -1,0 +1,93 @@
+{
+  "gate": "feature_parity_v2",
+  "status": "pass",
+  "checked_at": "2026-04-12T03:39:00.169965+00:00",
+  "checks": [
+    {
+      "name": "Artefactos requeridos disponibles",
+      "passed": true,
+      "detail": "Todos los artefactos de entrada para paridad estan presentes."
+    },
+    {
+      "name": "Lista de features sin duplicados",
+      "passed": true,
+      "detail": "La lista de features es unica (38 columnas)."
+    },
+    {
+      "name": "feature_columns.json coincide con longitud real",
+      "passed": true,
+      "detail": "feature_columns.json reporta n_features=38 y coincide con la lista."
+    },
+    {
+      "name": "model_metadata_v2 coincide con longitud real",
+      "passed": true,
+      "detail": "model_metadata_v2.json reporta n_features=38 y coincide con la lista."
+    },
+    {
+      "name": "Paridad de orden de features (notebook vs runtime)",
+      "passed": true,
+      "detail": "feature_columns.json y model_metadata_v2.json tienen el mismo orden de features."
+    },
+    {
+      "name": "Medians del imputer cubren contrato exacto",
+      "passed": true,
+      "detail": "imputer_medians.csv incluye exactamente los mismos nombres de features."
+    },
+    {
+      "name": "build_features runtime respeta contrato",
+      "passed": true,
+      "detail": "build_features retorna una fila con shape esperado y orden exacto de columnas."
+    },
+    {
+      "name": "Todos los splits contienen contrato completo",
+      "passed": true,
+      "detail": "Los headers de train/val/test contienen cada feature del contrato."
+    }
+  ],
+  "summary": {
+    "total_checks": 8,
+    "passed_checks": 8,
+    "failed_checks": 0
+  },
+  "n_features": 38,
+  "feature_columns": [
+    "RBC",
+    "WBC",
+    "Platelets",
+    "HGB",
+    "HCT",
+    "MCV",
+    "MCH",
+    "MCHC",
+    "RDW",
+    "Neutrophils",
+    "Neutrophils_pct",
+    "Lymphocytes",
+    "Lymphocytes_pct",
+    "Monocytes",
+    "Monocytes_pct",
+    "Eosinophils",
+    "Basophils",
+    "MPV",
+    "PDW",
+    "flag_thrombocytopenia",
+    "flag_thrombocytopenia_severe",
+    "flag_lymphopenia",
+    "flag_lymphocytosis",
+    "flag_neutrophilia",
+    "flag_neutropenia",
+    "flag_leukocytosis",
+    "flag_leukopenia",
+    "flag_anemia",
+    "flag_microcytic",
+    "flag_macrocytic",
+    "flag_hypochromic",
+    "flag_macro_platelets",
+    "ratio_NLR",
+    "ratio_PLR",
+    "ratio_MLR",
+    "ratio_MPV_PLT",
+    "pattern_stress_leukogram",
+    "age_years"
+  ]
+}

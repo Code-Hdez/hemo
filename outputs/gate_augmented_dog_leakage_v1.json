@@ -1,0 +1,9 @@
+{
+  "gate": "augmented_dog_leakage_v1",
+  "status": "pass",
+  "checked_at": "2026-05-24T21:19:38.390692+00:00",
+  "records": 2721,
+  "unique_dogs": 1827,
+  "dogs_crossing_splits": 0,
+  "top_crossing_dogs": {}
+}

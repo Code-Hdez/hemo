@@ -1,0 +1,6 @@
+efecto;valor;unidad;ic_inf;ic_sup;marca
+Latencia pareada (Δ p50);31.9534;s;19.0578;46.2789;MEDIDO · bootstrap 10 000
+Gramática (Δ TPOT);0.332;ms/token;;;MEDIDO · sin IC (crudos no persistidos)
+Fallos: 7-ago − réplica;15.7143;puntos %;;;MEDIDO · McNemar p = 0,035
+Alucinación numérica;0.0;%;0.0;29.9145;MEDIDO · Wilson
+Acuerdo de fallos (κ);-0.1451;κ;;;MEDIDO · sin IC

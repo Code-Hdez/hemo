@@ -1,0 +1,7 @@
+pytest
+# Pin para que CI no adopte reglas nuevas que no estaban presentes en la
+# línea base validada; actualizarlo requiere una migración de lint explícita.
+ruff==0.12.11
+black
+mypy
+alembic

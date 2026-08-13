@@ -1,0 +1,40 @@
+{
+  "gate": "metadata_retention_v1",
+  "status": "pass",
+  "checked_at": "2026-05-24T20:54:47.159921+00:00",
+  "checks": [
+    {
+      "name": "Artefactos de metadata disponibles",
+      "passed": true,
+      "detail": "analysis_metadata.csv y feature_columns.json estan disponibles."
+    },
+    {
+      "name": "Columnas longitudinales/geograficas presentes",
+      "passed": true,
+      "detail": "La metadata preserva IDs, fecha, cohorte y ubicacion."
+    },
+    {
+      "name": "Metadata no entra al contrato de features",
+      "passed": true,
+      "detail": "IDs, fechas y geografia estan fuera de feature_columns."
+    },
+    {
+      "name": "dog_id disponible para IDEXX",
+      "passed": true,
+      "detail": "dog_id disponible para 2454 registros IDEXX."
+    },
+    {
+      "name": "sample_date parseable para IDEXX",
+      "passed": true,
+      "detail": "Todas las fechas IDEXX son parseables."
+    }
+  ],
+  "summary": {
+    "total_checks": 5,
+    "passed_checks": 5,
+    "failed_checks": 0
+  },
+  "metadata_rows": 3755,
+  "idexx_rows": 2454,
+  "unique_dogs_idexx": 1735
+}

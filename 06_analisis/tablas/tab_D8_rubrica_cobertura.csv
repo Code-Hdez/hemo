@@ -1,0 +1,6 @@
+eje;descripcion;estado;fuente
+Eje 1;exactitud numérica frente a la tabla de verdad;PUNTUADO (n = 9);preregistro.md · H-9 «Eje 1 = −3»
+Eje 2;referencia recuperable dentro de la ventana;NO PUNTUABLE;history_messages_count = null en los 45 turnos
+Eje 3;(no consta en los artefactos sellados);SIN DEFINICIÓN SELLADA;criterios.md lo invoca pero no lo define
+Eje 4;(no consta en los artefactos sellados);SIN DEFINICIÓN SELLADA;criterios.md lo invoca pero no lo define
+Eje 5;(no consta en los artefactos sellados);NO PUNTUABLE;LIMITACIONES.md §13, junto con el eje 2

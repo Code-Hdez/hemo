@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="416.16pt" height="254.958281pt" viewBox="0 0 416.16 254.958281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:46.965462</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 254.958281 
+L 416.16 254.958281 
+L 416.16 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 56.703512 
+L 29.07802 56.703512 
+L 29.07802 72.056127 
+L 7.2 72.056127 
+z
+" clip-path="url(#p1642db7868)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 7.2 78.026589 
+L 29.07802 78.026589 
+L 29.07802 93.379204 
+L 7.2 93.379204 
+z
+" clip-path="url(#p1642db7868)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 7.2 99.349666 
+L 29.07802 99.349666 
+L 29.07802 114.702281 
+L 7.2 114.702281 
+z
+" clip-path="url(#p1642db7868)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 7.2 120.672743 
+L 29.07802 120.672743 
+L 29.07802 136.025358 
+L 7.2 136.025358 
+z
+" clip-path="url(#p1642db7868)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 7.2 141.99582 
+L 29.07802 141.99582 
+L 29.07802 157.348435 
+L 7.2 157.348435 
+z
+" clip-path="url(#p1642db7868)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 7.2 163.318897 
+L 29.07802 163.318897 
+L 29.07802 178.671512 
+L 7.2 178.671512 
+z
+" clip-path="url(#p1642db7868)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 7.2 184.641974 
+L 29.07802 184.641974 
+L 29.07802 199.994589 
+L 7.2 199.994589 
+z
+" clip-path="url(#p1642db7868)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 7.2 205.96505 
+L 29.07802 205.96505 
+L 29.07802 221.317666 
+L 7.2 221.317666 
+z
+" clip-path="url(#p1642db7868)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 7.2 227.288127 
+L 29.07802 227.288127 
+L 29.07802 242.640743 
+L 7.2 242.640743 
+z
+" clip-path="url(#p1642db7868)" style="fill: #0ca30c"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="66.302085" transform="rotate(-0 37.033663 66.302085)">HEMO-01</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="66.198453" transform="rotate(-0 86.756436 66.198453)">esperado  RBC, HGB, HCT, RDW, NEU</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="406.971089" y="66.198179" transform="rotate(-0 406.971089 66.198179)">SIN RESPUESTA</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="87.625162" transform="rotate(-0 37.033663 87.625162)">HEMO-02</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="87.521529" transform="rotate(-0 86.756436 87.521529)">esperado  15.23</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="406.971089" y="87.521256" transform="rotate(-0 406.971089 87.521256)">CONTIENE</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="108.948239" transform="rotate(-0 37.033663 108.948239)">HEMO-04</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="108.844606" transform="rotate(-0 86.756436 108.844606)">esperado  5.5, 16.9</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #ec835a" x="406.971089" y="108.844333" transform="rotate(-0 406.971089 108.844333)">NO CONTIENE</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="130.271316" transform="rotate(-0 37.033663 130.271316)">HEMO-06</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="130.167683" transform="rotate(-0 86.756436 130.167683)">esperado  8.93</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="406.971089" y="130.16741" transform="rotate(-0 406.971089 130.16741)">CONTIENE</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="151.594393" transform="rotate(-0 37.033663 151.594393)">HEMO-08</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="151.49076" transform="rotate(-0 86.756436 151.49076)">esperado  x10⁶/µL</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #ec835a" x="406.971089" y="151.490487" transform="rotate(-0 406.971089 151.490487)">NO CONTIENE</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="172.91747" transform="rotate(-0 37.033663 172.91747)">HEMO-10</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="172.813837" transform="rotate(-0 86.756436 172.813837)">esperado  63.6</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="406.971089" y="172.813564" transform="rotate(-0 406.971089 172.813564)">CONTIENE</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="194.240547" transform="rotate(-0 37.033663 194.240547)">HEMO-13</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="194.136914" transform="rotate(-0 86.756436 194.136914)">esperado  2025-12-18</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="406.971089" y="194.136641" transform="rotate(-0 406.971089 194.136641)">CONTIENE</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="215.563624" transform="rotate(-0 37.033663 215.563624)">HIST-01</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="215.459991" transform="rotate(-0 86.756436 215.459991)">esperado  2</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="406.971089" y="215.459718" transform="rotate(-0 406.971089 215.459718)">CONTIENE</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="37.033663" y="236.886701" transform="rotate(-0 37.033663 236.886701)">HIST-11</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="86.756436" y="236.783068" transform="rotate(-0 86.756436 236.783068)">esperado  2025-12-17, 2025-12-18</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="406.971089" y="236.782794" transform="rotate(-0 406.971089 236.782794)">CONTIENE</text>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="37.725974" transform="rotate(-0 7.2 37.725974)">6 contienen el valor · 2 no lo contienen · 1 sin respuesta</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.998281" transform="rotate(-0 7.2 15.998281)">Verificación mecánica contra la tabla de verdad sellada</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1642db7868">
+   <rect x="7.2" y="25.998281" width="401.76" height="221.76"/>
+  </clipPath>
+ </defs>
+</svg>

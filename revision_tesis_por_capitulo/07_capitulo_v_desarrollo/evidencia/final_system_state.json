@@ -1,0 +1,30 @@
+{
+  "version": "4.0.0",
+  "status": "READY_FOR_PRODUCTION_WITH_LIMITATIONS",
+  "model_file": "models/best_model_v4.pkl",
+  "runtime_model_file": "models/best_model_v2.pkl",
+  "runtime_thresholds_file": "data/processed/decision_thresholds_v2.json",
+  "threshold_selection": "v4_runtime_retained",
+  "n_official_labels": 7,
+  "test_metrics": {
+    "prauc_macro": 0.9529235354039882,
+    "brier_macro": 0.02981375453860632,
+    "f1_macro": 0.8726739179168546,
+    "recall_macro": 0.9205417720294601,
+    "tp": 585,
+    "fp": 54,
+    "fn": 49,
+    "tn": 1895
+  },
+  "rare_label_policy": {
+    "label": "PATRON_ANEMIA_REGENERATIVA",
+    "status": "exploratory_low_support",
+    "n_positive_test": 6,
+    "threshold_adjusted": false
+  },
+  "limitations": [
+    "Las 1213 etiquetas MYTHIC se derivan de flags y proxies, no de anotación clínica independiente.",
+    "PATRON_ANEMIA_REGENERATIVA es exploratoria: 6 positivos en test y 0 positivos MYTHIC nuevos.",
+    "POLICITEMIA y HEMOLISIS_MCHC tienen riesgo de circularidad por HCT y MCHC."
+  ]
+}

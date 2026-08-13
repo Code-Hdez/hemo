@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hemovet.app/contracts/gpu-runtime-release-v1.schema.json",
+  "title": "HemoVet GPU runtime release projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_contract",
+    "release_id",
+    "revision_state",
+    "apply_on",
+    "update_while_running",
+    "runtime",
+    "startup",
+    "model"
+  ],
+  "properties": {
+    "schema_version": {"const": "hemovet.gpu-runtime-release/v1"},
+    "source_contract": {"const": "hemovet.release/v1"},
+    "release_id": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "revision_state": {"const": "pending_boot_validation"},
+    "apply_on": {"const": "next_boot"},
+    "update_while_running": {"const": false},
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "digest"],
+      "properties": {
+        "reference": {
+          "type": "string",
+          "pattern": "^us-central1-docker\\.pkg\\.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/ollama-runtime@sha256:[0-9a-f]{64}$"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "startup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_version", "bundle_digest"],
+      "properties": {
+        "contract_version": {"const": "hemovet.gpu-startup/v1"},
+        "bundle_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "digest", "quantization"],
+      "properties": {
+        "name": {"const": "qwen3:4b-instruct-2507-q4_K_M"},
+        "digest": {
+          "const": "sha256:0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+        },
+        "quantization": {"const": "Q4_K_M"}
+      }
+    }
+  }
+}

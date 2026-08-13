@@ -1,0 +1,45 @@
+{
+  "nb06_version": "1.0.0",
+  "dap_n_records": 1301,
+  "features_imputed_dap": [
+    "PDW"
+  ],
+  "domain_shift_severe": [
+    "Monocytes",
+    "RDW"
+  ],
+  "domain_shift_moderate": [
+    "WBC",
+    "Neutrophils",
+    "Platelets",
+    "HCT",
+    "MCHC",
+    "MPV",
+    "MCV"
+  ],
+  "proxy_regen_n": 2,
+  "proxy_no_regen_n": 7,
+  "activation_rates_dap": {
+    "QC_REQUIERE_FROTIS": 0.2851652574942352,
+    "PATRON_INFLAMATORIO": 0.017678708685626442,
+    "PATRON_LEUCOGRAMA_ESTRES": 0.191391237509608,
+    "PATRON_ANEMIA_NO_REGENERATIVA": 0.006149116064565719,
+    "PATRON_HEMOLISIS_MCHC": 0.018447348193697154,
+    "PATRON_POLICITEMIA": 0.021521906225980016,
+    "PATRON_ANEMIA_REGENERATIVA": 0.0007686395080707148
+  },
+  "activation_rates_idexx": {
+    "QC_REQUIERE_FROTIS": 0.3685636856368564,
+    "PATRON_INFLAMATORIO": 0.5365853658536586,
+    "PATRON_LEUCOGRAMA_ESTRES": 0.46612466124661245,
+    "PATRON_ANEMIA_NO_REGENERATIVA": 0.11382113821138211,
+    "PATRON_HEMOLISIS_MCHC": 0.13008130081300814,
+    "PATRON_POLICITEMIA": 0.08672086720867209
+  },
+  "limitations": [
+    "Sin labels DAP -- no hay F1 ni PR-AUC para etiquetas del modelo",
+    "PDW imputado con mediana train en todo el DAP",
+    "sample_date anonimizado -- no hay analisis temporal exacto",
+    "Poblacion DAP (sana, EE.UU.) != Poblacion IDEXX (clinica, RD)"
+  ]
+}

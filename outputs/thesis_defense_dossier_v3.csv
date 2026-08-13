@@ -1,0 +1,9 @@
+claim_id,claim_text,evidence_file,evidence_locator,evidence_value,evidence_sha256,verified_at
+CLM-V3-001,El runtime mantiene trazabilidad de version de modelo.,models/model_metadata_v2.json,version,2.0.0,1aa2b18acf2a36b2d8843216145b12c41231ea928ab4d753c821a08e796f586a,2026-04-12T04:38:57.929897+00:00
+CLM-V3-002,La politica oficial de etiquetas esta congelada y versionada.,data/processed/final_label_policy.json,version,1.1.0,9d60e0f6a7d0355dc6ebaaef0698babdc0e953cfbd4fcfd6ffcdf19a0d204546,2026-04-12T04:38:57.929897+00:00
+CLM-V3-003,Los thresholds se seleccionaron sobre validation.,data/processed/decision_thresholds_v2.json,source_split,val,da6be9da2ae88170d2162b62973aa6ca49a61fc61a1b653d750af1646527f2e0,2026-04-12T04:38:57.929897+00:00
+CLM-V3-004,Gate de feature parity permanece operativo.,outputs/gate_feature_parity_v2.json,status,pass,15b6fd1708c91b5b2bb15118e693c9d7d257ec1f98b502115a150fdefe02cd98,2026-04-12T04:38:57.929897+00:00
+CLM-V3-005,Gate de leakage audit permanece operativo.,outputs/gate_leakage_audit_v2.json,status,pass,52e74e4ffaee3831a3ef4d95824171e6613d29554dab9f5a916ee49b69364184,2026-04-12T04:38:57.929897+00:00
+CLM-V3-006,Integridad de manifiesto de artefactos verificada.,outputs/gate_manifest_integrity_v2.json,status,pass,b55e81ba83df8d90978f2e1f7f101bba89ab55ee902bf4f3394843f6aff607e3,2026-04-12T04:38:57.929897+00:00
+CLM-V3-007,Policy freeze v3 documentado con hash.,data/processed/policy_freeze_v3.json,version,3.0.0,f16a2989f8e79ebf32e4de50b67fb363e0d03aedcd19f91930b197710558b987,2026-04-12T04:38:57.929897+00:00
+CLM-V3-008,Surveillance report v3 generado con estado operativo.,outputs/population_surveillance_report_v3.json,status,warn,ea82aef3e017ec52b5a0238f4534b72436f8eb5cc8de0b60cca696f34c92b846,2026-04-12T04:38:57.929897+00:00

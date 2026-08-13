@@ -1,0 +1,10 @@
+id;turno;desenlace;latencia_s;caracteres;mensajes_en_ventana
+GENERAL-13;13;util;10.9;242;
+GENERAL-14;14;util;8.1;86;
+GENERAL-15;15;util;11.1;445;
+HEMO-13;13;util;14.4;307;
+HEMO-14;14;util;31.2;507;
+HEMO-15;15;util;17.3;421;
+HIST-13;13;util;59.4;538;
+HIST-14;14;util;16.5;415;
+HIST-15;15;util;24.2;444;

@@ -1,0 +1,17 @@
+flowchart TB
+  USER["Usuario\n(navegador web)"] --> WEB["Servidor web\n(proxy inverso)"]
+
+  subgraph PROD["Servidor principal de HemoVet"]
+    WEB --> FE["Interfaz web\n(frontend)"]
+    WEB --> BE["Servidor de la aplicación\n(backend)"]
+    FE -.-> BE
+    BE --> PG[("Base de datos\n(persistencia)")]
+    BE --> CHROMA[("Base de conocimiento\nvectorial (RAG)")]
+    BE --> OLLAMA["Modelo de lenguaje\n(asistente conversacional)"]
+  end
+
+  subgraph GPU["Servidor con aceleración gráfica\n(opcional, apagado hoy)"]
+    OLLAMA_GPU["Modelo de lenguaje\ncon aceleración por GPU"]
+  end
+
+  BE -.->|"solo si se activa\neste servidor"| OLLAMA_GPU

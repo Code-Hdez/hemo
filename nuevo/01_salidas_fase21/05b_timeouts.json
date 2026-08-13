@@ -1,0 +1,109 @@
+{
+ "schema_version": "hemovet.fase22.timeouts/v1",
+ "generado_en": "2026-08-08T23:52:47Z",
+ "commit": "c187ed4a976368dfff3b9337e7640d258278e609",
+ "rama": "fix/last-resort-policy-rule-id",
+ "pregunta": "¿parte de los 17 fallos terminales son timeouts en vez de fallos de contrato?",
+ "veredicto": "NO. Los 17 son fallos de contrato. La prediccion 17/70 -> 4/70 se mantiene SIN corregir y el Bloque 3 no esta contaminado.",
+ "evidencia": {
+  "duracion_por_llamada": {
+   "valor": {
+    "min": 18.2,
+    "p50": 32.3,
+    "p90": 59.3,
+    "max": 107.5
+   },
+   "unidad": "s",
+   "estado": "MEDIDA",
+   "instrumento": "llm_chat.perf step=llm_stream campo llm_duration_ms (log crudo 7-ago); validado contra 5 cifras conocidas del registro",
+   "n": 138
+  },
+  "llamadas_sobre_120s": {
+   "valor": 0,
+   "unidad": "llamadas de 138",
+   "estado": "MEDIDA",
+   "instrumento": "llm_chat.perf step=llm_stream campo llm_duration_ms (log crudo 7-ago); validado contra 5 cifras conocidas del registro",
+   "n": 138
+  },
+  "llamadas_sobre_110s": {
+   "valor": 0,
+   "unidad": "llamadas de 138",
+   "estado": "MEDIDA",
+   "instrumento": "llm_chat.perf step=llm_stream campo llm_duration_ms (log crudo 7-ago); validado contra 5 cifras conocidas del registro",
+   "n": 138
+  },
+  "errores_de_proveedor": {
+   "valor": 0,
+   "unidad": "eventos de cualquier tipo de timeout/indisponibilidad",
+   "estado": "MEDIDA",
+   "instrumento": "conteo de patrones en el log crudo",
+   "n": 1
+  },
+  "codigos_terminales": {
+   "valor": {
+    "generation_repair_failed": 17
+   },
+   "unidad": "eventos llm_chat.terminal_error",
+   "estado": "MEDIDA",
+   "instrumento": "llm_chat.terminal_error",
+   "n": 17
+  },
+  "duracion_de_turnos_fallidos": {
+   "valor": {
+    "min": 68.5,
+    "mediana": 98.8,
+    "max": 212.3
+   },
+   "unidad": "s",
+   "estado": "MEDIDA",
+   "instrumento": "bateria_COMPLETA_2026-08-07.json: latencia.total_s + cliente.codigo_error",
+   "n": 17
+  }
+ },
+ "timeouts_efectivos": {
+  "OLLAMA_TIMEOUT_SECONDS": {
+   "valor": 120,
+   "unidad": "s POR LLAMADA",
+   "estado": "MEDIDA",
+   "instrumento": "docker exec printenv del contenedor",
+   "n": 1
+  },
+  "CHAT_QUEUE_TIMEOUT_SECONDS": {
+   "valor": 60,
+   "unidad": "s para adquirir el semaforo",
+   "estado": "MEDIDA",
+   "instrumento": "idem",
+   "n": 1
+  },
+  "CHAT_TOTAL_TIMEOUT_SECONDS": {
+   "valor": 240,
+   "unidad": "s POR TURNO",
+   "estado": "MEDIDA",
+   "instrumento": "idem",
+   "n": 1
+  }
+ },
+ "correccion_al_plan": "el plan decia 'un turno de 3 llamadas ronda 94 s y uno de 4 los 126 s, no estan lejos de 120'. Mezcla dos relojes: esos totales son POR TURNO y OLLAMA_TIMEOUT_SECONDS es POR LLAMADA. Un turno de 126 s con 4 llamadas son 4 relojes de ~30 s. El reloj del turno es CHAT_TOTAL_TIMEOUT_SECONDS=240.",
+ "riesgo_abierto": {
+  "margen_por_llamada": {
+   "valor": 12.5,
+   "unidad": "s entre el maximo observado (107,5) y el limite (120)",
+   "estado": "MEDIDA",
+   "instrumento": "llm_chat.perf step=llm_stream campo llm_duration_ms (log crudo 7-ago); validado contra 5 cifras conocidas del registro",
+   "n": 138
+  },
+  "margen_por_turno": {
+   "valor": 27.7,
+   "unidad": "s entre el maximo observado (212,3) y el limite (240)",
+   "estado": "MEDIDA",
+   "instrumento": "bateria_COMPLETA_2026-08-07.json: latencia.total_s + cliente.codigo_error",
+   "n": 17
+  },
+  "aviso": "hoy no hay timeouts pero el sistema esta cerca. Cualquier cosa que alargue una llamada empieza a producirlos. En particular: NO subir num_predict — el techo real ya es 1280 y la mediana de salida 349; subirlo empujaria llamadas sobre 120 s y abriria un modo de fallo que hoy no existe."
+ },
+ "que_contradijo_este_trabajo": [
+  "La premisa del plan de que los turnos largos estaban cerca de OLLAMA_TIMEOUT_SECONDS: confunde el reloj por turno con el reloj por llamada.",
+  "La sospecha de que parte de los 17 fueran timeouts: cero de tres vias independientes lo respaldan."
+ ],
+ "consecuencia": "DESBLOQUEADO el Bloque 3. Siguiente: paridad automatica (buscar la septima divergencia)."
+}

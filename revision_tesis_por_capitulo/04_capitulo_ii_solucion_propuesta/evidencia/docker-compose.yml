@@ -1,0 +1,231 @@
+# docker-compose.yml -- HemoVet
+#
+# Servicios:
+#   db       - PostgreSQL 16 (persistencia de analisis)
+#   ollama   - Runtime LLM local para el chat RAG
+#   backend  - FastAPI + modelo ML (uvicorn)
+#   frontend - React build servido por nginx (proxy /api/v1/ al backend)
+#
+# Uso:
+#   cp .env.example .env        # ajustar credenciales si se desea
+#   docker compose up --build
+
+services:
+
+  # --- Ollama LLM interno ---
+  # Mantiene el chat RAG independiente de la conectividad host -> Docker.
+  # Si OLLAMA_MODELS_DIR apunta a una carpeta local con modelos descargados
+  # (por ejemplo /home/usuario/.ollama), el servicio los reutiliza.
+  ollama:
+    image: ollama/ollama:0.30.10
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: "0.0.0.0:11434"
+      NVIDIA_VISIBLE_DEVICES: "${NVIDIA_VISIBLE_DEVICES:-all}"
+      NVIDIA_DRIVER_CAPABILITIES: "${NVIDIA_DRIVER_CAPABILITIES:-compute,utility}"
+    volumes:
+      - ${OLLAMA_MODELS_DIR:-ollama-data}:/root/.ollama
+    command: ["serve"]
+    healthcheck:
+      test: ["CMD-SHELL", "OLLAMA_HOST=http://127.0.0.1:11434 ollama list >/dev/null"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+
+  # --- Preparación idempotente del modelo LLM ---
+  # En local no bloquea el arranque si OLLAMA_AUTO_PULL=0.
+  # En producción se debe usar OLLAMA_AUTO_PULL=1 para exigir el modelo.
+  ollama_setup:
+    image: ollama/ollama:0.30.10
+    restart: "no"
+    environment:
+      OLLAMA_HOST: "http://ollama:11434"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-qwen3:4b}"
+      OLLAMA_AUTO_PULL: "0"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        if [ "$${OLLAMA_AUTO_PULL}" != "1" ]; then
+          echo "Skipping Ollama model bootstrap because OLLAMA_AUTO_PULL=$${OLLAMA_AUTO_PULL}"
+          exit 0
+        fi
+        if [ "$${OLLAMA_AUTO_PULL}" = "1" ]; then
+          ollama show "$${OLLAMA_MODEL}" >/dev/null 2>&1 || ollama pull "$${OLLAMA_MODEL}"
+        fi
+        ollama show "$${OLLAMA_MODEL}" >/dev/null
+
+  # --- ChromaDB vector store interno ---
+  chroma:
+    image: chromadb/chroma:1.5.9
+    restart: unless-stopped
+    environment:
+      IS_PERSISTENT: "TRUE"
+      PERSIST_DIRECTORY: "/data"
+    volumes:
+      - chroma-data:/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8000; printf \"GET /api/v2/heartbeat HTTP/1.1\\r\\nHost: 127.0.0.1\\r\\nConnection: close\\r\\n\\r\\n\" >&3; IFS= read -r status <&3; [[ \"$$status\" == *\" 200 \"* ]]'",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  # --- Ingesta RAG inicial ---
+  # Se ejecuta una vez al levantar el stack para indexar el corpus curado.
+  rag_ingest:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        INSTALL_LOCAL_ML: "${INSTALL_LOCAL_ML:-1}"
+        INSTALL_LOCAL_EXTRACTION: "${INSTALL_LOCAL_EXTRACTION:-1}"
+    restart: "no"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-hemovet}:${POSTGRES_PASSWORD:-hemovet_dev_2026}@db:5432/${POSTGRES_DB:-hemovet}"
+      SECRET_KEY: "${SECRET_KEY:-dev-secret-key-change-me-please-1234567890}"
+      HEMOVET_PROJECT_ROOT: "/app"
+      HEMOVET_ENABLE_LOCAL_ML: "${HEMOVET_ENABLE_LOCAL_ML:-1}"
+      HEMOVET_ENABLE_LOCAL_EXTRACTION: "${HEMOVET_ENABLE_LOCAL_EXTRACTION:-1}"
+      OLLAMA_BASE_URL: "http://ollama:11434/"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-qwen3:4b}"
+      CHROMA_HOST: "chroma"
+      CHROMA_PORT: "8000"
+      CHROMA_SSL: "0"
+      RAG_SOURCE_DIR: "knowledge_base/raw_md"
+      RAG_COLLECTION_NAME: "${RAG_COLLECTION_NAME:-hemovet_canine_hematology_v1}"
+      RAG_ALLOW_TEST_DOCUMENTS: "${RAG_ALLOW_TEST_DOCUMENTS:-0}"
+    volumes:
+      - ./models:/app/models:ro
+      - ./data/processed:/app/data/processed:ro
+      - ./outputs:/app/outputs:ro
+      - ./knowledge_base:/app/knowledge_base:ro
+      - embedding-cache:/app/.cache/fastembed
+    depends_on:
+      db:
+        condition: service_healthy
+      chroma:
+        condition: service_healthy
+    command:
+      - python
+      - scripts/ingest_rag.py
+      - index
+      - --prune
+
+  # --- Base de datos ---
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-hemovet}"
+      POSTGRES_USER: "${POSTGRES_USER:-hemovet}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-hemovet_dev_2026}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # --- Backend FastAPI ---
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        INSTALL_LOCAL_ML: "${INSTALL_LOCAL_ML:-1}"
+        INSTALL_LOCAL_EXTRACTION: "${INSTALL_LOCAL_EXTRACTION:-1}"
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-hemovet}:${POSTGRES_PASSWORD:-hemovet_dev_2026}@db:5432/${POSTGRES_DB:-hemovet}"
+      SECRET_KEY: "${SECRET_KEY:-dev-secret-key-change-me-please-1234567890}"
+      CORS_ORIGINS: "${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173}"
+      HEMOVET_ENABLE_LOCAL_ML: "${HEMOVET_ENABLE_LOCAL_ML:-1}"
+      HEMOVET_ENABLE_LOCAL_EXTRACTION: "${HEMOVET_ENABLE_LOCAL_EXTRACTION:-1}"
+      OLLAMA_BASE_URL: "http://ollama:11434/"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-qwen3:4b}"
+      OLLAMA_TEMPERATURE: "${OLLAMA_TEMPERATURE:-0.1}"
+      OLLAMA_MAX_RETRIES: "${OLLAMA_MAX_RETRIES:-1}"
+      CHROMA_HOST: "chroma"
+      CHROMA_PORT: "8000"
+      CHROMA_SSL: "0"
+      RAG_SOURCE_DIR: "knowledge_base/raw_md"
+      RAG_COLLECTION_NAME: "${RAG_COLLECTION_NAME:-hemovet_canine_hematology_v1}"
+      RAG_ALLOW_TEST_DOCUMENTS: "${RAG_ALLOW_TEST_DOCUMENTS:-0}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+      GEMINI_MODEL: "${GEMINI_MODEL:-gemini-3-flash-preview}"
+      GEMINI_TIMEOUT_SECONDS: "${GEMINI_TIMEOUT_SECONDS:-90}"
+      GEMINI_FILE_POLL_SECONDS: "${GEMINI_FILE_POLL_SECONDS:-2}"
+      GEMINI_FILE_POLL_MAX_ATTEMPTS: "${GEMINI_FILE_POLL_MAX_ATTEMPTS:-30}"
+      MAP_MIN_ZONE_COUNT: "${MAP_MIN_ZONE_COUNT:-3}"
+      MAP_MIN_DISTINCT_PETS: "${MAP_MIN_DISTINCT_PETS:-3}"
+      MAP_PUBLIC_GRID_DEGREES: "${MAP_PUBLIC_GRID_DEGREES:-0.03}"
+      MAP_AGGREGATION_GRID_DEGREES: "${MAP_AGGREGATION_GRID_DEGREES:-0.02}"
+      PET_MEDIA_DIR: "/app/media"
+      PET_PHOTO_MAX_BYTES: "${PET_PHOTO_MAX_BYTES:-5242880}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models:ro
+      - ./data/processed:/app/data/processed:ro
+      - ./outputs:/app/outputs:ro
+      - ./knowledge_base:/app/knowledge_base:ro
+      - embedding-cache:/app/.cache/fastembed
+      - pet-media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      rag_ingest:
+        condition: service_completed_successfully
+      ollama_setup:
+        condition: service_completed_successfully
+      chroma:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import json, sys, urllib.request; data=json.load(urllib.request.urlopen('http://127.0.0.1:8000/health/operational', timeout=5)); sys.exit(0 if data.get('status') == 'ok' else 1)\""]
+      interval: 15s
+      timeout: 8s
+      retries: 10
+      start_period: 30s
+
+  # --- Frontend nginx ---
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend_4/Dockerfile
+      args:
+        VITE_API_BASE_URL: "${VITE_API_BASE_URL:-/api/v1}"
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  ollama-data:
+  chroma-data:
+  embedding-cache:
+  pet-media:

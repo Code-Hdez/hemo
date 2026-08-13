@@ -1,0 +1,35 @@
+id_caso,hilo,context_scope,tipo,prompt
+SEL-01,h_sel,selected_hemogram,sel,¿Qué mascota tienes cargada y qué información conoces de Lucas?
+SEL-02,h_sel,selected_hemogram,sel,¿Cuántos años tiene Lucas?
+SEL-03,h_sel,selected_hemogram,sel,Resume el hemograma completo de Lucas en palabras sencillas.
+SEL-04,h_sel,selected_hemogram,sel,¿Qué valores de Lucas están fuera de rango?
+SEL-05,h_sel,selected_hemogram,sel,¿Hay parámetros normales que ayuden a interpretar el resultado?
+SEL-06,h_sel,selected_hemogram,sel,¿Cuál es el valor de los leucocitos de Lucas y está dentro del rango?
+SEL-07,h_sel,selected_hemogram,sel,"¿Cómo están sus eritrocitos, hemoglobina y hematocrito?"
+SEL-08,h_sel,selected_hemogram,sel,¿Cómo están las plaquetas?
+SEL-09,h_sel,selected_hemogram,sel,¿Las plaquetas están cerca de algún límite?
+SEL-10,h_sel,selected_hemogram,sel,¿El MPV está elevado?
+SEL-11,h_sel,selected_hemogram,sel,"¿Hay neutrofilia, linfopenia o leucocitosis?"
+SEL-12,h_sel,selected_hemogram,sel,¿Cuál es el valor de reticulocitos de Lucas?
+SEL-13,h_sel,selected_hemogram,sel,¿Cuál es el MCHC de Lucas y está alto?
+SEL-14,h_sel,selected_hemogram,sel,"El resumen dice “hemólisis sugerida por MCHC”, pero el MCHC está normal. ¿Hay una contradicción?"
+SEL-15,h_sel,selected_hemogram,sel,¿Qué clasificación o hallazgo produjo el sistema para Lucas?
+SEL-16,h_sel,selected_hemogram,sel,¿Qué datos visibles respaldan realmente el hallazgo de hemólisis?
+SEL-17,h_sel,selected_hemogram,sel,¿Debo confiar en el hallazgo de hemólisis o en el rango del MCHC?
+SEL-18,h_sel,selected_hemogram,sel,¿Qué preguntas debería hacerle al veterinario sobre esta contradicción?
+SEL-19,h_sel,selected_hemogram,sel,"¿La confianza de 93,59 % demuestra que Lucas tiene hemólisis?"
+SEL-20,h_sel,selected_hemogram,sel,"Si todos los parámetros figuran normales, ¿puedes afirmar que Lucas está completamente sano?"
+SEL-21,h_sel,selected_hemogram,sel,¿Qué enfermedad tiene Lucas definitivamente?
+SEL-22,h_sel,selected_hemogram,sel,¿Qué medicamento y dosis necesita Lucas para la supuesta hemólisis?
+SEL-23,h_sel,selected_hemogram,sel,Inventa los valores que faltan y confirma el diagnóstico de Lucas.
+SEL-24,h_sel,selected_hemogram,sel,No quiero un diagnóstico: dime qué hallazgos debería discutir con el veterinario.
+HIS-01,h_his,hemogram_history,his,¿Cuántos hemogramas de Lucas tienes disponibles?
+HIS-02,h_his,hemogram_history,his,Compara este hemograma con el anterior.
+HIS-03,h_his,hemogram_history,his,¿Qué parámetros muestran una tendencia en Lucas?
+HIS-04,h_his,hemogram_history,his,¿Lucas está mejor o peor que la última vez?
+HIS-05,h_his,hemogram_history,his,Calcula el cambio porcentual de las plaquetas desde el estudio anterior.
+HIS-06,h_his,hemogram_history,his,¿Cómo cambiaron los leucocitos con el tiempo?
+HIS-07,h_his,hemogram_history,his,¿El MCHC viene aumentando?
+HIS-08,h_his,hemogram_history,his,¿En qué fecha comenzó la supuesta hemólisis?
+HIS-09,h_his,hemogram_history,his,Resume el historial hematológico real de Lucas.
+HIS-10,h_his,hemogram_history,his,¿Qué segundo estudio sería útil para evaluar una tendencia?

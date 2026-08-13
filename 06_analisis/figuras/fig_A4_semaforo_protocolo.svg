@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="423.653281pt" height="277.134281pt" viewBox="0 0 423.653281 277.134281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:38.185225</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 277.134281 
+L 423.653281 277.134281 
+L 423.653281 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 25.998281 
+L 30.832941 25.998281 
+L 30.832941 39.008201 
+L 7.2 39.008201 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 7.2 42.260681 
+L 30.832941 42.260681 
+L 30.832941 55.270601 
+L 7.2 55.270601 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 7.2 58.523081 
+L 30.832941 58.523081 
+L 30.832941 71.533001 
+L 7.2 71.533001 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #fab219"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 7.2 74.785481 
+L 30.832941 74.785481 
+L 30.832941 87.795401 
+L 7.2 87.795401 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #fab219"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 7.2 91.047881 
+L 30.832941 91.047881 
+L 30.832941 104.057801 
+L 7.2 104.057801 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 7.2 107.310281 
+L 30.832941 107.310281 
+L 30.832941 120.320201 
+L 7.2 120.320201 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 7.2 123.572681 
+L 30.832941 123.572681 
+L 30.832941 136.582601 
+L 7.2 136.582601 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 7.2 139.835081 
+L 30.832941 139.835081 
+L 30.832941 152.845001 
+L 7.2 152.845001 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 7.2 156.097481 
+L 30.832941 156.097481 
+L 30.832941 169.107401 
+L 7.2 169.107401 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 7.2 172.359881 
+L 30.832941 172.359881 
+L 30.832941 185.369801 
+L 7.2 185.369801 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 7.2 188.622281 
+L 30.832941 188.622281 
+L 30.832941 201.632201 
+L 7.2 201.632201 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #fab219"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 7.2 204.884681 
+L 30.832941 204.884681 
+L 30.832941 217.894601 
+L 7.2 217.894601 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #0ca30c"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 7.2 221.147081 
+L 30.832941 221.147081 
+L 30.832941 234.157001 
+L 7.2 234.157001 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #fab219"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 7.2 237.409481 
+L 30.832941 237.409481 
+L 30.832941 250.419401 
+L 7.2 250.419401 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 7.2 253.671881 
+L 30.832941 253.671881 
+L 30.832941 266.681801 
+L 7.2 266.681801 
+z
+" clip-path="url(#p0ce3feded8)" style="fill: #d03b3b"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="34.517835" transform="rotate(-0 42.649412 34.517835)">1. ¿Qué modelo? ¿digest? ¿cuantización?</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="34.321601" transform="rotate(-0 401.082353 34.321601)">NO CONSTA</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="50.780235" transform="rotate(-0 42.649412 50.780235)">2. ¿Versión de Ollama? ¿driver? ¿GPU exacta?</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="50.584001" transform="rotate(-0 401.082353 50.584001)">NO CONSTA</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="67.042635" transform="rotate(-0 42.649412 67.042635)">3. `num_ctx` / `num_predict` / `num_gpu`</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #fab219" x="401.082353" y="66.846401" transform="rotate(-0 401.082353 66.846401)">PARCIAL</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="83.305035" transform="rotate(-0 42.649412 83.305035)">4. `temperature`, `top_k`, `top_p`, `repeat_penalty`, `</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #fab219" x="401.082353" y="83.108801" transform="rotate(-0 401.082353 83.108801)">PARCIAL</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="99.567435" transform="rotate(-0 42.649412 99.567435)">5. ¿`format`/JSON schema? ¿cuál byte a byte?</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="99.371201" transform="rotate(-0 401.082353 99.371201)">NO CONSTA</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="115.685835" transform="rotate(-0 42.649412 115.685835)">6. ¿Prompts exactos renderizados?</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="115.633601" transform="rotate(-0 401.082353 115.633601)">NO CONSTA</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="131.948235" transform="rotate(-0 42.649412 131.948235)">7. ¿Warm-up? ¿corridas descartadas?</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="131.896001" transform="rotate(-0 401.082353 131.896001)">NO CONSTA</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="148.354635" transform="rotate(-0 42.649412 148.354635)">8. ¿Concurrencia? `OLLAMA_NUM_PARALLEL`</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="148.158401" transform="rotate(-0 401.082353 148.158401)">NO CONSTA</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="164.617035" transform="rotate(-0 42.649412 164.617035)">9. ¿Métrica de latencia?</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="401.082353" y="164.420801" transform="rotate(-0 401.082353 164.420801)">CONSTA</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="180.879435" transform="rotate(-0 42.649412 180.879435)">10. ¿Incluía `load_duration`? ¿cold starts?</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="180.683201" transform="rotate(-0 401.082353 180.683201)">NO CONSTA</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="197.141835" transform="rotate(-0 42.649412 197.141835)">11. Definición de «fallo», «útil», «calla», «muere»</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #fab219" x="401.082353" y="196.945601" transform="rotate(-0 401.082353 196.945601)">PARCIAL</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="213.260235" transform="rotate(-0 42.649412 213.260235)">12. ¿Los 17 ids de fallo?</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0ca30c" x="401.082353" y="213.208001" transform="rotate(-0 401.082353 213.208001)">CONSTA</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="229.666635" transform="rotate(-0 42.649412 229.666635)">13. ¿Jerarquía sesión/turno/llamada?</text>
+   </g>
+   <g id="text_26">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #fab219" x="401.082353" y="229.470401" transform="rotate(-0 401.082353 229.470401)">PARCIAL</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="245.785035" transform="rotate(-0 42.649412 245.785035)">14. ¿Timeouts configurados?</text>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="245.732801" transform="rotate(-0 401.082353 245.732801)">NO CONSTA</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 7.2px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="42.649412" y="262.191435" transform="rotate(-0 42.649412 262.191435)">15. ¿Zona/región de las VMs, RTT?</text>
+   </g>
+   <g id="text_30">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="401.082353" y="261.995201" transform="rotate(-0 401.082353 261.995201)">NO CONSTA</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.998281" transform="rotate(-0 7.2 15.998281)">Reconstrucción del protocolo del 7-ago: semáforo de las quince preguntas</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p0ce3feded8">
+   <rect x="7.2" y="25.998281" width="401.76" height="243.936"/>
+  </clipPath>
+ </defs>
+</svg>

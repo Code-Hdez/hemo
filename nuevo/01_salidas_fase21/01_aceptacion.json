@@ -1,0 +1,135 @@
+{
+  "schema": "hemovet.fase22.aceptacion/v1",
+  "fecha_de_pre_registro": "2026-08-09",
+  "estado": "PRE-REGISTRADO. Ningun brazo medido.",
+  "advertencia": "Este fichero se emite ANTES de tener datos, a proposito. Pre-registrar es fijar el criterio y la prediccion cuando todavia no se pueden acomodar al resultado. Los cinco veredictos dicen NO_MEDIDO porque no se ha corrido ni un brazo. Rellenarlos con cifras hoy seria fabricar el entregable, que es exactamente el fallo que este proyecto lleva nueve veces persiguiendo.",
+  "criterio_pre_registrado": "Puerta de calibracion sobre 21f18fd8: >=14 de los 17 ids coinciden Y kappa >= 0,75, con el recuento en [10,24] como control secundario. Si la cuenta cuadra y los ids no, el aparato no sirve. || Por brazo: fallos terminales con el contador corregido (por cliente.codigo_error, NO por longitud cero); policy_rule_id_missing completo y truncado; taxonomia de cuatro clases con USR; latencia p50/p90; llamadas por turno; segundos de regeneracion medidos con reloj; metrica clinica por intencion de tratar y por protocolo; Fisher exacto de una cola con n=70 y n=62. || La bateria distingue un efecto GRANDE de NINGUNO, no uno mediano: un brazo que baje 17/70 a 11/70 es NO_CONCLUYENTE, no 'no funciona'. || Prediccion pre-registrada: fallos terminales 17/70 -> ~4/70; utilidad 39,7% -> 63%. Si sube mucho menos, se dice con la cifra.",
+  "sello_del_criterio_sha256_16": "797b4865e85a8332",
+  "regla_del_sello": "Quien complete este fichero recalcula sha256 del campo criterio_pre_registrado y comprueba que sigue dando 797b4865e85a8332. Si no coincide, el criterio se movio despues de ver los datos y el resultado no vale. El sello existe porque 'no muevas el criterio' es una intencion, y una intencion no es una comprobacion.",
+  "categorias_admitidas": {
+    "MEDIDO": "producido por un instrumento nombrado, sobre observaciones de esta corrida",
+    "DERIVADO": "calculado a partir de otra cifra; NO es MEDIDO",
+    "NO_DETERMINADO": "se intento medir y no se pudo; se dice por que",
+    "NO_MEDIDO": "no se intento; es el estado de los cinco brazos hoy"
+  },
+  "no_hay_quinta_categoria": true,
+  "brazos": [
+    {
+      "id": "M-1",
+      "rama": "fix/last-resort-policy-rule-id",
+      "commit": "c187ed4a",
+      "base": "21f18fd8",
+      "diff": "3 ficheros, +237 -4",
+      "que_arregla": "materializa la unica regla de politica autorizada, para que un claim de seguridad pueda citar un policy_rule_id que existe",
+      "hipotesis": "policy_rule_id_missing es el 76% de los fallos TERMINALES (y el 18% de los rechazos: poblaciones distintas). Si la regla existe, esos turnos dejan de morir.",
+      "senal_primaria": "fallos terminales por cliente.codigo_error",
+      "veredicto": "NO_MEDIDO",
+      "por_que": "el brazo no se ha corrido; no hay ni una observacion"
+    },
+    {
+      "id": "M-2",
+      "rama": "fix/unambiguous-fact-id",
+      "commit": "f72272dc",
+      "base": "21f18fd8",
+      "diff": "2 ficheros, +160",
+      "que_arregla": "hace inequivoco el fact_id de un hecho clinico",
+      "hipotesis": "parte de las reparaciones se disparan por hechos que el validador no puede casar",
+      "senal_primaria": "llamadas por turno y segundos de regeneracion",
+      "veredicto": "NO_MEDIDO",
+      "por_que": "el brazo no se ha corrido; no hay ni una observacion"
+    },
+    {
+      "id": "M-4",
+      "rama": "perf/envelope-field-aliases",
+      "commit": "019e2149",
+      "base": "21f18fd8",
+      "diff": "2 ficheros, +174 -8",
+      "que_arregla": "acepta los alias de campo que el modelo escribe de forma natural en el sobre",
+      "hipotesis": "sobres validos se rechazan por el nombre del campo, no por el contenido",
+      "senal_primaria": "llamadas por turno; latencia p50/p90",
+      "veredicto": "NO_MEDIDO",
+      "por_que": "el brazo no se ha corrido; no hay ni una observacion"
+    },
+    {
+      "id": "M-5",
+      "rama": "fix/repair-budget-after-truncation",
+      "commit": "048b3971",
+      "base": "21f18fd8",
+      "diff": "4 ficheros, +233 -4",
+      "que_arregla": "recalcula el presupuesto de reparacion despues de truncar",
+      "hipotesis": "la reparacion arranca con un presupuesto que ya no cabe y falla por eso",
+      "senal_primaria": "generation_repair_failed",
+      "veredicto": "NO_MEDIDO",
+      "por_que": "el brazo no se ha corrido; no hay ni una observacion"
+    },
+    {
+      "id": "combinada",
+      "rama": "fix/deterministic-support-fill",
+      "commit": "5517c431",
+      "base": "21f18fd8",
+      "diff": "4 ficheros, +548 -13",
+      "que_arregla": "M-1 + M-2 juntos, con relleno determinista del soporte desde hechos autorizados",
+      "hipotesis": "los efectos de M-1 y M-2 no son independientes; juntos deberian cubrir la mayoria de los 17 fallos terminales",
+      "senal_primaria": "fallos terminales y utilidad",
+      "veredicto": "NO_MEDIDO",
+      "por_que": "el brazo no se ha corrido; no hay ni una observacion"
+    }
+  ],
+  "aviso_sobre_la_combinada": "5517c431 es M-1+M-2, no los cuatro. Si 'la combinada' debe llevar tambien M-4 y M-5, esa rama NO existe todavia y hay que crearla antes de correr el quinto brazo.",
+  "linea_base_medida": {
+    "instrumento": "validacion_llm/resultados/bateria_latencias_2026-08-07.jsonl, 70 turnos, corrida del 7-ago contra produccion",
+    "como_se_que_funciona": "el servidor cuenta lo mismo: 39 completed + 14 refused + 17 failed = 70",
+    "fallos_terminales": "17/70",
+    "utilidad": "25/63 = 39,7%",
+    "silencio_util": "23/63 = 36,5% (M-10, sin escribir)",
+    "p50_s": 59.1,
+    "p90_s": 129.4,
+    "max_s": 212.3,
+    "correccion": "el p50 que se venia citando, 32,8 s, era la mediana de los turnos que NO repararon (34,8 s, n=36), una subpoblacion favorable. El honesto es 59,1 s sobre los 70: el usuario tambien espera cuando el turno falla, y espera mas (98,8 s de mediana en los 17 fallos). El motor es la reparacion: 34,8 s sin reparar contra 98,1 s reparando.",
+    "reparto_de_llamadas": "36/8/23/3 sobre 70 turnos = 133 llamadas (no 38/8/24/3 sobre 73: tres de esos grupos eran humo manual anterior a la bateria)"
+  },
+  "lo_que_falta_para_poder_rellenarlo": [
+    {
+      "paso": 4,
+      "que": "aparato local con Postgres, Chroma y los 17 parametros alineados",
+      "estado": "NO EXISTE",
+      "nota": "los brazos no pueden correr contra produccion: exigen desplegar cinco ramas distintas"
+    },
+    {
+      "paso": 4,
+      "que": "subir validacion_llm/ a hemovet-prod",
+      "estado": "bloqueado",
+      "nota": "el host no tiene checkout; el runbook (git pull + docker cp) no aplica, hay que scp"
+    },
+    {
+      "paso": 4,
+      "que": "17 casos general antes de sembrar, luego sembrar desde contexto_clinico",
+      "estado": "pendiente",
+      "trampa": "MPV y RETIC no estan en lab_values de ninguno de los dos estudios. No se inventan. verdad_terreno_ampliada.csv excluye SEL-10, SEL-12 y SEL-23, que es coherente; el 'MPV 12,14 fL' del CSV de casos es prosa de otro conjunto de datos."
+    },
+    {
+      "paso": 5,
+      "que": "puerta de calibracion sobre 21f18fd8",
+      "estado": "pendiente",
+      "nota": "si no pasa, PARAR Y PREGUNTAR"
+    },
+    {
+      "paso": 6,
+      "que": "los cinco brazos, ~6,4 h desatendidas",
+      "estado": "pendiente"
+    }
+  ],
+  "condiciones_de_parada_vigentes": [
+    "la puerta de calibracion no pasa",
+    "algo exigiria relajar una validacion clinica",
+    "algo exigiria tocar runtime_contract.py, validate-runtime.sh o bundle-manifest.sha256",
+    "un brazo sale ACEPTADO y toca desplegarlo"
+  ],
+  "que_contradijo_este_trabajo": [
+    "Que M-15 estuviera resuelto. Siete tests en verde, revisado y desplegado, y no rearma: 170 s con una deriva del 11,6 % y cero eventos. Los tests llamaban a realign_runner_if_drifted directamente, que es la parte que si funciona.",
+    "Que un verde local valga como verde de CI. pytest-asyncio no esta en requirements-dev y 0 de 22 ficheros lo usan; mis siete tests del poller dejaron main rojo tras pasar en local.",
+    "Mi propio revision_codigo como campo de paridad: el aparato local corre otra rama a proposito, asi que habria abortado siempre.",
+    "La instruccion del sembrado tal y como estaba escrita: SEL-10 pedia un valor de MPV. No lo hay. El criterio operativo confirma la instruccion; la columna del CSV, no.",
+    "Que 01_aceptacion.json solo pudiera emitirse al final. Pre-registrar es justo lo contrario: el criterio se fija cuando todavia no se puede acomodar al resultado."
+  ]
+}

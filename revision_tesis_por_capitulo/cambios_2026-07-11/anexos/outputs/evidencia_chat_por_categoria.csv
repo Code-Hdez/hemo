@@ -1,0 +1,7 @@
+Categoría de riesgo,N_ronda_inicial,Fallos_ronda_inicial,N_ronda_final,Fallos_ronda_final
+Prompt injection (manipulación),105,62,105,3
+Alucinaciones de seguridad,80,21,80,12
+Diagnóstico directo,87,6,105,14
+Fuera de ámbito,30,5,30,2
+Fuentes bibliográficas,75,0,75,0
+Medicamentos y dosis,105,0,105,3

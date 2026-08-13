@@ -1,0 +1,78 @@
+{
+  "version": "3.0.0",
+  "generated_at": "2026-04-12T04:38:57.929897+00:00",
+  "rows": [
+    {
+      "claim_id": "CLM-V3-001",
+      "claim_text": "El runtime mantiene trazabilidad de version de modelo.",
+      "evidence_file": "models/model_metadata_v2.json",
+      "evidence_locator": "version",
+      "evidence_value": "2.0.0",
+      "evidence_sha256": "1aa2b18acf2a36b2d8843216145b12c41231ea928ab4d753c821a08e796f586a",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-002",
+      "claim_text": "La politica oficial de etiquetas esta congelada y versionada.",
+      "evidence_file": "data/processed/final_label_policy.json",
+      "evidence_locator": "version",
+      "evidence_value": "1.1.0",
+      "evidence_sha256": "9d60e0f6a7d0355dc6ebaaef0698babdc0e953cfbd4fcfd6ffcdf19a0d204546",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-003",
+      "claim_text": "Los thresholds se seleccionaron sobre validation.",
+      "evidence_file": "data/processed/decision_thresholds_v2.json",
+      "evidence_locator": "source_split",
+      "evidence_value": "val",
+      "evidence_sha256": "da6be9da2ae88170d2162b62973aa6ca49a61fc61a1b653d750af1646527f2e0",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-004",
+      "claim_text": "Gate de feature parity permanece operativo.",
+      "evidence_file": "outputs/gate_feature_parity_v2.json",
+      "evidence_locator": "status",
+      "evidence_value": "pass",
+      "evidence_sha256": "15b6fd1708c91b5b2bb15118e693c9d7d257ec1f98b502115a150fdefe02cd98",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-005",
+      "claim_text": "Gate de leakage audit permanece operativo.",
+      "evidence_file": "outputs/gate_leakage_audit_v2.json",
+      "evidence_locator": "status",
+      "evidence_value": "pass",
+      "evidence_sha256": "52e74e4ffaee3831a3ef4d95824171e6613d29554dab9f5a916ee49b69364184",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-006",
+      "claim_text": "Integridad de manifiesto de artefactos verificada.",
+      "evidence_file": "outputs/gate_manifest_integrity_v2.json",
+      "evidence_locator": "status",
+      "evidence_value": "pass",
+      "evidence_sha256": "b55e81ba83df8d90978f2e1f7f101bba89ab55ee902bf4f3394843f6aff607e3",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-007",
+      "claim_text": "Policy freeze v3 documentado con hash.",
+      "evidence_file": "data/processed/policy_freeze_v3.json",
+      "evidence_locator": "version",
+      "evidence_value": "3.0.0",
+      "evidence_sha256": "f16a2989f8e79ebf32e4de50b67fb363e0d03aedcd19f91930b197710558b987",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    },
+    {
+      "claim_id": "CLM-V3-008",
+      "claim_text": "Surveillance report v3 generado con estado operativo.",
+      "evidence_file": "outputs/population_surveillance_report_v3.json",
+      "evidence_locator": "status",
+      "evidence_value": "warn",
+      "evidence_sha256": "ea82aef3e017ec52b5a0238f4534b72436f8eb5cc8de0b60cca696f34c92b846",
+      "verified_at": "2026-04-12T04:38:57.929897+00:00"
+    }
+  ]
+}

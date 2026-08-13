@@ -1,0 +1,9 @@
+claim_id,claim_text,evidence_file,evidence_locator,evidence_value,evidence_sha256
+CLM-001,El modelo runtime baseline es xgb_v2.,models/model_metadata_v2.json,model_type,xgb_v2,1aa2b18acf2a36b2d8843216145b12c41231ea928ab4d753c821a08e796f586a
+CLM-002,El sistema v2 tiene 6 etiquetas oficiales del modelo.,data/processed/final_label_policy.json,n_model_labels,6,9d60e0f6a7d0355dc6ebaaef0698babdc0e953cfbd4fcfd6ffcdf19a0d204546
+CLM-003,El sistema v2 tiene 2 etiquetas por regla.,data/processed/final_label_policy.json,n_rule_labels,2,9d60e0f6a7d0355dc6ebaaef0698babdc0e953cfbd4fcfd6ffcdf19a0d204546
+CLM-004,El sistema v2 tiene 2 etiquetas excluidas.,data/processed/final_label_policy.json,n_excluded_labels,2,9d60e0f6a7d0355dc6ebaaef0698babdc0e953cfbd4fcfd6ffcdf19a0d204546
+CLM-005,El PR-AUC macro oficial reportado en v2 es 0.9495.,outputs/final_system_state.json,prauc_macro_official,0.9495,2fdb8a2f98d473f4807f37ca8d42c90b97ddb5a94d67fef9da7de84f8d38e307
+CLM-006,La validacion externa usa DAP con 1301 registros.,outputs/final_system_state.json,external_validation.n_records,1301,2fdb8a2f98d473f4807f37ca8d42c90b97ddb5a94d67fef9da7de84f8d38e307
+CLM-007,Los thresholds v2 incluyen 6 etiquetas de modelo + exclusiones en 1.0.,data/processed/decision_thresholds_v2.json,thresholds,8,da6be9da2ae88170d2162b62973aa6ca49a61fc61a1b653d750af1646527f2e0
+CLM-008,El estado del sistema v2 reporta READY_FOR_PRODUCTION.,outputs/final_system_state.json,status,READY_FOR_PRODUCTION,2fdb8a2f98d473f4807f37ca8d42c90b97ddb5a94d67fef9da7de84f8d38e307

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="449.64pt" height="332.574281pt" viewBox="0 0 449.64 332.574281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:43.216012</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 332.574281 
+L 449.64 332.574281 
+L 449.64 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 353.659701 46.597547 
+L 440.274627 46.597547 
+L 440.274627 63.07696 
+L 353.659701 63.07696 
+z
+" clip-path="url(#p8858b49921)" style="fill: #ec835a; opacity: 0.2; stroke: #ec835a; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 353.659701 74.063235 
+L 440.274627 74.063235 
+L 440.274627 90.542648 
+L 353.659701 90.542648 
+z
+" clip-path="url(#p8858b49921)" style="fill: #d03b3b; opacity: 0.2; stroke: #d03b3b; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 7.2 97.134413 
+L 440.274627 97.134413 
+L 440.274627 122.402846 
+L 7.2 122.402846 
+z
+" clip-path="url(#p8858b49921)" style="fill: #fab219; opacity: 0.1"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 353.659701 101.528923 
+L 440.274627 101.528923 
+L 440.274627 118.008336 
+L 353.659701 118.008336 
+z
+" clip-path="url(#p8858b49921)" style="fill: #ec835a; opacity: 0.2; stroke: #ec835a; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 7.2 124.600101 
+L 440.274627 124.600101 
+L 440.274627 149.868534 
+L 7.2 149.868534 
+z
+" clip-path="url(#p8858b49921)" style="fill: #fab219; opacity: 0.1"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 353.659701 128.994612 
+L 440.274627 128.994612 
+L 440.274627 145.474024 
+L 353.659701 145.474024 
+z
+" clip-path="url(#p8858b49921)" style="fill: #ec835a; opacity: 0.2; stroke: #ec835a; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 7.2 152.06579 
+L 440.274627 152.06579 
+L 440.274627 177.334223 
+L 7.2 177.334223 
+z
+" clip-path="url(#p8858b49921)" style="fill: #fab219; opacity: 0.1"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 353.659701 156.4603 
+L 440.274627 156.4603 
+L 440.274627 172.939712 
+L 353.659701 172.939712 
+z
+" clip-path="url(#p8858b49921)" style="fill: #ec835a; opacity: 0.2; stroke: #ec835a; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 353.659701 183.925988 
+L 440.274627 183.925988 
+L 440.274627 200.405401 
+L 353.659701 200.405401 
+z
+" clip-path="url(#p8858b49921)" style="fill: #d03b3b; opacity: 0.2; stroke: #d03b3b; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 353.659701 211.391676 
+L 440.274627 211.391676 
+L 440.274627 227.871089 
+L 353.659701 227.871089 
+z
+" clip-path="url(#p8858b49921)" style="fill: #d03b3b; opacity: 0.2; stroke: #d03b3b; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 353.659701 238.857364 
+L 440.274627 238.857364 
+L 440.274627 255.336777 
+L 353.659701 255.336777 
+z
+" clip-path="url(#p8858b49921)" style="fill: #ec835a; opacity: 0.2; stroke: #ec835a; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 353.659701 266.323052 
+L 440.274627 266.323052 
+L 440.274627 282.802465 
+L 353.659701 282.802465 
+z
+" clip-path="url(#p8858b49921)" style="fill: #fab219; opacity: 0.2; stroke: #fab219; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 353.659701 293.78874 
+L 440.274627 293.78874 
+L 440.274627 310.268153 
+L 353.659701 310.268153 
+z
+" clip-path="url(#p8858b49921)" style="fill: #ec835a; opacity: 0.2; stroke: #ec835a; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="52.520869" transform="rotate(-0 9.365373 52.520869)">H-1</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="52.401376" transform="rotate(-0 34.050627 52.401376)">El decode en la A100 será más rápido pero con MBU menor que el 73,7 % atribuido a la L4</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="61.822141" transform="rotate(-0 34.050627 61.822141)">MBU 34,90 %</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ec835a" x="396.967164" y="56.551707" transform="rotate(-0 396.967164 56.551707)">— CONSISTENTE</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="79.986557" transform="rotate(-0 9.365373 79.986557)">H-2</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="79.867065" transform="rotate(-0 34.050627 79.867065)">La sobrecarga de gramática es ≥10 ms/token</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="89.288094" transform="rotate(-0 34.050627 89.288094)">0,332 ms/token frente a ≥ 10</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="396.967164" y="84.017395" transform="rotate(-0 396.967164 84.017395)">✗ REFUTADA</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="107.452245" transform="rotate(-0 9.365373 107.452245)">H-3</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="107.192753" transform="rotate(-0 34.050627 107.192753)">La tasa de fallos terminales no cambia apreciablemente (17/70 dentro de [10,24])</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #ec835a" x="34.050627" y="116.753782" transform="rotate(-0 34.050627 116.753782)">▲  κ = -0,145: poblaciones distintas</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ec835a" x="396.967164" y="111.483083" transform="rotate(-0 396.967164 111.483083)">— NO EVALUADA</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="134.917933" transform="rotate(-0 9.365373 134.917933)">H-4</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="134.658441" transform="rotate(-0 34.050627 134.658441)">Los ids de fallo se conservan aunque cambie el recuento</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #ec835a" x="34.050627" y="144.219471" transform="rotate(-0 34.050627 144.219471)">▲  0 de 17 ids coinciden</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ec835a" x="396.967164" y="138.948771" transform="rotate(-0 396.967164 138.948771)">— NO EVALUADA</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="162.383621" transform="rotate(-0 9.365373 162.383621)">H-5</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="162.124129" transform="rotate(-0 34.050627 162.124129)">El p50 por turno baja ≥50 % respecto a 59,1 s</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #ec835a" x="34.050627" y="171.685159" transform="rotate(-0 34.050627 171.685159)">▲  −60,6 % (Wilcoxon pareado, n = 64)</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ec835a" x="396.967164" y="166.414459" transform="rotate(-0 396.967164 166.414459)">— NO EVALUADA</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="189.849309" transform="rotate(-0 9.365373 189.849309)">H-6</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="189.589817" transform="rotate(-0 34.050627 189.589817)">En las preguntas de frontera (13/14/15) el sistema confabula en vez de declinar</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="199.150847" transform="rotate(-0 34.050627 199.150847)">reporta ventana truncada, no confabula</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="396.967164" y="193.880147" transform="rotate(-0 396.967164 193.880147)">✗ REFUTADA</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="217.314997" transform="rotate(-0 9.365373 217.314997)">H-7</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="217.055505" transform="rotate(-0 34.050627 217.055505)">El num_ctx efectivo ha cambiado por el salto de VRAM</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="226.752535" transform="rotate(-0 34.050627 226.752535)">num_ctx fijado por petición</text>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="396.967164" y="221.345835" transform="rotate(-0 396.967164 221.345835)">✗ REFUTADA</text>
+   </g>
+   <g id="text_29">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="244.780685" transform="rotate(-0 9.365373 244.780685)">H-8</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="244.661193" transform="rotate(-0 34.050627 244.661193)">ttft_per_1k_in crece a lo largo de los 15 turnos (sin reutilización de KV de prefijo)</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="254.082223" transform="rotate(-0 34.050627 254.082223)">campo no expuesto por la API</text>
+   </g>
+   <g id="text_32">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ec835a" x="396.967164" y="248.811523" transform="rotate(-0 396.967164 248.811523)">— NO EVALUABLE</text>
+   </g>
+   <g id="text_33">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="272.246373" transform="rotate(-0 9.365373 272.246373)">H-9</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="272.126881" transform="rotate(-0 34.050627 272.126881)">La tasa de alucinación numérica en modo HEMOGRAMA es distinta de cero</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="281.547911" transform="rotate(-0 34.050627 281.547911)">0 de 9 · IC de Wilson hasta 29,9 %</text>
+   </g>
+   <g id="text_36">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fab219" x="396.967164" y="276.277211" transform="rotate(-0 396.967164 276.277211)">? NO CONCLUYENTE</text>
+   </g>
+   <g id="text_37">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="9.365373" y="299.712061" transform="rotate(-0 9.365373 299.712061)">H-10</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="34.050627" y="299.592569" transform="rotate(-0 34.050627 299.592569)">La VM de CPU nueva cambia el tok/s por sí sola, vía enmascarado GBNF</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="34.050627" y="309.149599" transform="rotate(-0 34.050627 309.149599)">n = 1 máquina</text>
+   </g>
+   <g id="text_40">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ec835a" x="396.967164" y="303.7429" transform="rotate(-0 396.967164 303.7429)">— NO EVALUABLE</text>
+   </g>
+   <g id="text_41">
+    <text style="font-weight: 700; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="9.365373" y="28.74485" transform="rotate(-0 9.365373 28.74485)">hipótesis pre-registrada  ·  debajo, lo medido</text>
+   </g>
+   <g id="text_42">
+    <text style="font-weight: 700; font-size: 6.8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="396.967164" y="28.74485" transform="rotate(-0 396.967164 28.74485)">veredicto del informe</text>
+   </g>
+   <g id="text_43">
+    <text style="font-weight: 700; font-size: 7px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #ec835a" x="9.365373" y="319.881144" transform="rotate(-0 9.365373 319.881144)">▲  3 veredictos del informe se escribieron antes del brazo de réplica; su medición ya existe</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.998281" transform="rotate(-0 7.2 15.998281)">Tablero de las diez hipótesis pre-registradas</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8858b49921">
+   <rect x="7.2" y="25.998281" width="435.24" height="299.376"/>
+  </clipPath>
+ </defs>
+</svg>

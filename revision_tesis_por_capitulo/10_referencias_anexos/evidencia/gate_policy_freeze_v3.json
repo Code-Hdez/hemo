@@ -1,0 +1,65 @@
+{
+  "gate": "policy_freeze_v3",
+  "status": "pass",
+  "checked_at": "2026-04-12T03:39:17.952943+00:00",
+  "checks": [
+    {
+      "name": "Artefactos de policy freeze presentes",
+      "passed": true,
+      "detail": "Politica, thresholds, metadata y freeze v3 estan disponibles."
+    },
+    {
+      "name": "Version de politica alineada con model_metadata",
+      "passed": true,
+      "detail": "model_metadata_v2.json y final_label_policy.json declaran la misma version (1.1.0)."
+    },
+    {
+      "name": "Thresholds congelados en validation",
+      "passed": true,
+      "detail": "decision_thresholds_v2.json declara source_split=val."
+    },
+    {
+      "name": "Thresholds cubren todas las etiquetas oficiales",
+      "passed": true,
+      "detail": "Thresholds cubren 6 etiquetas oficiales."
+    },
+    {
+      "name": "Etiquetas excluidas congeladas en 1.0",
+      "passed": true,
+      "detail": "Todas las etiquetas excluidas estan congeladas en threshold=1.0."
+    },
+    {
+      "name": "Politica pre-registrada contiene secciones obligatorias",
+      "passed": true,
+      "detail": "policy_preregistered_v3.json incluye objetivos, reglas QC y aceptacion clinica."
+    },
+    {
+      "name": "Politica pre-registrada alinea etiquetas oficiales",
+      "passed": true,
+      "detail": "official_labels pre-registradas coinciden con la politica oficial runtime."
+    },
+    {
+      "name": "Archivo de freeze referencia hashes actuales",
+      "passed": true,
+      "detail": "policy_freeze_v3.json coincide con hashes actuales de policy y thresholds."
+    }
+  ],
+  "summary": {
+    "total_checks": 8,
+    "passed_checks": 8,
+    "failed_checks": 0
+  },
+  "policy_version": "1.1.0",
+  "thresholds_version": "1.1.0",
+  "official_labels": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA"
+  ],
+  "policy_sha256": "9d60e0f6a7d0355dc6ebaaef0698babdc0e953cfbd4fcfd6ffcdf19a0d204546",
+  "thresholds_sha256": "da6be9da2ae88170d2162b62973aa6ca49a61fc61a1b653d750af1646527f2e0",
+  "freeze_file": "data/processed/policy_freeze_v3.json"
+}

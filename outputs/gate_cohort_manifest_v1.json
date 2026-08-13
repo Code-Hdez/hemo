@@ -1,0 +1,48 @@
+{
+  "gate": "cohort_manifest_v1",
+  "status": "pass",
+  "checked_at": "2026-05-24T20:54:47.143635+00:00",
+  "checks": [
+    {
+      "name": "Manifest de ingesta disponible",
+      "passed": true,
+      "detail": "ingestion_manifest.csv esta disponible."
+    },
+    {
+      "name": "Columnas obligatorias presentes",
+      "passed": true,
+      "detail": "El manifiesto incluye rutas, hashes y cohorte."
+    },
+    {
+      "name": "Rutas relativas unicas",
+      "passed": true,
+      "detail": "Cada PDF tiene una ruta relativa unica."
+    },
+    {
+      "name": "Hashes de archivo disponibles",
+      "passed": true,
+      "detail": "Todos los PDFs tienen hash SHA-256."
+    },
+    {
+      "name": "Cohorte Dic-May detectada",
+      "passed": true,
+      "detail": "Dic-May contiene 59 PDFs."
+    },
+    {
+      "name": "Cohorte historica detectada",
+      "passed": true,
+      "detail": "Baseline historico contiene 298 PDFs."
+    }
+  ],
+  "summary": {
+    "total_checks": 6,
+    "passed_checks": 6,
+    "failed_checks": 0
+  },
+  "total_files": 357,
+  "cohort_counts": {
+    "baseline_historico": 298,
+    "dic_may_2026": 59
+  },
+  "duplicate_original_filenames": 59
+}

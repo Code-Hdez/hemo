@@ -1,0 +1,55 @@
+{
+  "application": {
+    "backend": {
+      "digest": "sha256:cf1dcab600cb880dbc07820896fd7816dac48956a4b9e6388df2f293a21b1826",
+      "reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/backend@sha256:cf1dcab600cb880dbc07820896fd7816dac48956a4b9e6388df2f293a21b1826"
+    },
+    "caddy_configuration_digest": "sha256:398548d4090bdd0d68c12bd08efcdd4ec6422cd9193a0b6c17496690314ccf53",
+    "configuration_digest": "sha256:3e0a9989b35dc9f0fa8f7b8c2b29c208256bcfeba4a4a39677f693af7a2b533e",
+    "frontend": {
+      "digest": "sha256:66cf329d1dce2f544454876b97433cf621fe4769d5d6a086ae9ca3074a489faf",
+      "reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/frontend@sha256:66cf329d1dce2f544454876b97433cf621fe4769d5d6a086ae9ca3074a489faf"
+    },
+    "revision": "e7713a72369bb9365f6d5323e165fbf84488bfb4"
+  },
+  "contracts": {
+    "availability": "hemovet.availability/v1",
+    "llm_provider": "hemovet.llm-provider/v1",
+    "release_manifest": "hemovet.release/v1"
+  },
+  "gpu_runtime": {
+    "apply_on": "next_boot",
+    "initial_validation_state": "pending_boot_validation",
+    "model": {
+      "digest": "sha256:0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "quantization": "Q4_K_M"
+    },
+    "revision": "e7713a72369bb9365f6d5323e165fbf84488bfb4",
+    "runtime": {
+      "digest": "sha256:aed77e3c668587c12ac32751d484d1a287e2853b3ffb56760fe8222a5fd3cd0c",
+      "reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/ollama-runtime@sha256:aed77e3c668587c12ac32751d484d1a287e2853b3ffb56760fe8222a5fd3cd0c"
+    },
+    "startup_bundle_digest": "sha256:b781a68bd132c7c29ddd5def3c1309c933b55026a3782ecd27494372476aaf65",
+    "startup_contract_version": "hemovet.gpu-startup/v1",
+    "update_while_running": false
+  },
+  "rag": {
+    "collection_name": "hemovet_canine_hematology_v2__6832f37d4287",
+    "corpus_revision": "20bb18ffff6684dba53b9f09f38c37d578268fe6377cdb6c4ab70304e75e6736",
+    "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "embedding_revision": "fastembed-registry-0.8.0",
+    "index_fingerprint": "6832f37d428731520ce903de60d0781df543df3a10c84f1fcdbf27056bef9b60",
+    "required": true,
+    "schema_version": "hemovet-rag-v2"
+  },
+  "release_id": "e7713a72369bb9365f6d5323e165fbf84488bfb4",
+  "schema_version": "hemovet.release/v1",
+  "source": {
+    "created_at": "2026-08-03T07:45:06Z",
+    "github_sha": "e7713a72369bb9365f6d5323e165fbf84488bfb4",
+    "repository": "xPshycho/hemogramas-proyectoICC",
+    "workflow_run_attempt": 1,
+    "workflow_run_id": 30794470808
+  }
+}

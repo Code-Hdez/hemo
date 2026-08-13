@@ -1,0 +1,157 @@
+{
+  "users": [
+    {
+      "id": "71172e69-fde1-4de6-b966-5962087caac7",
+      "email": "maria.fernandez@hemovet.demo",
+      "password": "HemoVet2026!",
+      "full_name": "Maria Fernandez",
+      "profile": "Veterinaria de pequenos animales con foco en rescates urbanos (Bogota).",
+      "pets": [
+        {
+          "id": "590df886-cf9a-40b7-9c23-0411cf056adb",
+          "name": "Luna",
+          "breed": "Mestizo",
+          "sex": "F",
+          "birth_year": 2019,
+          "weight_kg": 18.0,
+          "notes": "Rescate. Control trimestral.",
+          "uploaded_count": 26
+        },
+        {
+          "id": "538a65b8-4b1c-472d-8ff0-3a96a3d5cb1e",
+          "name": "Toby",
+          "breed": "Mestizo",
+          "sex": "M",
+          "birth_year": 2017,
+          "weight_kg": 22.0,
+          "notes": "Rescate adulto. Historial alergico.",
+          "uploaded_count": 27
+        },
+        {
+          "id": "0d04ef74-059d-44c8-b1b9-488f271b9556",
+          "name": "Nina",
+          "breed": "Beagle",
+          "sex": "F",
+          "birth_year": 2021,
+          "weight_kg": 12.0,
+          "notes": "Joven, control de crecimiento.",
+          "uploaded_count": 21
+        },
+        {
+          "id": "c8d58262-ccfb-44f9-9223-c159e2a39598",
+          "name": "Rocco",
+          "breed": "Pitbull",
+          "sex": "M",
+          "birth_year": 2018,
+          "weight_kg": 28.0,
+          "notes": "Rescate. Seguimiento cardiologico.",
+          "uploaded_count": 21
+        },
+        {
+          "id": "0d4fc918-a188-4a9a-b0ac-993cc6140162",
+          "name": "Pepa",
+          "breed": "Mestizo",
+          "sex": "F",
+          "birth_year": 2014,
+          "weight_kg": 15.0,
+          "notes": "Geriatrica. Monitoreo renal.",
+          "uploaded_count": 27
+        }
+      ]
+    },
+    {
+      "id": "b07fd13e-62a1-4777-b290-0b2f0fc13fcb",
+      "email": "carlos.ramirez@hemovet.demo",
+      "password": "HemoVet2026!",
+      "full_name": "Carlos Ramirez",
+      "profile": "Criador de razas grandes (Pastor Aleman, Labrador, Golden) - Medellin.",
+      "pets": [
+        {
+          "id": "50e2d8ad-76de-4f04-86c0-59d471c049ee",
+          "name": "Zeus",
+          "breed": "Pastor Aleman",
+          "sex": "M",
+          "birth_year": 2016,
+          "weight_kg": 35.0,
+          "notes": "Semental. Chequeos pre-cruza.",
+          "uploaded_count": 27
+        },
+        {
+          "id": "adfd9e8c-df5b-42d0-8c6c-54a16ce79811",
+          "name": "Hera",
+          "breed": "Pastor Aleman",
+          "sex": "F",
+          "birth_year": 2019,
+          "weight_kg": 30.0,
+          "notes": "Hembra reproductora.",
+          "uploaded_count": 21
+        },
+        {
+          "id": "1519b038-f56b-4c50-bfb0-9e1343090a9e",
+          "name": "Apolo",
+          "breed": "Labrador Retriever",
+          "sex": "M",
+          "birth_year": 2020,
+          "weight_kg": 32.0,
+          "notes": "Activo, dieta deportiva.",
+          "uploaded_count": 21
+        },
+        {
+          "id": "9ccc0642-0f34-42c2-a034-1b49e0e55154",
+          "name": "Atenea",
+          "breed": "Golden Retriever",
+          "sex": "F",
+          "birth_year": 2018,
+          "weight_kg": 28.0,
+          "notes": "Predisposicion a displasia.",
+          "uploaded_count": 21
+        }
+      ]
+    },
+    {
+      "id": "609726c9-2dc0-45f4-8633-393bfd5726ba",
+      "email": "lucia.torres@hemovet.demo",
+      "password": "HemoVet2026!",
+      "full_name": "Lucia Torres",
+      "profile": "Tenedora particular de razas pequenas (Cali).",
+      "pets": [
+        {
+          "id": "a0a68f7a-447c-469c-82b1-f670aefc2af9",
+          "name": "Coco",
+          "breed": "Chihuahua",
+          "sex": "F",
+          "birth_year": 2019,
+          "weight_kg": 3.2,
+          "notes": "Cardiopata congenita leve.",
+          "uploaded_count": 21
+        },
+        {
+          "id": "2686f2c3-e8fb-4223-b614-7fa5baa8ce6c",
+          "name": "Bruno",
+          "breed": "Pug",
+          "sex": "M",
+          "birth_year": 2017,
+          "weight_kg": 8.5,
+          "notes": "Braquicefalico. Sobrepeso.",
+          "uploaded_count": 20
+        },
+        {
+          "id": "ee00161d-ab5d-4ebd-957c-8d2ab8a131c9",
+          "name": "Mia",
+          "breed": "Poodle",
+          "sex": "F",
+          "birth_year": 2022,
+          "weight_kg": 6.0,
+          "notes": "Joven. Controles preventivos.",
+          "uploaded_count": 14
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "users": 3,
+    "pets": 12,
+    "hemogramas_subidos": 267,
+    "pdfs_disponibles": 268
+  }
+}

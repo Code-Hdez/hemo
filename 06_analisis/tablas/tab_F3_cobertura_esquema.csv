@@ -1,0 +1,5 @@
+nivel;campos;registros;estado
+SESIÓN;session_id, run_fingerprint, conversation_id;6;poblado
+TURNO;e2e_ms, http_status, outcome, answer_hash;115;poblado
+LLAMADA;eval_count, eval_duration, prompt_eval_*, load_duration;0;vacío
+EVENTO;cronología de eventos SSE del turno;0;vacío

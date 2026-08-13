@@ -1,0 +1,29 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic[email]
+pydantic-settings
+sqlalchemy
+psycopg2-binary
+alembic
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+google-genai>=2.0.0,<3.0.0
+httpx
+chromadb==1.5.9
+fastembed==0.8.0
+# Ya venían instalados como dependencias de fastembed; se declaran porque
+# ahora hay código que los importa directamente (infrastructure/entailment.py,
+# el verificador de soporte documental por entrañamiento). No añaden peso a la
+# imagen: el modelo XNLI que usan son 1,1 GB que se bajan del Hub en tiempo de
+# ejecución, y solo si CHAT_CLAIM_ENTAILMENT_ENABLED está encendido.
+onnxruntime
+tokenizers
+huggingface-hub
+PyYAML>=6.0,<7.0
+Pillow
+opentelemetry-api==1.44.0
+opentelemetry-sdk==1.44.0
+opentelemetry-exporter-otlp-proto-http==1.44.0
+opentelemetry-instrumentation-fastapi==0.65b0

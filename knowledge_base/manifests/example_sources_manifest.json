@@ -1,0 +1,34 @@
+[
+  {
+    "source_id": "atlas_cbc_canino_pdf",
+    "title": "Atlas de Hematologia Canina",
+    "author": "Equipo HemoVet",
+    "edition": "1a",
+    "language": "es",
+    "license": "internal-review",
+    "document_type": "pdf",
+    "path": "knowledge_base/raw_pdf/atlas_hematologia_canina.pdf",
+    "species": "canino",
+    "domain": "cbc",
+    "subdomain": "serie_blanca",
+    "audience_level": "mixed",
+    "allowed_for_citizen_explanation": true,
+    "diagnostic_risk_level": "review"
+  },
+  {
+    "source_id": "manual_leucograma_epub",
+    "title": "Manual de Leucograma Veterinario",
+    "author": "Equipo HemoVet",
+    "edition": "2a",
+    "language": "es",
+    "license": "internal-review",
+    "document_type": "epub",
+    "path": "knowledge_base/raw_epub/manual_leucograma.epub",
+    "species": "canino",
+    "domain": "cbc",
+    "subdomain": "leucograma",
+    "audience_level": "mixed",
+    "allowed_for_citizen_explanation": true,
+    "diagnostic_risk_level": "review"
+  }
+]

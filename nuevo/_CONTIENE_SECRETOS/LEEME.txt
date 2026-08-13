@@ -1,0 +1,19 @@
+ESTE DIRECTORIO CONTIENE SECRETOS DE PRODUCCION.
+
+env_desplegado_2026-08-08.txt es el printenv completo del contenedor desplegado
+e incluye, entre otros:
+
+    SECRET_KEY
+    DATABASE_URL            (con usuario y contrasena)
+    GEMINI_API_KEY
+    OPENAI_COMPATIBLE_API_KEY
+    OTEL_IDENTIFIER_HMAC_SECRET
+
+No lo subas a ningun sitio, no lo adjuntes a un correo ni a un ticket, y no lo
+metas en el repositorio: esta en .gitignore precisamente por esto.
+
+La version APTA para compartir es el recorte sin secretos, que solo lleva las
+claves CHAT_* y OLLAMA_* con la IP interna redactada:
+
+    01_salidas_fase21/../paridad_desplegado_2026-08-08.txt
+    (copiada tambien en 03_resultados_bateria/)

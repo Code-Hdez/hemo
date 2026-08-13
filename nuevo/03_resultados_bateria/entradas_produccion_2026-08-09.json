@@ -1,0 +1,17 @@
+{
+  "_comentario": [
+    "Huellas de ENTRADA de produccion, capturadas el 9-ago-2026 del despliegue 55d5e599.",
+    "Las tres primeras salen de GET /api/v1/chat/health del backend desplegado.",
+    "hash_casos son los 16 primeros hex del sha256 del CSV de casos.",
+    "revision_codigo es la revision desplegada; el host de la VM no tiene checkout,",
+    "revision_codigo NO es paridad con produccion: el aparato local corre otra rama",
+    "a proposito. Declara que revision dice la corrida que usa, y el preflight exige",
+    "que coincida con lo que el git del aparato reporta. Cada corrida lleva la suya."
+  ],
+  "chunk_count": 4696,
+  "index_fingerprint": "6832f37d428731520ce903de60d0781df543df3a10c84f1fcdbf27056bef9b60",
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "hash_casos": "66e2c52a3eb9776f",
+  "revision_codigo": "<la de cada corrida: 21f18fd8 para calibracion, la rama para cada brazo>",
+  "produccion_desplegada_el_9_ago": "55d5e599"
+}

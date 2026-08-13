@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-05-24T21:19:38.157629+00:00",
+  "status": "blocked_missing_dic_may_labels",
+  "baseline_records": 2454,
+  "dic_may_records": 267,
+  "combined_records": 2721,
+  "dic_may_comments_nonempty": 0,
+  "dic_may_positive_labels": 0,
+  "labels": [
+    {
+      "label": "QC_REQUIERE_FROTIS",
+      "historical_positive": 867,
+      "dic_may_positive": 0,
+      "combined_positive": 867,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "QC_AGREGADOS_PLAQUETARIOS",
+      "historical_positive": 125,
+      "dic_may_positive": 0,
+      "combined_positive": 125,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "QC_INTERFERENCIA_GR",
+      "historical_positive": 26,
+      "dic_may_positive": 0,
+      "combined_positive": 26,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "QC_UNIDAD_NO_CONVERTIDA",
+      "historical_positive": 89,
+      "dic_may_positive": 0,
+      "combined_positive": 89,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "PATRON_INFLAMATORIO",
+      "historical_positive": 1143,
+      "dic_may_positive": 0,
+      "combined_positive": 1143,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "PATRON_LEUCOGRAMA_ESTRES",
+      "historical_positive": 1108,
+      "dic_may_positive": 0,
+      "combined_positive": 1108,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "PATRON_ANEMIA_NO_REGENERATIVA",
+      "historical_positive": 252,
+      "dic_may_positive": 0,
+      "combined_positive": 252,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "PATRON_HEMOLISIS_MCHC",
+      "historical_positive": 345,
+      "dic_may_positive": 0,
+      "combined_positive": 345,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "PATRON_POLICITEMIA",
+      "historical_positive": 168,
+      "dic_may_positive": 0,
+      "combined_positive": 168,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    },
+    {
+      "label": "PATRON_ANEMIA_REGENERATIVA",
+      "historical_positive": 108,
+      "dic_may_positive": 0,
+      "combined_positive": 108,
+      "absolute_gain": 0,
+      "relative_gain_pct": 0.0,
+      "status": "sin_incremento_dic_may"
+    }
+  ],
+  "notes": [
+    "Dic-May se usa como aumento del pool, no como test externo.",
+    "La mejora por etiquetas bajas solo es valida si dic_may_positive_labels > 0."
+  ]
+}

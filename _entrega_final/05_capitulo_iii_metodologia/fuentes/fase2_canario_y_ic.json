@@ -1,0 +1,40 @@
+{
+ "canario": {
+  "prompts": 20,
+  "reps": 5,
+  "total": 100,
+  "prompts_con_mas_de_1_hash": 0,
+  "veredicto": "PASA — determinismo intra-maquina perfecto a temperature 0, top_k 1, seed fijo"
+ },
+ "tpot_ms": {
+  "n": 100,
+  "mediana": 24.4802,
+  "ic95": [
+   24.4701,
+   24.5193
+  ],
+  "cv_pct": 0.65
+ },
+ "decode_tok_s": {
+  "mediana": 40.849,
+  "ic95": [
+   40.784,
+   40.866
+  ]
+ },
+ "mbu_pct": {
+  "mediana": 34.9,
+  "ic95": [
+   34.84,
+   34.91
+  ],
+  "bw_nominal_gbs": 2039.0
+ },
+ "b_efectivo_gbs": {
+  "mediana": 711.6
+ },
+ "techo_teorico_tok_s": 117.0,
+ "prefill_tok_s_p50": 91.9,
+ "modelo_bytes": 17420432739,
+ "sello": "A100-SXM4-40GB · Ollama 0.32.6 · digest a50eda8ed977ab48"
+}

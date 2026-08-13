@@ -1,0 +1,1 @@
+ERROR: (gcloud.compute.instances.get-serial-port-output) Could not fetch serial port output: The resource 'projects/project-5b36701c-f44f-4c03-a12/zones/us-central1-a/instances/hemovet-llm-gpu' is not ready

@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-04-12T00:38:51.572487",
+  "period_days": 30,
+  "cohort_size": 200,
+  "status": "warn",
+  "status_counts": {
+    "pass": 3,
+    "warn": 2,
+    "fail": 0
+  },
+  "temporal_signals": [
+    {
+      "metric": "no_prediction_rate",
+      "value": 0.0,
+      "baseline": 0.0,
+      "status": "pass",
+      "action": "Revisar salud de artefactos, disponibilidad de modelo y calidad de parsing del extractor."
+    },
+    {
+      "metric": "partial_imputation_rate",
+      "value": 0.0,
+      "baseline": 0.0,
+      "status": "pass",
+      "action": "Auditar cobertura de campos CBC nucleares por fuente y reforzar normalizacion de ingesta."
+    },
+    {
+      "metric": "qc_flag_rate",
+      "value": 0.35,
+      "baseline": 0.3655,
+      "status": "pass",
+      "action": "Escalar revision de laboratorio: aumentar verificaciones de frotis y control pre-analitico."
+    },
+    {
+      "metric": "geocoded_rate",
+      "value": 0.0,
+      "baseline": null,
+      "status": "warn",
+      "action": "Mejorar captura de ubicacion para vigilancia geoespacial reproducible."
+    },
+    {
+      "metric": "top_location_share",
+      "value": 1.0,
+      "baseline": null,
+      "status": "warn",
+      "action": "Verificar sesgo de muestreo geografico y ampliar cobertura territorial de captura."
+    }
+  ],
+  "geographic_hotspots": [
+    {
+      "location": "Desconocida",
+      "count": 200,
+      "pct": 1.0
+    }
+  ],
+  "gate_status": {
+    "feature_parity": "pass",
+    "leakage_audit": "pass",
+    "manifest_integrity": "pass",
+    "policy_freeze": "pass",
+    "drift_basic": "pass"
+  },
+  "source": "labeled_idexx_fallback"
+}

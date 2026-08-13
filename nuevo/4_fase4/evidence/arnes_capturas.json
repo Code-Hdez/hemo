@@ -1,0 +1,420 @@
+[
+ {
+  "i": 1,
+  "raw": "{\n  \"response_type\": \"educational_veterinary_assistant\",\n  \"intent\": \"answer_lab_value_inquiry\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"Las plaquetas se encuentran dentro del rango normal con un valor de 290 x10^3/uL.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 238,
+  "wall_s": 20.2,
+  "done": "stop",
+  "parsed": {
+   "response_type": "educational_veterinary_assistant",
+   "intent": "answer_lab_value_inquiry",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "Las plaquetas se encuentran dentro del rango normal con un valor de 290 x10^3/uL.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": true,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 2,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_CLARIFICATION\",\n  \"intent\": \"answer_lab_query\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"Las plaquetas (PLT) se encuentran dentro del rango normal.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 222,
+  "wall_s": 18.5,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_CLARIFICATION",
+   "intent": "answer_lab_query",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "Las plaquetas (PLT) se encuentran dentro del rango normal.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": false,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 3,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_ANSWER\",\n  \"intent\": \"ask_lab_value\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_001\",\n      \"text\": \"El recuento de plaquetas (PLT) es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 242,
+  "wall_s": 20.0,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_ANSWER",
+   "intent": "ask_lab_value",
+   "claims": [
+    {
+     "claim_id": "claim_001",
+     "text": "El recuento de plaquetas (PLT) es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": true,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 4,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL\",\n  \"intent\": \"INQUIRY_LAB_VALUE\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_001\",\n      \"text\": \"El recuento de plaquetas (PLT) es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal establecido.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  }\n}",
+  "eval_count": 223,
+  "wall_s": 18.2,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL",
+   "intent": "INQUIRY_LAB_VALUE",
+   "claims": [
+    {
+     "claim_id": "claim_001",
+     "text": "El recuento de plaquetas (PLT) es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal establecido.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   }
+  },
+  "n_claims": 1,
+  "tiene_290": true,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 5,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_CLARIFICATION\",\n  \"intent\": \"INQUIRY_LAB_VALUE\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"El recuento de plaquetas (PLT) es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal establecido de 175-500 x10^3/uL.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 265,
+  "wall_s": 21.8,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_CLARIFICATION",
+   "intent": "INQUIRY_LAB_VALUE",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "El recuento de plaquetas (PLT) es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal establecido de 175-500 x10^3/uL.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": true,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 6,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_INFO\",\n  \"intent\": \"answer_question\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"Las plaquetas están en un nivel normal.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 218,
+  "wall_s": 18.2,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_INFO",
+   "intent": "answer_question",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "Las plaquetas están en un nivel normal.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": false,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 7,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_EXPLANATION\",\n  \"intent\": \"INQUIRY_LAB_VALUE\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_001\",\n      \"text\": \"Las plaquetas del paciente están dentro del rango normal.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ]\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 213,
+  "wall_s": 17.9,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_EXPLANATION",
+   "intent": "INQUIRY_LAB_VALUE",
+   "claims": [
+    {
+     "claim_id": "claim_001",
+     "text": "Las plaquetas del paciente están dentro del rango normal.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ]
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": false,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 8,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_EXPLANATION\",\n  \"intent\": \"answer_question\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"Las plaquetas del paciente se encuentran dentro del rango normal.\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 217,
+  "wall_s": 17.9,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_EXPLANATION",
+   "intent": "answer_question",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "Las plaquetas del paciente se encuentran dentro del rango normal.",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": false,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 9,
+  "raw": "{\n  \"response_type\": \"educational_veterinary_assistance\",\n  \"intent\": \"answer_lab_query\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"Las plaquetas (PLT) están en un valor de 290 x10^3/uL, lo cual se encuentra dentro del rango normal (175-500 x10^3/uL).\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 255,
+  "wall_s": 20.8,
+  "done": "stop",
+  "parsed": {
+   "response_type": "educational_veterinary_assistance",
+   "intent": "answer_lab_query",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "Las plaquetas (PLT) están en un valor de 290 x10^3/uL, lo cual se encuentra dentro del rango normal (175-500 x10^3/uL).",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": true,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ },
+ {
+  "i": 10,
+  "raw": "{\n  \"response_type\": \"EDUCATIONAL_ANALYSIS\",\n  \"intent\": \"INQUIRY_LAB_VALUE\",\n  \"claims\": [\n    {\n      \"claim_id\": \"claim_plt_status_01\",\n      \"text\": \"El conteo de plaquetas es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal (175-500 x10^3/uL).\",\n      \"claim_type\": \"PATIENT_FACT\",\n      \"fact_ids\": [\n        \"fact_plt_001\"\n      ],\n      \"policy_rule_ids\": []\n    }\n  ],\n  \"safety\": {\n    \"contains_diagnosis_confirmation\": false,\n    \"contains_medication_recommendation\": false,\n    \"contains_dose\": false,\n    \"contains_frequency\": false,\n    \"contains_treatment_duration\": false,\n    \"contains_personalized_treatment\": false,\n    \"requires_urgent_referral\": false\n  },\n  \"schema_version\": \"hemovet-response-v2\"\n}",
+  "eval_count": 260,
+  "wall_s": 21.4,
+  "done": "stop",
+  "parsed": {
+   "response_type": "EDUCATIONAL_ANALYSIS",
+   "intent": "INQUIRY_LAB_VALUE",
+   "claims": [
+    {
+     "claim_id": "claim_plt_status_01",
+     "text": "El conteo de plaquetas es de 290 x10^3/uL, lo cual se encuentra dentro del rango normal (175-500 x10^3/uL).",
+     "claim_type": "PATIENT_FACT",
+     "fact_ids": [
+      "fact_plt_001"
+     ],
+     "policy_rule_ids": []
+    }
+   ],
+   "safety": {
+    "contains_diagnosis_confirmation": false,
+    "contains_medication_recommendation": false,
+    "contains_dose": false,
+    "contains_frequency": false,
+    "contains_treatment_duration": false,
+    "contains_personalized_treatment": false,
+    "requires_urgent_referral": false
+   },
+   "schema_version": "hemovet-response-v2"
+  },
+  "n_claims": 1,
+  "tiene_290": true,
+  "fact_ids_usados": [
+   "fact_plt_001"
+  ],
+  "policy_ids_usados": [],
+  "claim_types": [
+   "PATIENT_FACT"
+  ],
+  "fallos_regla": []
+ }
+]

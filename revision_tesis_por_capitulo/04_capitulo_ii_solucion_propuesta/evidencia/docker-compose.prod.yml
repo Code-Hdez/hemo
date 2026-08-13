@@ -1,0 +1,115 @@
+# =============================================================================
+# HemoVet — Overlay de producción con Caddy
+# =============================================================================
+# Este archivo extiende docker-compose.yml con configuraciones de producción:
+#   - Caddy como reverse proxy real con HTTPS automático (Let's Encrypt)
+#   - Límites de recursos ajustados al ARM Ampere A1 (4 OCPUs / 24 GB)
+#   - Políticas de reinicio y logging controlado
+#   - Puerto 3000 del frontend no expuesto directamente (solo via Caddy)
+#
+# Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# Este overlay es el perfil canónico del servidor actual. El compose base sigue
+# siendo suficiente para desarrollo o para un host con proxy TLS externo.
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # Caddy — reverse proxy con HTTPS automático
+  # ---------------------------------------------------------------------------
+  caddy:
+    image: caddy:2.11.4-alpine
+    restart: unless-stopped
+    environment:
+      CADDY_SITE_ADDRESS: "${CADDY_SITE_ADDRESS:-hemovet.app}"
+      CADDY_WWW_ADDRESS: "${CADDY_WWW_ADDRESS:-www.hemovet.app}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "caddy", "validate", "--config", "/etc/caddy/Caddyfile"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # Frontend — sin exposición directa de puerto en producción
+  # ---------------------------------------------------------------------------
+  frontend:
+    ports: !reset []
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # Backend — límites de recursos y logging
+  # ---------------------------------------------------------------------------
+  backend:
+    ports: !reset []
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+        reservations:
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL — logging controlado
+  # ---------------------------------------------------------------------------
+  db:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # Ollama — límites de recursos (CPU intensivo en ARM sin GPU)
+  # ---------------------------------------------------------------------------
+  ollama_setup:
+    environment:
+      OLLAMA_AUTO_PULL: "${OLLAMA_AUTO_PULL:-1}"
+
+  ollama:
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 14G
+        reservations:
+          memory: 4G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  caddy-data:
+    name: caddy_data
+  caddy-config:
+    name: caddy_config

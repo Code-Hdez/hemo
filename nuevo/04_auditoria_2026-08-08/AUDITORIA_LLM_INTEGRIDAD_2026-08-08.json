@@ -1,0 +1,59 @@
+{
+  "audit_run_id": "bateria-2026-08-07",
+  "comprobaciones": {
+    "casos_esperados": 70,
+    "casos_presentes": 70,
+    "todos_con_pregunta": true,
+    "todos_con_inicio": true,
+    "todos_con_respuesta_o_error": true,
+    "todos_con_eventos_sse": true,
+    "todos_con_latencia": true,
+    "todos_con_estado_servidor": true,
+    "todos_correlacion_verificada": true,
+    "total_llamadas_llm": 133,
+    "ninguna_respuesta_truncada": true,
+    "raw_generation_observable": false
+  },
+  "artefactos": {
+    "AUDITORIA_CORRELACIONADA.json": {
+      "sha256": "7ea22843b9e710bc680bb0a31142b94a4d10483408183581bfd1a8a7811fcc94",
+      "bytes": 2413343
+    },
+    "AUDITORIA_LLM_INTEGRIDAD_2026-08-08.json": {
+      "sha256": "e33a768e7139b6af8a50575d06b3ae7938fced29c6fd16cf82833b759994c00f",
+      "bytes": 1568
+    },
+    "AUDITORIA_LLM_METRICAS_2026-08-08.csv": {
+      "sha256": "56db11888e6f8460da4f06e45c5d8455eaea1738202a81045cc304d606da6d32",
+      "bytes": 33588
+    },
+    "AUDITORIA_LLM_TIMELINE_2026-08-08.csv": {
+      "sha256": "af58f97824be5df7bfe4801cfc530ab3aeecc1cb24154302af14097ca7acffb7",
+      "bytes": 144976
+    },
+    "AUDITORIA_REPETICION.json": {
+      "sha256": "4058d88f74909259b3edeed2be5eb782a8e6e6194cec8d96363dff9d89002b1c",
+      "bytes": 434471
+    },
+    "backend_telemetry_raw.log": {
+      "sha256": "e5183a6a2044401a04b13f2a882f58ce584236ba6558fb29aaa884a1f0f06cbe",
+      "bytes": 772173
+    },
+    "backend_telemetry_repeticion.log": {
+      "sha256": "374b6334de9adcfcb270b5d457967d225c5e289cbdc8739e5f9a3e049c62a116",
+      "bytes": 136281
+    },
+    "casos_repeticion_plt.csv": {
+      "sha256": "6347840783838f2911453069c016136405a5dfb3c1596d20a29ed7fa7a76526a",
+      "bytes": 1655
+    },
+    "ollama_timings_raw.log": {
+      "sha256": "e0ba1e7d26b373bb21a85b0a6c50dac997ae0b602c9e5e6870db4745d186c609",
+      "bytes": 569747
+    },
+    "repeticion_plt_2026-08-08.jsonl": {
+      "sha256": "ed38cffead4b5ae315dfbba3b44c65731f6782c7fc33465298dda40d2babb2be",
+      "bytes": 27406
+    }
+  }
+}

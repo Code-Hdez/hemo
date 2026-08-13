@@ -1,0 +1,12 @@
+{
+  "source_dir": "knowledge_base/expert_review/approved",
+  "sources": 1250,
+  "chunks": 4696,
+  "quarantined_sources": 0,
+  "corpus_revision": "20bb18ffff6684dba53b9f09f38c37d578268fe6377cdb6c4ab70304e75e6736",
+  "content_version": "2b653343dd66ccac1255999d2973beddd5bc2a8a30fb360ee5487b3ac5e723b2",
+  "index_fingerprint": "6832f37d428731520ce903de60d0781df543df3a10c84f1fcdbf27056bef9b60",
+  "schema_version": "markdown-v5",
+  "corpus_schema_version": "hemovet-rag-v2",
+  "dry_run": true
+}

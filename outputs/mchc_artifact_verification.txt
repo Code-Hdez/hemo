@@ -1,0 +1,11 @@
+Verificacion de regla MCHC artifact
+============================================================
+
+FP originales: 2
+FP corregidos: 0
+FP eliminados: 2
+
+Casos corregidos:
+ MCHC  HCT  HGB
+ 66.7 48.9 17.3
+ 53.8 12.7  6.8

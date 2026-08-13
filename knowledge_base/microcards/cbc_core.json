@@ -1,0 +1,198 @@
+[
+  {
+    "doc_id": "microcard:QC_REQUIERE_FROTIS",
+    "title": "Microcard - frotis recomendado",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "QC_REQUIERE_FROTIS significa que el analizador sugiere confirmar el resultado con frotis sanguineo o revision morfologica. En lenguaje simple, el sistema avisa que conviene validar manualmente antes de asumir que todo el recuento es definitivo.",
+    "metadata": {
+      "chapter": "control de calidad",
+      "section": "QC_REQUIERE_FROTIS",
+      "tags": ["qc", "frotis", "revision", "morfologia"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:QC_AGREGADOS_PLAQUETARIOS",
+    "title": "Microcard - agregados plaquetarios",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "QC_AGREGADOS_PLAQUETARIOS indica que puede haber plaquetas agrupadas. Cuando eso ocurre, el recuento automatizado puede verse artificialmente bajo y se recomienda confirmar con frotis o muestra fresca.",
+    "metadata": {
+      "chapter": "control de calidad",
+      "section": "QC_AGREGADOS_PLAQUETARIOS",
+      "tags": ["plaquetas", "agregados", "plt", "qc", "frotis"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:PATRON_INFLAMATORIO",
+    "title": "Microcard - patron inflamatorio",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "PATRON_INFLAMATORIO resume una serie blanca compatible con respuesta inflamatoria. Debe explicarse como un patron hematologico que requiere correlacion clinica y no como un diagnostico etiologico cerrado.",
+    "metadata": {
+      "chapter": "serie blanca",
+      "section": "PATRON_INFLAMATORIO",
+      "tags": ["inflamatorio", "serie blanca", "neutrofilia", "leucocitosis"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:PATRON_LEUCOGRAMA_ESTRES",
+    "title": "Microcard - leucograma de estres",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "PATRON_LEUCOGRAMA_ESTRES describe una combinacion compatible con respuesta al estres glucocorticoide. En lenguaje ciudadano, significa que la serie blanca puede reflejar estres fisiologico y no confirma por si sola una infeccion.",
+    "metadata": {
+      "chapter": "serie blanca",
+      "section": "PATRON_LEUCOGRAMA_ESTRES",
+      "tags": ["estres", "linfopenia", "serie blanca", "cortisol"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:TROMBOCITOPENIA",
+    "title": "Microcard - trombocitopenia",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "La trombocitopenia describe un recuento de plaquetas por debajo del rango esperado. En lenguaje simple, significa que hay menos plaquetas circulantes, pero siempre debe confirmarse si existen agregados plaquetarios o artefactos preanaliticos antes de sacar conclusiones.",
+    "metadata": {
+      "chapter": "plaquetas",
+      "section": "TROMBOCITOPENIA",
+      "tags": ["trombocitopenia", "plaquetopenia", "plaquetas", "plt", "frotis"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:TROMBOCITOSIS",
+    "title": "Microcard - trombocitosis",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "La trombocitosis describe un recuento de plaquetas por encima del rango esperado. En lenguaje simple, significa que hay mas plaquetas circulantes de lo habitual; debe interpretarse junto con el hemograma completo, el frotis y el contexto clinico, sin asumir por si sola una causa especifica.",
+    "metadata": {
+      "chapter": "plaquetas",
+      "section": "TROMBOCITOSIS",
+      "tags": ["trombocitosis", "thrombocytosis", "plaquetas", "plt", "recuento alto", "platelet"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:LEUCOPENIA",
+    "title": "Microcard - leucopenia",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "La leucopenia significa que el recuento total de leucocitos o globulos blancos esta disminuido. Debe explicarse como un hallazgo hematologico que requiere correlacion clinica y, si hace falta, revision del diferencial leucocitario.",
+    "metadata": {
+      "chapter": "serie blanca",
+      "section": "LEUCOPENIA",
+      "tags": ["leucopenia", "leukopenia", "wbc", "serie blanca", "leucocitos"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:NEUTROFILIA",
+    "title": "Microcard - neutrofilia",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "La neutrofilia significa que el recuento de neutrofilos esta elevado. En el chat debe describirse como un patron posible dentro de la serie blanca y no como una causa unica o diagnostico definitivo.",
+    "metadata": {
+      "chapter": "serie blanca",
+      "section": "NEUTROFILIA",
+      "tags": ["neutrofilia", "neutrophilia", "neu", "serie blanca"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:LINFOPENIA",
+    "title": "Microcard - linfopenia",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "La linfopenia describe una disminucion del recuento de linfocitos. Puede formar parte de ciertos patrones hematologicos, como el leucograma de estres, pero no debe comunicarse como diagnostico final.",
+    "metadata": {
+      "chapter": "serie blanca",
+      "section": "LINFOPENIA",
+      "tags": ["linfopenia", "lymphopenia", "lym", "serie blanca", "estres"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:ARTEFACTOS_PLAQUETARIOS",
+    "title": "Microcard - artefactos plaquetarios",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "Los agregados o artefactos plaquetarios pueden hacer que el recuento automatizado de plaquetas parezca mas bajo de lo real. Si el sistema detecta esta posibilidad, conviene confirmar con frotis o revisar la muestra antes de interpretar la trombocitopenia como un hallazgo verdadero.",
+    "metadata": {
+      "chapter": "plaquetas",
+      "section": "ARTEFACTOS_PLAQUETARIOS",
+      "tags": ["plaquetas", "agregados", "platelet clumping", "artefacto", "frotis"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:PATRON_ANEMIA_NO_REGENERATIVA",
+    "title": "Microcard - anemia no regenerativa",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "PATRON_ANEMIA_NO_REGENERATIVA significa que la sangre muestra anemia sin evidencia suficiente de respuesta regenerativa. Debe comunicarse como patron que requiere correlacion veterinaria y no como enfermedad final.",
+    "metadata": {
+      "chapter": "serie roja",
+      "section": "PATRON_ANEMIA_NO_REGENERATIVA",
+      "tags": ["anemia", "serie roja", "hgb", "hct", "no regenerativa"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "microcard:PATRON_HEMOLISIS_MCHC",
+    "title": "Microcard - hemolisis sugerida por MCHC",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "PATRON_HEMOLISIS_MCHC aparece cuando el sistema detecta un aumento compatible con hemolisis o artefacto de muestra. La explicacion debe incluir que puede existir una causa preanalitica y que no debe interpretarse aisladamente.",
+    "metadata": {
+      "chapter": "serie roja",
+      "section": "PATRON_HEMOLISIS_MCHC",
+      "tags": ["hemolisis", "mchc", "artefacto", "muestra"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "review"
+    }
+  },
+  {
+    "doc_id": "microcard:PATRON_POLICITEMIA",
+    "title": "Microcard - policitemia",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "PATRON_POLICITEMIA resume un hematocrito por encima del rango esperado. Debe explicarse como elevacion de la masa eritrocitaria aparente o real, siempre pendiente de correlacion veterinaria.",
+    "metadata": {
+      "chapter": "serie roja",
+      "section": "PATRON_POLICITEMIA",
+      "tags": ["policitemia", "hct", "serie roja", "eritrocitos"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "review"
+    }
+  },
+  {
+    "doc_id": "microcard:LIMITATION_ANEMIA_REGENERATIVA",
+    "title": "Microcard - limitacion del sistema en anemia regenerativa",
+    "source_type": "microcard",
+    "chunk_type": "microcard",
+    "text": "El sistema documenta una limitacion estructural para PATRON_ANEMIA_REGENERATIVA porque no captura reticulocitos en esta version. La respuesta nunca debe afirmar regeneracion eritroide como si fuera una salida oficial del modelo.",
+    "metadata": {
+      "chapter": "limitaciones del sistema",
+      "section": "PATRON_ANEMIA_REGENERATIVA",
+      "tags": ["limitacion", "reticulocitos", "anemia regenerativa", "sistema"],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  }
+]

@@ -1,0 +1,23 @@
+[Unit]
+Description=HemoVet GPU runtime boot reconciler
+Documentation=file:///opt/hemovet-gpu/current/deploy/gpu/README.md
+Wants=network-online.target
+After=network-online.target docker.service nvidia-persistenced.service
+Requires=docker.service
+OnFailure=hemovet-gpu-failure-shutdown.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/hemovet-gpu/current/deploy/gpu/startup.sh
+RemainAfterExit=yes
+TimeoutStartSec=2700
+StandardOutput=journal+console
+StandardError=journal+console
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full
+ReadWritePaths=/opt/hemovet-gpu /var/lib/hemovet-gpu /run /etc/cdi /etc/systemd/system /var/lib/docker
+
+[Install]
+WantedBy=multi-user.target

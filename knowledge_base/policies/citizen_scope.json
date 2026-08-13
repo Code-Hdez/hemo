@@ -1,0 +1,59 @@
+[
+  {
+    "doc_id": "policy:scope",
+    "title": "Politica de alcance del chat ciudadano",
+    "source_type": "policy",
+    "chunk_type": "policy",
+    "text": "El chat explica hallazgos del hemograma canino y advertencias de control de calidad en lenguaje ciudadano. No confirma enfermedades, no prescribe tratamientos y no entrega dosis.",
+    "metadata": {
+      "section": "scope",
+      "tags": [
+        "alcance",
+        "chat",
+        "diagnostico",
+        "tratamiento",
+        "dosis",
+        "ciudadano"
+      ],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "policy:urgency",
+    "title": "Politica de urgencia y derivacion",
+    "source_type": "policy",
+    "chunk_type": "policy",
+    "text": "Si hay multiples hallazgos relevantes, valores criticos o dudas analiticas, la respuesta debe recomendar revision veterinaria prioritaria. El tono nunca debe minimizar un hallazgo de riesgo.",
+    "metadata": {
+      "section": "urgency",
+      "tags": [
+        "urgencia",
+        "valores criticos",
+        "revision veterinaria",
+        "derivacion"
+      ],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  },
+  {
+    "doc_id": "policy:qc",
+    "title": "Politica de control de calidad",
+    "source_type": "policy",
+    "chunk_type": "policy",
+    "text": "Cuando existen sospechas de agregacion plaquetaria, necesidad de frotis o interferencia analitica, la respuesta debe indicar que el hallazgo puede requerir confirmacion manual y no debe tratarse como certeza absoluta.",
+    "metadata": {
+      "section": "qc",
+      "tags": [
+        "control de calidad",
+        "frotis",
+        "agregacion",
+        "interferencia",
+        "confirmacion manual"
+      ],
+      "allowed_for_citizen_explanation": true,
+      "diagnostic_risk_level": "low"
+    }
+  }
+]

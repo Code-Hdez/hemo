@@ -1,0 +1,230 @@
+{
+  "audit_run_id": "bateria-2026-08-07",
+  "fecha": "2026-08-08",
+  "escala_evidencia": ["CONFIRMADO", "EVIDENCIA_FUERTE", "HIPOTESIS_PLAUSIBLE", "HIPOTESIS_DEBIL", "DESCARTADO", "NO_OBSERVABLE"],
+  "hipotesis": [
+    {
+      "id": "H-01",
+      "hipotesis": "El decode de un modelo 27B en una NVIDIA L4 es el suelo físico de la latencia",
+      "status": "CONFIRMADO",
+      "evidencia_a_favor": [
+        "decode = 4.241 s de 4.865 s de cómputo del modelo (87,2 %)",
+        "13,05 tok/s de mediana, con muy poca dispersión (12,59-13,38)",
+        "Referencia externa: 27B Q4_K_M rinde ~40 tok/s en RTX 4090; la L4 tiene ~30 % de su ancho de banda de memoria; 13/40 = 0,33"
+      ],
+      "evidencia_en_contra": [],
+      "prueba_que_lo_confirmaria_mas": "llama-bench en la misma L4 con el mismo gguf, comparado contra el tok/s observado",
+      "componente": "modelo + hardware"
+    },
+    {
+      "id": "H-02",
+      "hipotesis": "El contrato estructurado se incumple casi siempre y multiplica las llamadas al modelo",
+      "status": "CONFIRMADO",
+      "evidencia_a_favor": [
+        "133 llamadas para 70 preguntas (1,9 por pregunta)",
+        "Veredictos: 53 válidas, 57 inválidas, 23 reparables -> 60 % descartado",
+        "Repetición controlada: 1 de 10 primeras generaciones pasa la validación",
+        "Detalle dominante: policy_rule_id_missing (15), patient_fact_ids_missing (6), ANALITO:value/unit"
+      ],
+      "evidencia_en_contra": [
+        "Sólo 7 de 133 rechazos son barreras de seguridad, así que el contrato no protege contra daño clínico en la mayoría de los casos"
+      ],
+      "prueba_que_lo_confirmaria_mas": "E-1: leer la envoltura rechazada y ver si el contenido era correcto",
+      "componente": "validator / contrato estructurado"
+    },
+    {
+      "id": "H-03",
+      "hipotesis": "El paso de reparación no corrige el fallo que lo motivó",
+      "status": "CONFIRMADO",
+      "evidencia_a_favor": [
+        "Repetición controlada: 0 de 9 reparaciones corrigieron el fallo",
+        "Las 9 fallan con el MISMO detalle (PLT:value,PLT:unit) que disparó la reparación",
+        "Baja la temperatura de 0,3 a 0,1 y no cambia el resultado ni una vez",
+        "Coste: 2.046 s (41,6 % del cómputo del modelo) en la batería"
+      ],
+      "evidencia_en_contra": [],
+      "prueba_que_lo_confirmaria_mas": "Repetir con N=50 para acotar el intervalo de confianza de la tasa 0/9",
+      "componente": "repair"
+    },
+    {
+      "id": "H-04",
+      "hipotesis": "El clasificador de ámbito rechaza preguntas de su propio dominio",
+      "status": "CONFIRMADO",
+      "evidencia_a_favor": [
+        "intent_classifier.py es regex sobre texto normalizado, con confianzas codificadas a mano (0,96/0,97/0,99), sin LLM ni umbral aprendido",
+        "GEN-02 ('¿En qué puedes ayudarme con un hemograma canino?') recibe un rechazo por ámbito",
+        "3 de 5 preguntas de identidad/cortesía afectadas (GEN-01, GEN-02, GEN-05)",
+        "El servidor las marca 'refused' por su cuenta"
+      ],
+      "evidencia_en_contra": [
+        "El evento routed publica intent=identity para GEN-02, así que el fallo puede estar aguas abajo del clasificador y no en él"
+      ],
+      "prueba_que_lo_confirmaria_mas": "E-4: instrumentar qué regla/patrón casa en esos tres casos",
+      "componente": "scope classifier"
+    },
+    {
+      "id": "H-05",
+      "hipotesis": "Un único modelo de 27B atiende también tareas triviales (guardarraíles, clasificación, identidad)",
+      "status": "EVIDENCIA_FUERTE",
+      "evidencia_a_favor": [
+        "Perfil safety_guardrail usa el mismo modelo con num_predict 320",
+        "Preguntas de identidad tardan 19-23 s, todas a 13 tok/s",
+        "Socratic Tutor usa un modelo pequeño aparte (gemma-4-E4B) exactamente para guardrails y clasificación"
+      ],
+      "evidencia_en_contra": [
+        "No se ha medido la calidad que perdería un modelo menor en esas tareas"
+      ],
+      "prueba_que_lo_confirmaria_mas": "E-5: medir calidad de un modelo pequeño en el subconjunto de identidad/seguridad",
+      "componente": "arquitectura de serving"
+    },
+    {
+      "id": "H-06",
+      "hipotesis": "El modelo genera tokens de razonamiento (thinking) que no se muestran",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [
+        "Qwen3.6 tiene thinking activado por defecto según su model card"
+      ],
+      "evidencia_en_contra": [
+        "thinking=false en 133/133 llamadas (llm_chat.generation_config)",
+        "eval_count mediana 375 tokens, coherente con envelope_chars ~924 del sobre JSON visible; no queda hueco para una cadena de razonamiento"
+      ],
+      "prueba_que_lo_confirmaria_mas": "Capturar la respuesta cruda de Ollama y comprobar si trae campo 'thinking'",
+      "componente": "modelo"
+    },
+    {
+      "id": "H-07",
+      "hipotesis": "El multiturno reprocesa todo el contexto en cada turno (no hay reutilización de KV/prefijo)",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [
+        "prompt_eval_count crece 3.871 -> 5.151 -> 5.167 -> 5.378 en MT-B"
+      ],
+      "evidencia_en_contra": [
+        "llama-server registra 'restored context checkpoint (n_past = 1370/3454, size = 149.626 MiB)'",
+        "Tras restaurar checkpoint, prompt eval baja a 4 tokens (task 157291) o 417 tokens (task 157527)",
+        "El crecimiento observado corresponde a cache MISS de conversaciones nuevas, no a ausencia de caché"
+      ],
+      "prueba_que_lo_confirmaria_mas": "Medir tasa de acierto de checkpoint en una conversación real de 10 turnos",
+      "componente": "cache / runtime"
+    },
+    {
+      "id": "H-08",
+      "hipotesis": "El prefill (contexto, RAG, historial) es el cuello de botella",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [],
+      "evidencia_en_contra": [
+        "prefill = 551 s (11,3 %) frente a decode 4.241 s (87,2 %)",
+        "RAG se activa en 8 de 70 preguntas y dura 183-655 ms",
+        "El prompt usa 3.884 tokens de los 16.384 disponibles (24 %)"
+      ],
+      "prueba_que_lo_confirmaria_mas": "n/a — descartado",
+      "componente": "prefill"
+    },
+    {
+      "id": "H-09",
+      "hipotesis": "Hay CPU fallback, offload parcial o presión de VRAM",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [],
+      "evidencia_en_contra": [
+        "inference_device = full_gpu y gpu_active = true en 133/133",
+        "size_vram == size (16.926.501.764 B): el modelo entero en VRAM",
+        "17.418 de 23.034 MiB usados -> 5,6 GB libres"
+      ],
+      "prueba_que_lo_confirmaria_mas": "n/a — descartado",
+      "componente": "GPU"
+    },
+    {
+      "id": "H-10",
+      "hipotesis": "Existe cola o contención entre peticiones",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [
+        "llama-server corre con -np 1 (una sola ranura)"
+      ],
+      "evidencia_en_contra": [
+        "queue_duration_ms mediana 0 ms, máximo 1 ms en 133 llamadas",
+        "TTFB 0,2 s en las 70 preguntas"
+      ],
+      "prueba_que_lo_confirmaria_mas": "Repetir con 2 usuarios concurrentes (no hecho: exigiría carga en producción)",
+      "componente": "concurrencia"
+    },
+    {
+      "id": "H-11",
+      "hipotesis": "Hay arranque en frío o recarga del modelo entre preguntas",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [],
+      "evidencia_en_contra": [
+        "load_duration_ms mediana 554 ms",
+        "expires_at = año 2318 (keep_alive infinito)",
+        "El proceso llama-server lleva 2 días arriba"
+      ],
+      "prueba_que_lo_confirmaria_mas": "n/a — descartado",
+      "componente": "runtime"
+    },
+    {
+      "id": "H-12",
+      "hipotesis": "El output se trunca por num_predict y rompe el JSON",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [
+        "2 de 138 llamadas terminan con finish_reason = length"
+      ],
+      "evidencia_en_contra": [
+        "136 de 138 terminan con finish_reason = stop",
+        "completion_tokens mediana 319 frente a num_predict 1.280"
+      ],
+      "prueba_que_lo_confirmaria_mas": "n/a — marginal",
+      "componente": "límites de output"
+    },
+    {
+      "id": "H-13",
+      "hipotesis": "La memoria conversacional actual cumple el objetivo de 10 pares",
+      "status": "DESCARTADO",
+      "evidencia_a_favor": [],
+      "evidencia_en_contra": [
+        "history_limit = 12 en todos los perfiles, y es límite de MENSAJES, no de pares -> 6 pares",
+        "El objetivo de producto son 10 pares"
+      ],
+      "prueba_que_lo_confirmaria_mas": "Conversación real de 15 turnos midiendo qué recuerda",
+      "componente": "memoria conversacional"
+    },
+    {
+      "id": "H-14",
+      "hipotesis": "La primera generación rechazada era clínicamente correcta",
+      "status": "NO_OBSERVABLE",
+      "evidencia_a_favor": [
+        "El modelo produce la respuesta correcta para la misma pregunta 1 de cada 10 veces, así que sabe generarla"
+      ],
+      "evidencia_en_contra": [],
+      "prueba_que_lo_confirmaria_mas": "E-1: CHAT_STRUCTURED_DEBUG_DIR (existe en el código, apagado en producción)",
+      "componente": "NO_OBSERVABLE",
+      "por_que_no_observable": "CHAT_STRUCTURED_DEBUG_DIR vacío y /tmp/structured-debug con 0 ficheros; el log del backend sólo publica hashes y códigos; el log de llama-server con --log-verbosity 4 da 0 coincidencias de términos clínicos en 17.344 líneas"
+    },
+    {
+      "id": "H-15",
+      "hipotesis": "El código local es exactamente el que produjo las 70 respuestas",
+      "status": "EVIDENCIA_FUERTE",
+      "evidencia_a_favor": [
+        "Repositorio local en 21f18fd8 sin ficheros modificados",
+        "Los nombres de validador y códigos de error del log coinciden exactamente con el código local"
+      ],
+      "evidencia_en_contra": [
+        "No se cerró la cadena git SHA -> imagen del backend -> despliegue"
+      ],
+      "prueba_que_lo_confirmaria_mas": "E-0: leer build metadata/labels de la imagen del backend",
+      "componente": "identidad de despliegue"
+    },
+    {
+      "id": "H-16",
+      "hipotesis": "El usuario espera más de lo necesario por falta de streaming de tokens",
+      "status": "HIPOTESIS_PLAUSIBLE",
+      "evidencia_a_favor": [
+        "La cronología SSE no muestra eventos delta/token: sólo start, status y final",
+        "t_primer_texto_s es null en las 70 preguntas",
+        "La arquitectura valida el sobre completo antes de emitir"
+      ],
+      "evidencia_en_contra": [
+        "No se ha inspeccionado el frontend para confirmar que no puede renderizar parcial"
+      ],
+      "prueba_que_lo_confirmaria_mas": "Leer streamChatOnce en frontend_4/src/app/api.ts y el contrato de eventos",
+      "componente": "streaming / latencia percibida"
+    }
+  ]
+}

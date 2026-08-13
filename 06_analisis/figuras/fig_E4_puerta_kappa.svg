@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="416.16pt" height="288.222281pt" viewBox="0 0 416.16 288.222281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:36.596745</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 288.222281 
+L 416.16 288.222281 
+L 416.16 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 95.5872 191.763881 
+C 116.896799 191.763881 137.336482 186.389694 152.404644 176.824921 
+C 167.472806 167.260149 175.9392 154.285712 175.9392 140.759081 
+C 175.9392 127.23245 167.472806 114.258014 152.404644 104.693241 
+C 137.336482 95.128469 116.896799 89.754281 95.5872 89.754281 
+C 74.277601 89.754281 53.837918 95.128469 38.769756 104.693241 
+C 23.701594 114.258014 15.2352 127.23245 15.2352 140.759081 
+C 15.2352 154.285712 23.701594 167.260149 38.769756 176.824921 
+C 53.837918 186.389694 74.277601 191.763881 95.5872 191.763881 
+z
+" clip-path="url(#p38c2e361df)" style="fill: #2a78d6; opacity: 0.16; stroke: #2a78d6; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 320.5728 191.763881 
+C 341.882399 191.763881 362.322082 186.389694 377.390244 176.824921 
+C 392.458406 167.260149 400.9248 154.285712 400.9248 140.759081 
+C 400.9248 127.23245 392.458406 114.258014 377.390244 104.693241 
+C 362.322082 95.128469 341.882399 89.754281 320.5728 89.754281 
+C 299.263201 89.754281 278.823518 95.128469 263.755356 104.693241 
+C 248.687194 114.258014 240.2208 127.23245 240.2208 140.759081 
+C 240.2208 154.285712 248.687194 167.260149 263.755356 176.824921 
+C 278.823518 186.389694 299.263201 191.763881 320.5728 191.763881 
+z
+" clip-path="url(#p38c2e361df)" style="fill: #e34948; opacity: 0.16; stroke: #e34948; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; fill: #0b0b0b" transform="translate(69.561028 66.20062)">7-ago (L4)</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; fill: #0b0b0b" transform="translate(80.316731 77.003081)">17 ids</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(83.275794 103.63748)">GEN-12</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(84.812942 112.41248)">HIS-02</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(84.812942 121.18748)">HIS-06</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(84.812942 129.96248)">HIS-07</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(82.943684 138.73748)">HIS-F05</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(82.943684 147.51248)">HIS-F07</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(84.239114 156.291034)">MT-H-1</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(84.239114 165.108691)">MT-H-2</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(84.408216 173.83748)">SEL-03</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(92.3372 180.649784)">…</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; fill: #0b0b0b" transform="translate(284.735222 66.20062)">réplica (A100)</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans', sans-serif; fill: #0b0b0b" transform="translate(308.433347 77.003081)">6 ids</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(308.261394 121.18748)">GEN-15</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(307.929284 129.96248)">HIS-F08</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(309.588816 138.73748)">MT-A-3</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(309.224714 147.51248)">MT-H-3</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(309.393816 156.28748)">SEL-19</text>
+    <text style="font-size: 6.5px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(309.393816 165.06248)">SEL-21</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 26px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="208.08" y="147.512988" transform="rotate(-0 208.08 147.512988)">∅</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', sans-serif; fill: #d03b3b" transform="translate(178.734414 186.662183)">intersección</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'DejaVu Sans', sans-serif; fill: #d03b3b" transform="translate(174.663047 197.204507)">vacía: 0 de 17</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #d03b3b" x="208.08" y="240.218441" transform="rotate(-0 208.08 240.218441)">κ = -0,145   ·   umbral de aceptación κ ≥ 0,75</text>
+   </g>
+   <g id="text_8">
+    <g id="patch_4">
+     <path d="M 144.862031 272.323185 
+L 271.297969 272.323185 
+Q 275.497969 272.323185 275.497969 268.123185 
+L 275.497969 258.123185 
+Q 275.497969 253.923185 271.297969 253.923185 
+L 144.862031 253.923185 
+Q 140.662031 253.923185 140.662031 258.123185 
+L 140.662031 268.123185 
+Q 140.662031 272.323185 144.862031 272.323185 
+z
+" style="fill: #d03b3b"/>
+    </g>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="208.08" y="265.720841" transform="rotate(-0 208.08 265.720841)">PUERTA §8.2: NO PASA</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.998281" transform="rotate(-0 7.2 15.998281)">La puerta de aceptación: coincidencia de identificadores de fallo</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p38c2e361df">
+   <rect x="7.2" y="25.998281" width="401.76" height="255.024"/>
+  </clipPath>
+ </defs>
+</svg>

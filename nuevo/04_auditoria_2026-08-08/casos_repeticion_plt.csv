@@ -1,0 +1,11 @@
+id_caso,hilo,context_scope,bloque,tipo,prompt,resultado_esperado
+"REP-PLT-01","REP-PLT-01","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-02","REP-PLT-02","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-03","REP-PLT-03","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-04","REP-PLT-04","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-05","REP-PLT-05","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-06","REP-PLT-06","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-07","REP-PLT-07","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-08","REP-PLT-08","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-09","REP-PLT-09","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."
+"REP-PLT-10","REP-PLT-10","selected_hemogram","Repeticion diagnostica","valores","¿Cómo están las plaquetas?","PLT 290 x10³/µL; normal frente a 175-500."

@@ -1,0 +1,19 @@
+flowchart TB
+  USER["Usuario\n(navegador web)"] --> WEB["Servidor web\n(proxy inverso)"]
+
+  subgraph PROD["Servidor principal de HemoVet"]
+    WEB --> FE["Interfaz web\n(frontend)"]
+    WEB --> BE["Servidor de la aplicación\n(backend)"]
+    FE -.-> BE
+    BE --> PG[("Base de datos\n(persistencia)")]
+    BE --> CHROMA[("Base de conocimiento\nvectorial (RAG)")]
+  end
+
+  subgraph GPU["Servidor dedicado con GPU\n(arquitectura objetivo, en migración)"]
+    OLLAMA_GPU["Modelo de lenguaje\n(fuente única del asistente)"]
+  end
+
+  BE -->|"se conecta a este\nservidor dedicado"| OLLAMA_GPU
+
+  classDef pending fill:#fff3cd,stroke:#c99a2e,stroke-dasharray: 4 3
+  class GPU,OLLAMA_GPU pending

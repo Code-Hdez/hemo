@@ -1,0 +1,166 @@
+{
+  "schema": "hemovet.fase22.m15/v1",
+  "fecha": "2026-08-09",
+  "hallazgo": "M-15 desplegado; el poller NO rearma",
+  "veredicto": "SIGUE SIN FUNCIONAR, pero ya no en silencio. Causa acotada a un TypeError por vuelta.",
+  "instrumentos": {
+    "reloj": "date +%s%3N en la VM hemovet-prod, antes y despues del POST /api/generate",
+    "size_vram": "GET http://10.128.0.3:11434/api/ps, muestreado cada 5 s",
+    "como_se_que_funciona": "las dos lecturas de referencia reproducen los valores medidos el 8-ago para 16384 y 65536 —16926501764 y 18889436036— con separacion del 11,6 %, muy por encima de la tolerancia del 5 %"
+  },
+  "despliegue": {
+    "oleada": "157a389a (poller) + 55d5e599 (arreglo de CI)",
+    "run": "31288756295",
+    "jobs": "8/8 success incluidos Deploy production through IAP y Production smoke tests",
+    "verificado_en_el_contenedor": {
+      "realign_runner_if_drifted": true,
+      "capture_runner_baseline": true,
+      "RUNNER_VRAM_TOLERANCE": 0.05,
+      "OLLAMA_RUNNER_REALIGN_SECONDS": 60.0
+    }
+  },
+  "experimento": {
+    "metodo": "provocar la discordancia sin reiniciar la VM, con POST /api/generate num_ctx=65536 keep_alive=-1",
+    "T0": {
+      "hora": "2026-08-09T01:56:14Z",
+      "size_vram": 16926501764,
+      "estado": "alineado"
+    },
+    "T1": {
+      "hora": "2026-08-09T01:57:56Z",
+      "size_vram": 18889436036,
+      "recarga_a_65536_s": 101,
+      "nota": "MEDIDO. Reproduce exactamente la mediana de 101,0 s (n=5) del 8-ago."
+    },
+    "observacion": {
+      "duracion_s": 170,
+      "intervalos_de_poll_transcurridos": "2 o 3 (intervalo 60 s)",
+      "size_vram_en_todas_las_muestras": 18889436036,
+      "rearmados": 0,
+      "muestras": 34,
+      "cadencia_s": 5
+    },
+    "log_del_backend": {
+      "llm_chat.runner_realigned": 0,
+      "llm_chat.runner_realign_failed": 0,
+      "nota": "ni exito ni fallo: silencio absoluto"
+    },
+    "restauracion": "runner devuelto a 16384 (size_vram 16926501764); produccion queda como estaba"
+  },
+  "hipotesis_descartadas": [
+    {
+      "h": "la URL con doble barra",
+      "por_que_no": "OLLAMA_BASE_URL de produccion acaba en '/', pero el cliente hace base_url.rstrip('/'). Comprobado dentro del contenedor: base_url normalizada = http://10.128.0.3:11434. Y aun asi //api/ps devuelve 307, no un error."
+    },
+    {
+      "h": "el cliente esta envuelto y getattr no encuentra los metodos",
+      "por_que_no": "composition.py asigna llm=OllamaNativeLLMClient directamente, sin decorador."
+    },
+    {
+      "h": "la logica del rearmado esta mal",
+      "por_que_no": "ejecutada dentro del contenedor con el codigo desplegado: resident_runner_vram=16926501764, capture_runner_baseline=16926501764, realign sin deriva=False. Correcto."
+    },
+    {
+      "h": "el poll no llego a correr por tiempo",
+      "por_que_no": "el contenedor arranco a las 01:53:02 y la deriva duro de 01:57:56 a 02:00:46; caben dos o tres ticks de 60 s."
+    }
+  ],
+  "causa_raiz": "NO_DETERMINADA, con la busqueda acotada",
+  "candidatas_que_quedan": [
+    "capture_runner_baseline() devolvio None en la app viva, y sin referencia realign devuelve False",
+    "la tarea de fondo no llego a crearse o murio sin registrar nada"
+  ],
+  "el_hallazgo_de_verdad": "Las dos candidatas son SILENCIOSAS por construccion. start_runner_realignment hace 'if not callable(realign) or self._realign_task is not None: return' sin registrar nada, y capture_runner_baseline no registra su resultado. Desde fuera, un poller que nunca arranca es indistinguible de uno que arranca y no encuentra deriva. La mitigacion se comprobo con siete tests en verde —condicion necesaria— y se trato como suficiente. Es la novena vez que aparece esta forma en el proyecto, y la primera en una mitigacion ya desplegada.",
+  "siguiente_paso": "Anadir observabilidad a las precondiciones, no a la funcion: registrar el arranque del poll con el intervalo, y el resultado de capture_runner_baseline. Sin eso, cualquier arreglo se verifica igual de mal. No esta en el camino critico de 01_aceptacion.json: se rodea.",
+  "impacto_en_la_bateria": "Ninguno mientras el runner siga alineado, y lo esta. La bateria empieza con un warmup del backend, asi que arranca en el estado bueno. El riesgo es un reinicio de la VM a mitad de las 6,4 h, que ya existia antes de M-15.",
+  "que_contradijo_este_trabajo": [
+    "Las dos hipotesis con nombre, las dos falsificadas por el mismo log que las iba a distinguir.",
+    "Mi propia lectura por eliminacion: conclui que '_warmed_vram is None' era el unico camino silencioso que quedaba. El log dice baseline_vram=16926501764. La eliminacion era tirante y estaba mal.",
+    "Mi 'dos construcciones de ChatContainer': artefacto de leer el arbol equivocado. El repositorio principal esta en fix/last-resort-policy-rule-id, no en main.",
+    "Que la observabilidad fuese cosmetica. Convirtio un silencio de dos sesiones en un error con nombre, hora y periodicidad exacta en menos de diez minutos.",
+    "El reproductor de dos llamadas, que iba a dar la linea exacta en treinta segundos y salio limpio tres veces. Y mi propia sospecha de que el culpable era mi linea de log: en el proceso vivo, logger.log(logging.DEBUG, ...) funciona.",
+    "Mi tercera hipotesis: que el TypeError estuviera en warmup(). Llamada directa con el perfil real devuelve True. La eliminacion que la sugeria era correcta en su forma y falsa en su conclusion, que es la manera mas incomoda de equivocarse."
+  ],
+  "actualizado": "2026-08-09 tras desplegar observabilidad (8c9a2c6a)",
+  "hipotesis_del_usuario": {
+    "A_recoleccion_de_basura": {
+      "estado": "FALSIFICADA",
+      "prueba": "build_chat_container se llama UNA vez en _lifespan (application.py:359) y el contenedor queda en fastapi_app.state.llm_chat. Ademas el log nuevo 'runner_realign_tick vuelta=1' demuestra que la tarea sobrevivio al primer sleep(60): si la recogiera el recolector, esa linea no existiria."
+    },
+    "B_baseline_None": {
+      "estado": "FALSIFICADA",
+      "prueba": "el log nuevo dice 'provider_warmup completed=True baseline_vram=16926501764'. La referencia se captura y no es None."
+    }
+  },
+  "lo_que_revelo_la_observabilidad": {
+    "instrumento": "docker logs -t del backend desplegado (8c9a2c6a)",
+    "eventos": [
+      "02:45:54 runner_realign_started interval_seconds=60.0 task=llm-chat-runner-realignment",
+      "02:45:55 llm_chat.warmup duration_ms=655",
+      "02:46:54 runner_realign_tick vuelta=1 rearmado=False   <- la unica vuelta sana",
+      "02:47:54 runner_realign_failed error_type=TypeError",
+      "02:48:54 runner_realign_failed error_type=TypeError",
+      "02:49:54 runner_realign_failed error_type=TypeError   (ya con deriva forzada)",
+      "02:50:54 runner_realign_failed error_type=TypeError",
+      "02:51:54 runner_realign_failed error_type=TypeError"
+    ],
+    "hecho": "el bucle SI corre, cada 60 s exactos, y falla con TypeError desde la vuelta 2",
+    "descartado": "no es mi linea de log: composition.py importa logging (linea 5) y logger es un logging.Logger estandar (linea 85). El TypeError viene de realign()",
+    "sin_resolver": "que cambia entre la vuelta 1 (sana) y la 2 (TypeError) SIN que haya deriva. El unico operando que puede dar TypeError en esa funcion es _warmed_vram dejando de ser numerico despues de la primera vuelta.",
+    "estado": "NO_DETERMINADO"
+  },
+  "el_runner_volvio_a_16384": {
+    "medido": true,
+    "valor": 16926501764,
+    "aviso": "NO se ha demostrado que lo hiciera el poller: no hay ningun evento runner_realigned. Atribuirselo seria justamente el habito que este proyecto persigue. Queda como NO_DETERMINADO quien lo realineo."
+  },
+  "estado_de_produccion": {
+    "runner": "alineado, 16926501764",
+    "impacto_del_fallo": "benigno: el poll es mantenimiento de fondo, la excepcion se captura y no toca el camino de peticion. El coste es un WARNING por minuto y que la mitigacion no mitiga.",
+    "recomendacion": "revertir el poller (b63c221e) manteniendo la observabilidad, o arreglar el TypeError. El plan ya preveia esta salida: 'si en 45 minutos no lo has arreglado, revierte el poller y sigue'."
+  },
+  "reproductor_de_dos_llamadas": {
+    "propuesto_por": "el usuario, para no depender de exc_info ni de un despliegue",
+    "ejecutado": "dentro del contenedor desplegado, cliente nuevo, tres llamadas seguidas",
+    "resultado": "NO REPRODUCE: llamada 1 False, 2 False, 3 False; _warmed_vram estable en 16926501764",
+    "consecuencia": "el TypeError NO esta en realign_runner_if_drifted llamada repetidamente sobre un cliente recien construido. Hace falta el cliente vivo y de larga vida."
+  },
+  "hipotesis_propia_tambien_falsificada": {
+    "h": "lo rompio mi linea de log, que usa logging.DEBUG desde la vuelta 2 y logging.INFO en la 1",
+    "prueba_en_el_proceso_vivo": {
+      "composition.logging is logging": true,
+      "logging.DEBUG": "10 (int)",
+      "logger": "Logger",
+      "logger.log(DEBUG, ...)": "OK"
+    },
+    "estado": "FALSIFICADA. Mi linea de log no lanza."
+  },
+  "lo_que_queda_por_mirar": [
+    "el TypeError necesita el cliente VIVO del contenedor (http_client compartido, warmup_profile puesto, larga vida), no uno recien construido",
+    "el siguiente paso barato es exc_info=True en el except del bucle: hoy solo registra type(exc).__name__, que es justo lo que obliga a adivinar"
+  ],
+  "recomendacion_final": "revertir b63c221e y CONSERVAR 8c9a2c6a. Es estrictamente mejor que el estado de anteayer: los tres eventos nuevos siguen ahi para quien retome M-15. El fallo actual es benigno —un WARNING por minuto, sin tocar el camino de peticion— y M-15 vale 101 s por reinicio de GPU con una frecuencia que sigue sin medirse.",
+  "estado_final_de_la_sesion": {
+    "decision": "APAGADO, NO REVERTIDO",
+    "como": "OLLAMA_RUNNER_REALIGN_SECONDS default 0.0 (ge=0); start_runner_realignment sale registrando llm_chat.runner_realign_disabled",
+    "que_se_queda": [
+      "exc_info=True en el except del bucle",
+      "log de la rama vram is None, que recargaba y no lo contaba",
+      "los tres eventos de observabilidad de 8c9a2c6a"
+    ],
+    "documentado_en": [
+      ".env.example",
+      ".env.production.example"
+    ],
+    "para_reencender": "poner OLLAMA_RUNNER_REALIGN_SECONDS a 60",
+    "causa_raiz": "NO_DETERMINADA"
+  },
+  "hipotesis_falsificadas_en_esta_sesion": [
+    "el recolector se lleva la tarea (usuario)",
+    "capture_runner_baseline devolvio None (usuario)",
+    "lo rompe la linea de log nueva (mia)",
+    "tres llamadas seguidas reproducen (mia)",
+    "el TypeError esta en warmup() (mia): con el perfil real devuelve True"
+  ],
+  "reproductor_pendiente": "forzar el camino B: _warmed_vram = 1 tras capture_runner_baseline, con warmup_profile REAL, y traceback.print_exc(). Recarga el modelo: horario de bajo trafico y restaurar a 16384 al terminar."
+}

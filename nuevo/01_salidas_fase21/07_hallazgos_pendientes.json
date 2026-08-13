@@ -1,0 +1,185 @@
+{
+  "schema": "hemovet.fase22.hallazgos/v1",
+  "fecha": "2026-08-08",
+  "descripcion": "Hallazgos abiertos que no son ruido de suite ni tarea de limpieza.",
+  "hallazgos": [
+    {
+      "id": "H-01",
+      "titulo": "El reloj por turno local mata turnos que produccion no mata",
+      "severidad": "alta",
+      "estado": "cerrado_por_prevencion",
+      "evidencia": {
+        "CHAT_TOTAL_TIMEOUT_SECONDS_local": 150,
+        "CHAT_TOTAL_TIMEOUT_SECONDS_desplegado": 240,
+        "turnos_medidos_7ago": 70,
+        "turnos_sobre_150s": 5,
+        "turnos_sobre_240s": 0,
+        "maximo_observado_s": 212.315,
+        "holgura_produccion_s": 27.7,
+        "detalle": [
+          {
+            "id_caso": "HIS-02",
+            "segundos": 212.315,
+            "reparaciones": 1,
+            "codigo_error": "generation_repair_failed",
+            "ya_era_fallo": true
+          },
+          {
+            "id_caso": "SEL-03",
+            "segundos": 181.764,
+            "reparaciones": 1,
+            "codigo_error": "generation_repair_failed",
+            "ya_era_fallo": true
+          },
+          {
+            "id_caso": "SEL-19",
+            "segundos": 153.664,
+            "reparaciones": 1,
+            "codigo_error": null,
+            "ya_era_fallo": false
+          },
+          {
+            "id_caso": "HIS-F08",
+            "segundos": 152.287,
+            "reparaciones": 1,
+            "codigo_error": null,
+            "ya_era_fallo": false
+          },
+          {
+            "id_caso": "MT-B-3",
+            "segundos": 150.883,
+            "reparaciones": 1,
+            "codigo_error": null,
+            "ya_era_fallo": false
+          }
+        ]
+      },
+      "consecuencia": "Tres de los cinco habian terminado bien, pero el numero no seria tres: los tres estan en 150,9 / 152,3 / 153,7 s contra un umbral de 150, menos de 4 s de margen, y con temperature=0.3 la duracion varia entre corridas mucho mas que eso. Serian 0, 1, 2 o 3 segun la tirada, y la base local habria dado 17, 18, 19 o 20 sin ninguna razon.",
+      "por_que_importa": "La puerta no habria sido severa: habria sido IRREPRODUCIBLE. Un resultado inestable no se diagnostica, se persigue — y el diagnostico natural habria sido 'el sembrado esta mal'. Nadie sospecha del instrumento cuando el instrumento dice que algo va mal.",
+      "resuelto_por": "preflight_paridad.py comprueba CHAT_TOTAL_TIMEOUT_SECONDS y aborta.",
+      "margen_al_umbral_s": [
+        0.9,
+        2.3,
+        3.7
+      ]
+    },
+    {
+      "id": "H-02",
+      "titulo": "Un claim de transicion con numero se acepta cuando deberia rechazarse",
+      "severidad": "a_determinar",
+      "estado": "abierto",
+      "evidencia": {
+        "test": "backend/tests/llm_chat/test_structured_send_chat_message.py::test_transition_claim_cannot_carry_a_number",
+        "fallo": "Failed: DID NOT RAISE ChatRuntimeUnavailable",
+        "reproducido_en": "worktree limpio sobre 21f18fd8, sin cambios locales",
+        "anterior_a": "21f18fd8 (base de las seis ramas de remediacion)"
+      },
+      "consecuencia": "El test afirma que un claim de transicion que lleva un numero debe rechazarse. No se rechaza. Es un posible agujero de validacion clinica, no una molestia de CI: la prohibicion existe porque un claim de transicion afirma un cambio sin citar la medida que lo sostiene.",
+      "por_que_no_se_toco": "El regimen vigente prohibe relajar validacion clinica sin autorizacion escrita, y arreglarlo exige decidir si el defecto esta en el test o en el codigo. Esa decision es de producto.",
+      "siguiente_paso": "Determinar cual de los dos lados es el correcto antes de desplegar."
+    },
+    {
+      "id": "H-03",
+      "titulo": "ruff falla en la base: import sin usar",
+      "severidad": "baja",
+      "estado": "abierto",
+      "evidencia": {
+        "regla": "F401",
+        "simbolo": "GuardAction",
+        "fichero": "backend/app/modules/llm_chat/application/use_cases/send_chat_message.py:99",
+        "reproducido_en": "worktree limpio sobre 21f18fd8"
+      },
+      "consecuencia": "El paso 'Static checks' del workflow de despliegue corre `ruff check --no-cache backend` y fallaria."
+    },
+    {
+      "id": "H-04",
+      "titulo": "La paridad de entradas no tiene referencia de produccion capturada",
+      "severidad": "media",
+      "estado": "abierto_bloquea_bateria",
+      "evidencia": {
+        "campos_sin_referencia": [
+          "chunk_count",
+          "index_fingerprint",
+          "embedding_model",
+          "hash_casos",
+          "revision_codigo"
+        ],
+        "observables_en_local": true,
+        "comportamiento_actual": "rc=3, aborta antes del primer caso"
+      },
+      "consecuencia": "El preflight compara parametros; sin estas cinco huellas, dos aparatos con los 17 parametros identicos y otro corpus RAG pasarian como equivalentes.",
+      "siguiente_paso": "Capturar una vez de produccion: GET /api/v1/chat/health -> {chunk_count, index_fingerprint, embedding_model}, mas el hash del CSV de casos y la revision desplegada. Versionarlo junto al recorte del printenv."
+    },
+    {
+      "id": "H-05",
+      "titulo": "Bajar OLLAMA_CONTEXT_LENGTH a 16384 en la VM: pendiente, no descartado",
+      "severidad": "baja",
+      "estado": "pendiente_proxima_release",
+      "evidencia": {
+        "cambio": "dos ediciones de una linea",
+        "ficheros": [
+          "deploy/gpu/runtime_contract.py:254 (65536 -> 16384)",
+          "deploy/gpu/validate-runtime.sh:40 (piso -ge 65536 -> -ge 16384)"
+        ],
+        "tambien": "deploy/gpu/compose.env.example:7,21 (ejemplo, no ejecutable)",
+        "aritmetica_verificada": "12000 + 1280 + 256 = 13536 <= 16384, margen 2848; ningun perfil por alcance declara mas",
+        "cadena_de_firmas": "bundle-manifest.sha256 -> sha256 6ec6942b -> applied-release.json .startup.bundle_digest; hemovet-gpu.service OnFailure apaga la VM"
+      },
+      "por_que_no_ahora": "Por si sola cuesta cinco pasos sobre una cadena cerrada cuyo modo de fallo es que la VM se apaga, con capacidad L4 escasa para recuperarla. Y el beneficio es 101 s por arranque de GPU, que es lo que ya absorbe el poller de M-15: el runner esta ya residente a 16384 (size_vram=16926501764).",
+      "cuando": "En la siguiente release que se emita por cualquier otro motivo. Los cinco pasos ya se pagan ahi; el coste marginal de dos ediciones de una linea es practicamente cero y el riesgo es el que esa release ya asume. El coste es prohibitivo solo cuando el cambio va solo."
+    },
+    {
+      "id": "H-06",
+      "titulo": "Los '73 turnos, 138 llamadas' eran 70 y 133",
+      "severidad": "media",
+      "estado": "corregido",
+      "evidencia": {
+        "grupos_request_id_en_el_log": 73,
+        "turnos_de_la_bateria": 70,
+        "huerfanos": 3,
+        "que_eran_los_huerfanos": "Tres turnos ANTERIORES al inicio de la bateria (23:46:53, 23:47:32, 23:49:02 contra las 23:49:13), uno por alcance —faq_simple, hemogram_interpretation, history_comparison—: una prueba de humo manual de los tres scopes antes de lanzar.",
+        "correlacion": "70 grupos mapean 1:1 con los 70 id_caso por ventana temporal; cero ambiguos, cero duplicados, cero casos sin grupo",
+        "reparto_antiguo_73": {
+          "1": 38,
+          "2": 8,
+          "3": 24,
+          "4": 3,
+          "llamadas": 138
+        },
+        "reparto_correcto_70": {
+          "1": 36,
+          "2": 8,
+          "3": 23,
+          "4": 3,
+          "llamadas": 133
+        }
+      },
+      "correccion_al_diagnostico": "Se atribuyo el desplazamiento del p50 a donde cayeran esos tres. Medido, mueven el p50 de servidor de 58,8 a 58,4 s: 0,4 s. No son la causa. La causa de que se citara 32,8 s es que poblacion se conto.",
+      "p50_segun_poblacion_s": {
+        "los_70_lo_que_espero_el_usuario": {
+          "n": 70,
+          "p50": 59.1,
+          "p90": 129.4,
+          "max": 212.315
+        },
+        "sin_error": {
+          "n": 53,
+          "p50": 46.1
+        },
+        "solo_los_que_fallaron": {
+          "n": 17,
+          "p50": 98.8
+        },
+        "sin_reparacion": {
+          "n": 36,
+          "p50": 34.8
+        },
+        "con_reparacion": {
+          "n": 34,
+          "p50": 98.1
+        }
+      },
+      "consecuencia": "El p50 honesto de la experiencia del usuario es 59,1 s, no 32,8: el usuario tambien espera cuando el turno falla, y espera MAS (p50 98,8 s en los 17 fallos). Cualquier p50 calculado solo sobre exitos subestima la espera. El motor real es la reparacion: 34,8 s sin reparar contra 98,1 s reparando."
+    }
+  ]
+}

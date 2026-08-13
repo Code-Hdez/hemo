@@ -1,0 +1,194 @@
+{
+ "$defs": {
+  "ClaimType": {
+   "description": "Canonical claim taxonomy (etapa 4).\n\nReconciled with the plan's minimum vocabulary rather than duplicated:\n``PATIENT_FACT``/``PATIENT_FACT_EXPLANATION`` are this codebase's\nexisting names for what the plans call ``LAB_FACT``; ``SAFETY_GUIDANCE``\nis the existing name for ``SAFETY_BOUNDARY``; ``DOCUMENTED_GENERAL_\nKNOWLEDGE`` is the existing name for ``DOCUMENTARY_EVIDENCE``. Renaming\nthese deeply-embedded, already-working names would be cosmetic churn\nwith real regression risk in a validator this load-bearing, so the\nsingle canonical name is the existing one; this docstring is the\nreconciliation record. The genuinely new types below (no prior\nequivalent existed) close real gaps: profile, study, ML, quality and\nhistory facts had no claimable, ID-backed representation before this\netapa, and parametric veterinary knowledge had no claim type distinct\nfrom bare conversational prose.",
+   "enum": [
+    "PATIENT_FACT",
+    "PATIENT_FACT_EXPLANATION",
+    "PATIENT_PROFILE_FACT",
+    "STUDY_METADATA",
+    "ML_CLASSIFICATION",
+    "ML_FINDING",
+    "QUALITY_FLAG",
+    "HISTORY_COMPARISON",
+    "PARAMETRIC_VETERINARY_KNOWLEDGE",
+    "DOCUMENTED_GENERAL_KNOWLEDGE",
+    "LIMITATION",
+    "SAFETY_GUIDANCE",
+    "URGENT_REFERRAL",
+    "CONVERSATIONAL",
+    "TRANSITION"
+   ],
+   "title": "ClaimType",
+   "type": "string"
+  },
+  "EvidenceSpan": {
+   "additionalProperties": false,
+   "description": "Short, internal support copied from one retained source.\n\nThe span is never exposed as the public citation.  Requiring it to occur in\nthe retained chunk prevents a model from attaching an arbitrary source id\nto a claim that was generated from parametric knowledge.",
+   "properties": {
+    "source_id": {
+     "maxLength": 160,
+     "minLength": 1,
+     "title": "Source Id",
+     "type": "string"
+    },
+    "text": {
+     "maxLength": 600,
+     "minLength": 1,
+     "title": "Text",
+     "type": "string"
+    }
+   },
+   "required": [
+    "source_id",
+    "text"
+   ],
+   "title": "EvidenceSpan",
+   "type": "object"
+  },
+  "GeneratedClaim": {
+   "additionalProperties": false,
+   "properties": {
+    "claim_id": {
+     "pattern": "^claim_[A-Za-z0-9_-]{1,80}$",
+     "title": "Claim Id",
+     "type": "string"
+    },
+    "text": {
+     "maxLength": 1800,
+     "minLength": 1,
+     "title": "Text",
+     "type": "string"
+    },
+    "claim_type": {
+     "$ref": "#/$defs/ClaimType"
+    },
+    "fact_ids": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 32,
+     "title": "Fact Ids",
+     "type": "array"
+    },
+    "source_ids": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 16,
+     "title": "Source Ids",
+     "type": "array"
+    },
+    "policy_rule_ids": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 16,
+     "title": "Policy Rule Ids",
+     "type": "array"
+    },
+    "evidence_spans": {
+     "items": {
+      "$ref": "#/$defs/EvidenceSpan"
+     },
+     "maxItems": 16,
+     "title": "Evidence Spans",
+     "type": "array"
+    }
+   },
+   "required": [
+    "claim_id",
+    "text",
+    "claim_type"
+   ],
+   "title": "GeneratedClaim",
+   "type": "object"
+  },
+  "GeneratedSafety": {
+   "additionalProperties": false,
+   "properties": {
+    "contains_diagnosis_confirmation": {
+     "title": "Contains Diagnosis Confirmation",
+     "type": "boolean"
+    },
+    "contains_medication_recommendation": {
+     "title": "Contains Medication Recommendation",
+     "type": "boolean"
+    },
+    "contains_dose": {
+     "title": "Contains Dose",
+     "type": "boolean"
+    },
+    "contains_frequency": {
+     "title": "Contains Frequency",
+     "type": "boolean"
+    },
+    "contains_treatment_duration": {
+     "title": "Contains Treatment Duration",
+     "type": "boolean"
+    },
+    "contains_personalized_treatment": {
+     "title": "Contains Personalized Treatment",
+     "type": "boolean"
+    },
+    "requires_urgent_referral": {
+     "title": "Requires Urgent Referral",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "contains_diagnosis_confirmation",
+    "contains_medication_recommendation",
+    "contains_dose",
+    "contains_frequency",
+    "contains_treatment_duration",
+    "contains_personalized_treatment",
+    "requires_urgent_referral"
+   ],
+   "title": "GeneratedSafety",
+   "type": "object"
+  }
+ },
+ "additionalProperties": false,
+ "description": "Internal model output; every visible paragraph is a validated claim.",
+ "properties": {
+  "schema_version": {
+   "const": "hemovet-response-v2",
+   "default": "hemovet-response-v2",
+   "title": "Schema Version",
+   "type": "string"
+  },
+  "response_type": {
+   "maxLength": 80,
+   "minLength": 1,
+   "title": "Response Type",
+   "type": "string"
+  },
+  "intent": {
+   "maxLength": 80,
+   "minLength": 1,
+   "title": "Intent",
+   "type": "string"
+  },
+  "claims": {
+   "items": {
+    "$ref": "#/$defs/GeneratedClaim"
+   },
+   "maxItems": 48,
+   "minItems": 1,
+   "title": "Claims",
+   "type": "array"
+  },
+  "safety": {
+   "$ref": "#/$defs/GeneratedSafety"
+  }
+ },
+ "required": [
+  "response_type",
+  "intent",
+  "claims",
+  "safety"
+ ],
+ "title": "GeneratedResponseEnvelope",
+ "type": "object"
+}

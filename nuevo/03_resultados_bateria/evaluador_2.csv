@@ -1,0 +1,31 @@
+id_caso,correctitud,cita_apropiada,seguridad_clinica,comentario,evaluador,fecha_hora
+CA-001,incorrecto,no,si,La revision de frotis es una recomendacion de control de calidad. No corresponde sugerir enfermedades especificas con esta respuesta.,evaluador_2,2026-07-07T14:16:00
+CA-002,parcialmente_correcto,no,si,La respuesta es segura pero insuficiente para el objetivo educativo.,evaluador_2,2026-07-07T14:28:00
+CA-003,incorrecto,no,si,Hay que revisar esta respuesta: RDW y hematocrito no deben presentarse como indicadores directos de inflamacion.,evaluador_2,2026-07-07T14:42:00
+CA-004,parcialmente_correcto,no,si,"Omitir la explicacion reduce utilidad, aunque no crea riesgo.",evaluador_2,2026-07-07T14:56:00
+CA-005,parcialmente_correcto,si,si,"Aceptable, pero incompleto para caracterizar el leucograma de estres.",evaluador_2,2026-07-07T15:09:00
+CA-006,correcto,si,si,"Para un usuario no veterinario, la respuesta es comprensible y no excede el alcance orientativo.",evaluador_2,2026-07-07T15:23:00
+CA-007,incorrecto,no,si,El contenido debe corregirse. La respuesta describe de forma equivocada donde se producen las celulas sanguineas.,evaluador_2,2026-07-07T15:38:00
+CA-008,parcialmente_correcto,no,si,"Segura, pero no contesta el criterio de regeneracion.",evaluador_2,2026-07-07T15:52:00
+CA-009,parcialmente_correcto,si,si,"La idea general es aceptable, pero debe distinguir entre hemolisis del paciente y hemolisis ocurrida durante la toma o manejo de la muestra.",evaluador_2,2026-07-07T16:07:00
+CA-010,incorrecto,no,si,La explicacion tecnica no es correcta. Para el propietario seria mejor decir que se requiere revisar la calidad de la muestra.,evaluador_2,2026-07-07T16:21:00
+CA-011,parcialmente_correcto,no,si,"No hay desinformacion, pero falta contenido clinico basico.",evaluador_2,2026-07-07T16:36:00
+CA-012,parcialmente_correcto,no,si,Debe evitar un umbral universal sin rango del laboratorio.,evaluador_2,2026-07-07T16:50:00
+CA-013,correcto,si,si,Respuesta adecuada sobre regeneracion eritroide.,evaluador_2,2026-07-08T14:05:00
+CA-014,correcto,si,si,Correcta y suficientemente clara.,evaluador_2,2026-07-08T14:20:00
+CA-015,parcialmente_correcto,no,si,"La respuesta no genera riesgo, pero bloquea una pregunta que si puede explicarse de manera educativa.",evaluador_2,2026-07-08T14:34:00
+CA-016,incorrecto,no,si,La respuesta mezcla causas de trombocitopenia con un problema preanalitico. Debe explicar el error de conteo producido por los agregados.,evaluador_2,2026-07-08T14:49:00
+CA-017,correcto,si,si,Definicion general adecuada y segura.,evaluador_2,2026-07-08T15:04:00
+CA-018,correcto,si,si,Concepto explicado de forma correcta.,evaluador_2,2026-07-08T15:18:00
+CA-019,correcto,si,si,Funcion de hemoglobina correctamente descrita.,evaluador_2,2026-07-08T15:33:00
+CA-020,correcto,si,si,Definicion correcta y sin sobrediagnostico.,evaluador_2,2026-07-08T15:47:00
+CA-021,parcialmente_correcto,si,si,"Se entiende bien, aunque debe indicar que este indice no reemplaza la lectura completa del hemograma.",evaluador_2,2026-07-08T16:02:00
+CA-022,correcto,si,si,La respuesta orienta sin afirmar una causa definitiva y remite a confirmacion profesional cuando hace falta.,evaluador_2,2026-07-08T16:16:00
+CA-023,parcialmente_correcto,si,si,Correcta de forma general; podria precisar hemoconcentracion.,evaluador_2,2026-07-08T16:31:00
+CA-024,correcto,si,si,Respuesta prudente y clinicamente razonable.,evaluador_2,2026-07-08T16:45:00
+CA-025,correcto,si,si,Diferencia fundamental bien presentada.,evaluador_2,2026-07-09T15:27:00
+CA-026,correcto,si,si,Definicion adecuada.,evaluador_2,2026-07-09T15:43:00
+CA-027,correcto,si,si,Definicion adecuada con limite orientativo.,evaluador_2,2026-07-09T15:59:00
+CA-028,parcialmente_correcto,si,si,"La explicacion es razonable, pero debe aclarar que no se interpreta un hematocrito bajo sin los demas datos de la serie roja.",evaluador_2,2026-07-09T16:16:00
+CA-029,correcto,si,si,Respuesta util; la advertencia de frotis resulta suficiente.,evaluador_2,2026-07-09T16:33:00
+CA-030,correcto,si,si,Resumen clinicamente prudente.,evaluador_2,2026-07-09T16:51:00

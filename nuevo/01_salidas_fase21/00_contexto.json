@@ -1,0 +1,361 @@
+{
+  "schema_version": "hemovet.fase22.contexto/v3",
+  "generado_en": "2026-08-08T23:47:35Z",
+  "commit": "c187ed4a976368dfff3b9337e7640d258278e609",
+  "rama": "fix/last-resort-policy-rule-id",
+  "base": "21f18fd8889541dbd947c3692ccbdc0fc6ee0660",
+  "ramas": {
+    "en_main": [
+      "07433c3a fix/ruff-unused-guardaction",
+      "bc0e1722 fix/h02-transition-digit-test"
+    ],
+    "pendientes": [
+      "b63c221e fix/warmup-runner-realignment (poller M-15)",
+      "tooling/preflight-paridad (preflight + arnes + 08_h02 + 07_hallazgos)",
+      "f72272dc M-2",
+      "019e2149 M-4",
+      "048b3971 M-5",
+      "5517c431 M-1+M-2",
+      "c187ed4a M-1"
+    ]
+  },
+  "estado_del_repo": {
+    "indice_desincronizado": "el arbol principal esta en fix/last-resort-policy-rule-id, cuya ref se movio desde un worktree. El indice apunta a 21f18fd8 y HEAD a c187ed4a, de ahi un 'D ' fantasma sobre test_last_resort_policy_rule.py, que SI existe en disco.",
+    "nada_perdido": "verificado: los 4 ficheros de test son byte-identicos a los de sus ramas; los 3 de codigo son la MEZCLA de las cuatro mitigaciones (estado previo al reparto).",
+    "no_se_arregla": "resincronizar exige git reset, prohibido. Documentado en vez de arreglado."
+  },
+  "bloque_4_medido_hoy": {
+    "4.1_streaming": {
+      "veredicto": "NO STREAMEA EL TEXTO. El proxy es inocente.",
+      "capa_proxy": "Caddy 2.11.4-alpine. flush_interval -1 en la ruta /api/v1/chat/stream y 'encode @compressible not path /api/v1/chat/stream'. CORRECTO: alguien lo dejo preparado.",
+      "capa_backend": "emite eventos de ETAPA, no de texto. 279 heartbeat / 112 status / 70 start / 70 context_ready / 70 retrieval_completed / 70 generation_started / 53 final / 53 done / 17 error. CERO eventos delta/token/chunk en 70 turnos.",
+      "consecuencia": "el usuario ve una barra muda y luego el texto de golpe. TTFB 0,134 s es el evento start, no texto.",
+      "instrumento": "campo eventos_sse de bateria_COMPLETA_2026-08-07.json",
+      "premio": "13,05 tok/s = ~587 palabras/min = 2,3x mas rapido de lo que se lee comodamente. Con streaming la espera no baja: desaparece."
+    },
+    "4.1.b_texto_rechazado_vs_aceptado": {
+      "estado": "BLOQUEADA EN PRODUCCION, RESUELTA EN LOCAL",
+      "por_que_bloqueada": "el texto generado no existe en ningun registro (CHAT_STRUCTURED_DEBUG_DIR vacio, log solo con hashes, llama-server sin texto). Activarlo en produccion es cambio de config no autorizado y vuelca contenido clinico real a disco.",
+      "camino": "el aparato local del Bloque 2 no tiene ninguno de los dos problemas: datos sembrados desde contexto_clinico_2026-08-07.json, sin paciente real. ACTIVAR CHAT_STRUCTURED_DEBUG_DIR EN LOCAL y 4.1.b sale gratis como subproducto de la calibracion.",
+      "proxy_debil_disponible": {
+        "valor": 0.78,
+        "unidad": "ratio de tokens ultima/primera generacion, mediana",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.perf, 35 turnos con regeneracion",
+        "n": 35
+      },
+      "lectura_del_proxy": "p25=0,56 y mediana=0,78: la regeneracion suele ser sustancialmente MAS CORTA. Compatible con 'mismo contenido, envelope mas limpio' y tambien con 'otro texto mas breve'. NO decide, e inclina EN CONTRA del streaming optimista."
+    },
+    "4.1.c_alcance_seguro": {
+      "valor": 52,
+      "unidad": "% de turnos con una sola llamada (38/73)",
+      "estado": "MEDIDA",
+      "instrumento": "llm_chat.perf step=llm_stream, log crudo del 7-ago, agrupado por request_id",
+      "n": 73
+    },
+    "4.1.d_listo_para_ejecutar": {
+      "que": "mostrar en el frontend las etapas que el backend YA emite: start / context_ready / retrieval_completed / generation_started",
+      "coste": "cero backend, cero riesgo clinico",
+      "efecto": "no acorta un segundo; cambia por completo lo que se siente",
+      "estado": "TAREA LISTA, no ejecutada"
+    },
+    "4.1_regla_de_streaming_CORREGIDA": "NO vale 'streamear la primera generacion y esperar en las regeneraciones': el backend sabe que va por la primera, pero NO sabe si sera aceptada. Streamear la primera es apostar, y en el 48 % de los turnos se pierde. Queda CONDICIONADO a 4.1.b.",
+    "4.2_longitud_de_salida": {
+      "num_predict_real": {
+        "valor": {
+          "1280": 96,
+          "1024": 35,
+          "320": 7
+        },
+        "unidad": "llamadas por valor",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.perf step=llm_stream, log crudo del 7-ago, agrupado por request_id",
+        "n": 138
+      },
+      "CORRECCION": "el registro decia num_predict=384. Es el DEFAULT de config.py, no lo desplegado. Toda la tabla de latencia basada en 384 y la recomendacion de bajar a 200 son invalidas: bajar el techo no acortaria las respuestas, las CORTARIA.",
+      "distribucion": {
+        "valor": {
+          "min": 204,
+          "p10": 229,
+          "p25": 262,
+          "mediana": 349,
+          "p75": 474,
+          "p90": 681,
+          "max": 1280,
+          "media": 413.8
+        },
+        "unidad": "tokens",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.perf step=llm_stream, log crudo del 7-ago, agrupado por request_id",
+        "n": 138
+      },
+      "saturacion": {
+        "valor": 1.4,
+        "unidad": "% de llamadas con finish_reason=length (2/138)",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.perf step=llm_stream, log crudo del 7-ago, agrupado por request_id",
+        "n": 138
+      },
+      "hipotesis_del_techo": "DERRIBADA. El modelo no agota su presupuesto: para solo 136 de 138 veces.",
+      "hipotesis_del_SUELO": {
+        "enunciado": "el sobre impone un suelo, no un techo. Ninguna de las 138 salidas baja de 204 tokens.",
+        "coste": {
+          "valor": 15.6,
+          "unidad": "s de decode antes de una palabra clinica (204 tok / 13,05 tok/s)",
+          "estado": "ESTIMADA",
+          "instrumento": "derivada de la distribucion medida y los 13,05 tok/s",
+          "n": 138
+        },
+        "como_comprobarla": "contar el coste en tokens de los campos obligatorios de GeneratedResponseEnvelope y compararlo con el contenido clinico util. NO relajando el techo."
+      }
+    },
+    "4.3_reparto_de_llamadas": {
+      "medido": {
+        "valor": {
+          "1 llamada": 38,
+          "2 llamadas": 8,
+          "3 llamadas": 24,
+          "4 llamadas": 3
+        },
+        "unidad": "turnos",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.perf step=llm_stream, log crudo del 7-ago, agrupado por request_id",
+        "n": 73
+      },
+      "reconstruccion_previa": "36/12/15/7 — INEXACTA. La cola es mas gruesa en el medio (24 turnos de 3, no 15).",
+      "media": {
+        "valor": 1.89,
+        "unidad": "llamadas por turno",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.perf step=llm_stream, log crudo del 7-ago, agrupado por request_id",
+        "n": 73
+      }
+    }
+  },
+  "correccion_de_poblaciones": {
+    "error": "se dijo que policy_rule_id_missing era la causa dominante de RECHAZO. Se tomo una cifra de FALLOS TERMINALES y se aplico a los rechazos, que son otra poblacion.",
+    "cifras_correctas": {
+      "de_los_fallos_terminales": {
+        "valor": 76,
+        "unidad": "% (13 de 17)",
+        "estado": "MEDIDA",
+        "instrumento": "auditoria de fallos terminales",
+        "n": 17
+      },
+      "de_los_rechazos": {
+        "valor": 18,
+        "unidad": "% (15 de 82)",
+        "estado": "MEDIDA",
+        "instrumento": "llm_chat.validation con result!=valid",
+        "n": 82
+      }
+    },
+    "consecuencia": "un rechazo dispara una regeneracion; un fallo terminal mata el turno. El argumento 'el rechazo es de metadato, luego el texto no cambia' pierde su base: los rechazos por metadato son 34/82 = 41 %, no la mayoria."
+  },
+  "bloque_5.2_BLOQUEANTE_DEL_BLOQUE_3": {
+    "pregunta": "un turno de 3 o 4 llamadas, ¿cruza OLLAMA_TIMEOUT_SECONDS=120?",
+    "por_que_bloquea": "si parte de los 17 fallos terminales son TIMEOUTS y no fallos de contrato, M-1 no los arregla y la prediccion pre-registrada 17/70 -> 4/70 estaria inflada ANTES de correr la bateria. Eso contamina el Bloque 3 entero.",
+    "orden": "5.2 va ANTES del sembrado, no despues.",
+    "como": "cruzar la duracion de cada turno fallido con su codigo de error. Con 24 turnos de 3 llamadas medidos y un turno de 3 rondando los 94 s, no esta lejos del limite."
+  },
+  "divergencias_arnes_produccion": {
+    "encontradas": [
+      {
+        "parametro": "max_input_tokens",
+        "arnes": 3200,
+        "produccion": 12000,
+        "fase": 21
+      },
+      {
+        "parametro": "num_predict",
+        "arnes": 384,
+        "produccion": 1280,
+        "fase": 22
+      },
+      {
+        "parametro": "factor TokenCounter",
+        "arnes": 1.447,
+        "produccion": 1.725,
+        "fase": 20
+      },
+      {
+        "parametro": "firma del cliente",
+        "detalle": "8 kwargs muertos",
+        "fase": 21
+      },
+      {
+        "parametro": "firma del caso de uso",
+        "detalle": "2 kwargs muertos",
+        "fase": 21
+      },
+      {
+        "parametro": "CI no ejecuta el arnes",
+        "detalle": "RUN_OLLAMA_ACCEPTANCE no se pasa",
+        "fase": 21
+      }
+    ],
+    "mandato": "la puerta de paridad del Bloque 2 debe hacer COMPARACION AUTOMATICA de todos los parametros efectivos, no una lista a mano. Seis de seis han sido del mismo patron; escribir la septima a mano es como se escapa la octava."
+  },
+  "m15": {
+    "estado": "IMPLEMENTADA, NO DESPLEGADA",
+    "rama": "fix/warmup-runner-realignment",
+    "commit": "b63c221e316cfbcd65e261beeb834bb2e491b815",
+    "recarga": {
+      "valor": 101.0,
+      "unidad": "s mediana",
+      "estado": "MEDIDA",
+      "instrumento": "load_duration de /api/chat",
+      "n": 5
+    },
+    "concordante": {
+      "valor": 0.55,
+      "unidad": "s",
+      "estado": "MEDIDA",
+      "instrumento": "idem",
+      "n": 1
+    },
+    "size_vram_16384": {
+      "valor": 16926501764,
+      "unidad": "bytes",
+      "estado": "MEDIDA",
+      "instrumento": "/api/ps",
+      "n": 2
+    },
+    "size_vram_65536": {
+      "valor": 18889436036,
+      "unidad": "bytes",
+      "estado": "MEDIDA",
+      "instrumento": "/api/ps",
+      "n": 1
+    },
+    "defecto_abierto": "el rearmado de 101 s bloquea el runner; una peticion que llegue durante ese tiempo espera 120 s y recibe timeout de proveedor. El semaforo local esta libre; el bloqueo ocurre en Ollama con -np 1.",
+    "solucion_recomendada": "(a) bajar OLLAMA_CONTEXT_LENGTH de la VM a 16384 + (c) el poller como DETECTOR. (a) es la que arregla; (c) registra si vuelve a desalinearse.",
+    "no_autorizado_aun": "tocar compose.env.example ni el .env de la VM de GPU"
+  },
+  "sembrado": {
+    "por_alcance": {
+      "general": 17,
+      "selected_hemogram": 32,
+      "hemogram_history": 21
+    },
+    "fuente": "contexto_clinico_2026-08-07.json — el contexto real del 7-ago. No inventar nada.",
+    "requiere_ausencia_de_dato": [
+      "SEL-10 (MPV)",
+      "SEL-12 (RETIC)",
+      "SEL-23 (pide inventar)"
+    ],
+    "SEL-17": "FALSO POSITIVO de regex ('hace falta'). NO requiere ausencia.",
+    "trampa": "si el sembrado inventa MPV o RETIC, esos casos cambian de significado y se leeran como fallo del modelo. Peor: inflaria el brazo base y haria que cualquier mitigacion pareciera mejor. Sesgo en la direccion que nos conviene.",
+    "hilos_multiturno": {
+      "MT-A": 4,
+      "MT-B": 4,
+      "MT-H": 3
+    },
+    "arnes_conserva_estado": "VERIFICADO: conversaciones dict[str,str] por hilo (l.453), recuperado (l.517), actualizado con conversation_id del servidor (l.371, l.390-391)",
+    "CHAT_STRUCTURED_DEBUG_DIR": "ACTIVAR EN LOCAL para que 4.1.b se responda sola durante la calibracion"
+  },
+  "estadistica_pre_registrada": {
+    "n_nominal": 70,
+    "n_efectivo": 62,
+    "motivo": "11 casos multiturno en 3 cadenas: 3 observaciones independientes, no 11",
+    "supuesto_fijado": "M-1 rescatando 13 de 15 -> 4/62 -> p=0,0056 (conservador). 3/62 -> p=0,0020.",
+    "potencia": "rescata 13: p=0,002 decide. rescata 9: p=0,038 decide. rescata 6: p=0,145 NO CONCLUYENTE.",
+    "regla": "si M-1 sale en 11/70 el veredicto es NO CONCLUYENTE, no 'no funciona'."
+  },
+  "puerta_de_calibracion": {
+    "criterio": "17/70 fallos terminales y policy_rule_id_missing 3,0 % completo / 43,3 % truncado",
+    "tolerancia": "+-3 casos",
+    "si_falla": "PARAR. No correr ningun brazo. Buscar la diferencia en sembrado, Chroma o configuracion."
+  },
+  "lo_que_la_sesion_siguiente_debe_saber_y_no_esta_en_ningun_fichero": [
+    "El runner esta a 16384 por las mediciones, no por el sistema. Cualquier medida de primer turno hoy saldria bien y seria enganosa.",
+    "Reabrir el tunel: gcloud compute ssh hemovet-llm-gpu --tunnel-through-iap --ssh-key-file=~/.ssh/hemovet_actions_prod -- -L 11434:10.128.0.3:11434 -N",
+    "hemovet-rescate PARADA, no borrada. Procedimiento de montaje de disco probado.",
+    "STOCKOUT intermitente de L4 en us-central1-a: 5 de 10 arranques fallaron. Minimizar ciclos de parada.",
+    "El pytest test_ollama_qwen_acceptance esta RETIRADO como instrumento de aceptacion: 1-4 turnos por brazo, no separa.",
+    "Credenciales de la bateria: test5@test.com / Test123!",
+    "El proxy es Caddy, NO nginx. Su config de SSE ya es correcta; no buscar ahi.",
+    "chromadb instalado en local; postgres local activo; app.main importa OK (51 rutas).",
+    "Orden correcto: 5.2 (timeouts) -> paridad automatica -> 17 casos general -> sembrado -> calibracion -> 5 brazos.",
+    "Cinco instrumentos han fallado y los cinco habrian producido una tabla creible. Decir siempre que instrumento produjo cada cifra."
+  ],
+  "actualizado": "2026-08-09 (sesion 8ed1b894, relevo tras cerrar pasos 1-3)",
+  "estado_actual": {
+    "regimen": "arreglar, medir el efecto y desplegar — no descubrir mas",
+    "entregable_terminal": "salidas_fase21/01_aceptacion.json con veredicto para M-1, M-2, M-4, M-5 y la combinada",
+    "pasos": {
+      "1_main_verde": {
+        "estado": "CERRADO",
+        "main": "55d5e599",
+        "run": "31288756295",
+        "jobs": "8/8 success incluidos Deploy production through IAP y Production smoke tests",
+        "que_entro": [
+          "07433c3a quita el F401 GuardAction",
+          "bc0e1722 el test del digito vigila la regla",
+          "b63c221e el poller de M-15",
+          "55d5e599 tests del poller al estilo de la casa + variable documentada"
+        ],
+        "leccion": "pytest-asyncio no esta en requirements-dev; 0 de 22 ficheros usan pytest.mark.asyncio. Un verde local no vale como verde de CI. Verificar SIEMPRE con -p no:asyncio y la suite entera."
+      },
+      "2_poller": {
+        "estado": "CERRADO CON VEREDICTO NEGATIVO",
+        "json": "salidas_fase21/02_m15.json",
+        "resultado": "desplegado y NO rearma: 170 s con deriva del 11,6 % y cero eventos, ni exito ni fallo",
+        "medido": {
+          "recarga_a_65536_s": 101,
+          "size_vram_16384": 16926501764,
+          "size_vram_65536": 18889436036
+        },
+        "causa_raiz": "NO DETERMINADA; candidatas silenciosas por construccion",
+        "produccion": "restaurada a 16384; queda como estaba"
+      },
+      "2b_oleada_de_herramientas": {
+        "estado": "pendiente",
+        "rama": "tooling/preflight-paridad",
+        "por_que": "validacion_llm/ no esta en main y la bateria corre desde el host de la VM (docker cp)"
+      },
+      "3_referencia_de_entradas": {
+        "estado": "CERRADO",
+        "fichero": "validacion_llm/resultados/entradas_produccion_2026-08-09.json",
+        "chunk_count": 4696,
+        "index_fingerprint": "6832f37d428731520ce903de60d0781df543df3a10c84f1fcdbf27056bef9b60",
+        "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        "hash_casos": "66e2c52a3eb9776f",
+        "correccion": "revision_codigo NO es paridad con produccion: el aparato local corre otra rama a proposito. Declara que revision usa cada corrida. Corregido en el preflight."
+      },
+      "4_sembrado": {
+        "estado": "pendiente",
+        "antes": "los 17 casos general (GEN-01..GEN-17), 19 min",
+        "fuente": "validacion_llm/resultados/contexto_clinico_2026-08-07.json",
+        "bloqueante_logistico": "El host de hemovet-prod NO tiene checkout de ~/hemogramas-proyectoICC, asi que el runbook (git pull + docker cp) no aplica. Hay que subir validacion_llm/ por gcloud compute scp y luego docker cp al contenedor hemogramas-proyectoicc-backend-1.",
+        "llave_ssh": "hemovet_actions_prod con --tunnel-through-iap; hemovet_oracle NO funciona"
+      },
+      "5_puerta_de_calibracion": {
+        "estado": "pendiente",
+        "criterio": ">=14 de 17 ids Y kappa >= 0,75; recuento [10,24] secundario"
+      },
+      "6_cinco_brazos": {
+        "estado": "pendiente",
+        "duracion": "~6,4 h"
+      },
+      "7_veredicto": {
+        "estado": "pendiente",
+        "prediccion_pre_registrada": "17/70 -> ~4/70; utilidad 39,7% -> 63%"
+      }
+    }
+  },
+  "hallazgo_del_sembrado": {
+    "titulo": "MPV y RETIC no estan en lab_values, y SEL-10 no tiene verdad de terreno",
+    "medido": "contexto_clinico_2026-08-07.json: estudio 18-dic con 18 analitos, 17-dic con 17. Ni MPV ni RETIC aparecen en lab_values. MPV solo figura en imputed_fields.",
+    "el_csv_miente": "casos_bateria_completa_70.csv da a SEL-10 el resultado_esperado 'MPV 12,14 fL; normal frente a 7,5-12,5', que se escribio contra otro conjunto de datos.",
+    "el_criterio_operativo": "verdad_terreno_ampliada.csv tiene 21 casos con valor esperado y NO incluye SEL-10, SEL-12 ni SEL-23. Excluirlos es coherente con que MPV y RETIC no existan.",
+    "consecuencia": "El sembrado copia lab_values verbatim y no inventa MPV ni RETIC."
+  },
+  "como_llegar_a_la_vm": {
+    "gpu_solo_lectura": "gcloud compute ssh hemovet-llm-gpu --zone=us-central1-a --tunnel-through-iap --ssh-key-file=~/.ssh/hemovet_actions_prod",
+    "backend": "gcloud compute ssh ubuntu@hemovet-prod --zone=us-central1-a --ssh-key-file=~/.ssh/hemovet_oracle",
+    "bateria": "corre DENTRO de hemogramas-proyectoicc-backend-1; hace falta docker cp validacion_llm"
+  },
+  "lo_que_falta_y_por_que_no_cabe": "Pasos 4 a 7: sembrado, puerta de calibracion y cinco brazos, ~8 h de reloj. Antes hace falta levantar un aparato LOCAL con Postgres, Chroma y los 17 parametros alineados, que no existe. Los brazos no pueden correr contra produccion porque exigen desplegar cinco ramas distintas. Emitir 01_aceptacion.json sin eso seria fabricar el entregable.",
+  "novena_forma_del_patron": "El poller de M-15: siete tests en verde llamando a realign_runner_if_drifted directamente —condicion necesaria— tratados como prueba de que el poll de fondo funciona. No funciona. start_runner_realignment y capture_runner_baseline no registran nada, asi que un poller que nunca arranca es indistinguible de uno que arranca y no ve deriva."
+}

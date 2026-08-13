@@ -1,0 +1,101 @@
+{
+  "version": "3.0.0",
+  "model_type": "xgb_v3_reticulocytes",
+  "nb05b_timestamp": "2026-05-25T02:09:23.490559+00:00",
+  "official_model_labels": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA",
+    "PATRON_ANEMIA_REGENERATIVA"
+  ],
+  "rule_labels": [
+    "QC_AGREGADOS_PLAQUETARIOS",
+    "QC_INTERFERENCIA_GR"
+  ],
+  "excluded_labels": [
+    "QC_UNIDAD_NO_CONVERTIDA"
+  ],
+  "n_features": 43,
+  "feature_columns": [
+    "RBC",
+    "WBC",
+    "Platelets",
+    "HGB",
+    "HCT",
+    "MCV",
+    "MCH",
+    "MCHC",
+    "RDW",
+    "Reticulocytes",
+    "Reticulocytes_pct",
+    "Neutrophils",
+    "Neutrophils_pct",
+    "Lymphocytes",
+    "Lymphocytes_pct",
+    "Monocytes",
+    "Monocytes_pct",
+    "Eosinophils",
+    "Basophils",
+    "MPV",
+    "PDW",
+    "flag_thrombocytopenia",
+    "flag_thrombocytopenia_severe",
+    "flag_lymphopenia",
+    "flag_lymphocytosis",
+    "flag_neutrophilia",
+    "flag_neutropenia",
+    "flag_leukocytosis",
+    "flag_leukopenia",
+    "flag_anemia",
+    "flag_microcytic",
+    "flag_macrocytic",
+    "flag_hypochromic",
+    "flag_macro_platelets",
+    "ratio_NLR",
+    "ratio_PLR",
+    "ratio_MLR",
+    "ratio_MPV_PLT",
+    "pattern_stress_leukogram",
+    "age_years",
+    "flag_reticulocytosis_pct_gt2",
+    "flag_reticulocytopenia_abs_lt10",
+    "flag_regen_anemia_proxy"
+  ],
+  "prauc_macro": 0.9577,
+  "label_policy_version": "3.0.0",
+  "label_policy_file": "data/processed/final_label_policy.json",
+  "reticulocyte_features": [
+    "Reticulocytes",
+    "Reticulocytes_pct",
+    "flag_reticulocytosis_pct_gt2",
+    "flag_reticulocytopenia_abs_lt10",
+    "flag_regen_anemia_proxy"
+  ],
+  "postprocessing_rules": [
+    {
+      "name": "mchc_artifact",
+      "description": "MCHC > 50 fuerza PATRON_HEMOLISIS_MCHC a 0.0",
+      "threshold": 50.0,
+      "affects": "PATRON_HEMOLISIS_MCHC"
+    }
+  ],
+  "train_n": 1717,
+  "val_n": 368,
+  "test_n": 369,
+  "xgboost_params": {
+    "n_estimators": 300,
+    "max_depth": 8,
+    "learning_rate": 0.03,
+    "min_child_weight": 3,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "eval_metric": "aucpr",
+    "verbosity": 0
+  }
+}

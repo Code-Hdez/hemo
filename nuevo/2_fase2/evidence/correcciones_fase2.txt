@@ -1,0 +1,25 @@
+=== TRAZABILIDAD (docker exec printenv, 2026-08-08) ===
+HEMOVET_BUILD_REVISION=21f18fd8889541dbd947c3692ccbdc0fc6ee0660
+git rev-parse HEAD (local) = 21f18fd8889541dbd947c3692ccbdc0fc6ee0660
+backend image digest = sha256:86833576b609be8268f5c0bf29fd07b96d6967e29db0c9edb9d5f224ff9bf6d6
+release path = /opt/hemovet-prod/releases/c1193ae29dc95275606acd7b5c5abafb8170aa02/source/
+container created = 2026-08-06T19:13:03Z  (bateria: 2026-08-07T23:49Z) -> anterior, consistente
+
+=== DECODIFICACION RESTRINGIDA YA ACTIVA ===
+751:            payload["format"] = request.response_schema
+688:        schema = GeneratedResponseEnvelope.model_json_schema()
+
+=== SALVAGE POR CLAIM YA VIVO ===
+4634:    def _claim_rejection(
+4941:                self._claim_rejection(
+        # and answering with the four is better than answering with nothing.
+        #
+        # Nothing is loosened by this: each claim faces exactly the checks it
+        # faced before, and one that fails is not shown. What changes is that
+        # its failure no longer condemns its neighbours. If none survive, the
+        # first rejection is raised exactly as it would have been, so the
+        # repair and the last resort still see the same reason they always did.
+        kept: list[GeneratedClaim] = []
+        first_rejection: StructuredResponseError | None = None
+        for claim in envelope.claims:
+            try:

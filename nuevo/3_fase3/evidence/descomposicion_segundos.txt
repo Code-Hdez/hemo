@@ -1,0 +1,19 @@
+=== DESCOMPOSICION DE LOS 4.940 s DE LA BATERIA (70 preguntas) ===
+  decode 1a generacion (INEVITABLE con este stack) :    2365 s  (47.9 %)
+  decode 2a/3a/4a generacion (EVITABLE)            :    1876 s  (38.0 %)
+  prefill 1a generacion                            :     438 s  ( 8.9 %)
+  prefill regeneraciones (EVITABLE)                :     113 s  ( 2.3 %)
+  resto (load, backend, validacion, red)           :     148 s  ( 3.0 %)
+
+  TOTAL 4940 s | EVITABLE = 1989 s (40.3 %)
+
+=== POR TURNO ===
+  mediana global      : 59.1 s
+  mediana sin repair  : 34.8 s  (n=36) <- suelo practico actual
+  mediana con repair  : 98.1 s  (n=34)
+  sobrecoste mediano del repair: +63.4 s
+
+=== TOKENS ===
+  generados total        : 55562
+  de turnos que entregaron: 20060 (aprox, ultima llamada de los 53 exitosos)
+  DESPERDICIADOS         : 35502 (63.9 % de los tokens generados)

@@ -1,0 +1,9 @@
+{
+  "jaccard_inflamatorio_leucograma": 0.7,
+  "n_cooccurrence": 930,
+  "pct_cooccurrence": 37.9,
+  "top_shap_inflamatorio": "Monocytes (3.90)",
+  "top_shap_leucograma": "Monocytes (2.95) + Lymphocytes (1.05)",
+  "clinical_distinction": "Inflamatorio=monocitosis activa; Leucograma=linfopenia por estres",
+  "verdict": "Etiquetas distintas -- retencion justificada"
+}

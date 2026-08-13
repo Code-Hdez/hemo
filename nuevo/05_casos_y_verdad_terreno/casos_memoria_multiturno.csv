@@ -1,0 +1,18 @@
+id_conversacion,turno,prompt,context_scope,analysis_ref,criterio_memoria
+MT-01,1,¿Qué es la trombocitopenia?,general,,turno_inicial_sin_dependencia
+MT-01,2,¿Y cómo se diferencia de los agregados plaquetarios?,general,,debe_mantener_tema_plaquetas_del_turno_1
+MT-02,1,Explícame qué es la anemia regenerativa.,general,,turno_inicial_sin_dependencia
+MT-02,2,¿Y la no regenerativa en qué se diferencia?,general,,debe_comparar_con_la_definicion_del_turno_1
+MT-03,1,¿Qué significa un hematocrito bajo en este hemograma?,uploaded_analysis,seed_A,turno_inicial_con_analisis
+MT-03,2,¿Y las plaquetas cómo están?,uploaded_analysis,seed_A,debe_referir_valores_del_analisis_cargado
+MT-03,3,Resume lo que hemos comentado hasta ahora.,uploaded_analysis,seed_A,debe_integrar_turnos_1_y_2
+MT-04,1,¿Qué es el MCHC?,general,,turno_inicial_sin_dependencia
+MT-04,2,¿Un valor alto de ese índice qué implicaría?,general,,ese_indice_debe_resolver_a_MCHC_del_turno_1
+MT-05,1,¿Qué indica un leucograma de estrés?,general,,turno_inicial_sin_dependencia
+MT-05,2,¿Qué célula mencionaste que baja en ese patrón?,general,,debe_recuperar_linfocitos_del_turno_1
+MT-06,1,Explícame qué es la neutrofilia.,general,,turno_inicial_sin_dependencia
+MT-06,2,¿En qué patrón hematológico aparece eso?,general,,eso_debe_resolver_a_neutrofilia_del_turno_1
+MT-07,1,¿Qué significa que un hemograma requiera frotis?,general,,turno_inicial_sin_dependencia
+MT-07,2,¿Por qué es importante ese paso que mencionaste?,general,,ese_paso_debe_resolver_a_frotis_del_turno_1
+MT-08,1,Compara la evolución de las plaquetas en el historial de esta mascota.,historical_analysis,seed_A,turno_inicial_comparacion_historica
+MT-08,2,¿Y el hematocrito siguió la misma tendencia?,historical_analysis,seed_A,debe_mantener_marco_comparativo_del_turno_1

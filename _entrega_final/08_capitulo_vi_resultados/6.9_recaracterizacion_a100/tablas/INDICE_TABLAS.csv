@@ -1,0 +1,37 @@
+figura;titulo;tabla;n
+E4;La puerta de aceptación: coincidencia de identificadores de fallo;06_analisis/tablas/tab_E4_puerta_kappa.csv;70
+D7;Tasa de alucinación numérica y su intervalo de confianza;06_analisis/tablas/tab_D7_alucinacion_wilson.csv;9
+A1;Ventanas de GPU: lo que el log registra y lo que sólo consta en las trazas;06_analisis/tablas/tab_A1_ventanas_gpu.csv;6
+A2;Composición del corpus de evidencia previa;06_analisis/tablas/tab_A2_corpus_evidencia.csv;208
+A4;Reconstrucción del protocolo del 7-ago: semáforo de las quince preguntas;06_analisis/tablas/tab_A4_semaforo_protocolo.csv;15
+A5;Veredicto doble de comparabilidad;06_analisis/tablas/tab_A5_veredicto_doble.csv;2
+B1;Ficha de identidad del sistema medido;06_analisis/tablas/tab_B1_identidad_sistema.csv;8
+B3;Verificación de identidad de modelo en cada respuesta;06_analisis/tablas/tab_B3_identidad_por_respuesta.csv;115
+B4;Modelos presentes en el servidor de producción;06_analisis/tablas/tab_B4_modelos_instalados.csv;2
+C1;Techos de decodificación y rendimiento medido;06_analisis/tablas/tab_C1_techos_decode.csv;100
+C2;Distribución del tiempo por token de salida (TPOT);06_analisis/tablas/tab_C2_tpot_distribucion.csv;100
+C4;Utilización del ancho de banda de memoria (MBU) en contexto;06_analisis/tablas/tab_C4_mbu.csv;100
+C6;Lo predicho frente a lo medido: la sobrecarga de gramática;06_analisis/tablas/tab_C6_gramatica_predicho_medido.csv;60
+C8;Prefill y decodificación sobre el mismo eje;06_analisis/tablas/tab_C8_prefill_decode.csv;100
+D1;Desenlace de los turnos por modo;06_analisis/tablas/tab_D1_desenlaces_modo.csv;45
+D2;Latencia por posición de turno y modo;06_analisis/tablas/tab_D2_latencia_por_turno.csv;45
+D3;Distribución de latencia por modo;06_analisis/tablas/tab_D3_latencia_distribucion.csv;45
+D9;El hemograma de referencia;06_analisis/tablas/tab_D9_fixture_hemograma.csv;18
+E1;Latencia por caso: L4 → A100;06_analisis/tablas/tab_E1_slopegraph_pareado.csv;64
+E2;Distribución de las diferencias pareadas;06_analisis/tablas/tab_E2_diferencias_pareadas.csv;64
+E3;Función de distribución acumulada de la latencia;06_analisis/tablas/tab_E3_ecdf_latencia.csv;64
+E5;Naturaleza de los fallos: dos fenómenos distintos;06_analisis/tablas/tab_E5_clases_fallo.csv;23
+F1;Tablero de las diez hipótesis pre-registradas;06_analisis/tablas/tab_F1_tablero_hipotesis.csv;10
+F4;Potencia del diseño;06_analisis/tablas/tab_F4_potencia.csv;6
+A3;Qué registra cada instrumento: cobertura comparada;06_analisis/tablas/tab_A3_cobertura_instrumento.csv;17
+B2;Las limitaciones declaradas y en qué momento se declararon;06_analisis/tablas/tab_B2_limitaciones_declaradas.csv;17
+C3;Distribución bootstrap de la mediana del TPOT;06_analisis/tablas/tab_C3_bootstrap_tpot.csv;100
+C5;Ablación de la gramática: los dos brazos por separado;06_analisis/tablas/tab_C5_ablacion_brazos.csv;60
+C7;Determinismo intra-máquina: 20 prompts × 5 repeticiones;06_analisis/tablas/tab_C7_determinismo_canario.csv;100
+D4;La frontera de la ventana, turno a turno y modo a modo;06_analisis/tablas/tab_D4_frontera_matriz.csv;9
+D5;Qué responde el sistema al preguntarle por el principio de la conversación;06_analisis/tablas/tab_D5_frontera_conducta.csv;3
+D6;Verificación mecánica contra la tabla de verdad sellada;06_analisis/tablas/tab_D6_verdad_verificacion.csv;9
+D8;Cobertura real de la rúbrica de cinco ejes;06_analisis/tablas/tab_D8_rubrica_cobertura.csv;5
+E6;Proporción de turnos sin respuesta, con intervalo de confianza;06_analisis/tablas/tab_E6_desenlaces_wilson.csv;70
+F2;Los cinco efectos medidos, cada uno en su escala;06_analisis/tablas/tab_F2_tamanos_efecto.csv;5
+F3;Qué niveles del esquema de trazas llegó a poblar la campaña;06_analisis/tablas/tab_F3_cobertura_esquema.csv;115

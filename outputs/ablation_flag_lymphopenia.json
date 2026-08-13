@@ -1,0 +1,8 @@
+{
+  "label": "QC_REQUIERE_FROTIS",
+  "feature_removed": "flag_lymphopenia",
+  "model": "xgb",
+  "prauc_full_features": 0.9155,
+  "prauc_reduced_features": 0.9126,
+  "delta": 0.0029
+}

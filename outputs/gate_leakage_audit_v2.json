@@ -1,0 +1,79 @@
+{
+  "gate": "leakage_audit_v2",
+  "status": "pass",
+  "checked_at": "2026-04-12T03:39:03.587929+00:00",
+  "checks": [
+    {
+      "name": "Artefactos requeridos disponibles",
+      "passed": true,
+      "detail": "Todos los artefactos de entrada para leakage audit estan presentes."
+    },
+    {
+      "name": "Columnas prohibidas de leakage ausentes",
+      "passed": true,
+      "detail": "No hay columnas de leakage directo ni metadata-only en el feature set."
+    },
+    {
+      "name": "Columnas _flag del analizador ausentes",
+      "passed": true,
+      "detail": "No se encontraron columnas del analizador terminadas en _flag."
+    },
+    {
+      "name": "Columnas de morfologia externa ausentes",
+      "passed": true,
+      "detail": "No se encontraron columnas de morfologia DAP-only en training features."
+    },
+    {
+      "name": "Ninguna etiqueta se reutiliza como feature",
+      "passed": true,
+      "detail": "Ninguna columna de etiqueta official/rule/excluded aparece en el contrato de features."
+    },
+    {
+      "name": "Sin nombres de feature tipo target",
+      "passed": true,
+      "detail": "Los nombres de features no usan prefijos target QC_/PATRON_."
+    },
+    {
+      "name": "Train split contiene todas las features",
+      "passed": true,
+      "detail": "Todas las columnas de features existen en train.csv."
+    },
+    {
+      "name": "Todas las features son numericas en train",
+      "passed": true,
+      "detail": "Cada feature puede interpretarse como numerica en train.csv."
+    },
+    {
+      "name": "Medians del imputer alineadas a train",
+      "passed": true,
+      "detail": "imputer_medians.csv coincide con las medianas de train para todas las features numericas."
+    },
+    {
+      "name": "Split temporal sin solapamiento",
+      "passed": true,
+      "detail": "Temporal split check OK (train_max=2025-06-14 00:00:00, val_min=2025-06-14 00:00:00, val_max=2025-10-24 00:00:00, test_min=2025-10-24 00:00:00)."
+    },
+    {
+      "name": "Ningun feature replica una etiqueta",
+      "passed": true,
+      "detail": "No se encontro label-echo directo ni proxy inverso de etiquetas en train features."
+    }
+  ],
+  "summary": {
+    "total_checks": 11,
+    "passed_checks": 11,
+    "failed_checks": 0
+  },
+  "n_features": 38,
+  "n_labels": 10,
+  "evaluated_label_columns": [
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_ANEMIA_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_POLICITEMIA",
+    "QC_AGREGADOS_PLAQUETARIOS",
+    "QC_REQUIERE_FROTIS"
+  ]
+}

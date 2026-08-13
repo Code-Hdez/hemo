@@ -1,0 +1,4 @@
+corrida;fallos;n;p_pct;ic_inf_pct;ic_sup_pct
+7-ago L4;17;70;24.29;15.75;35.5
+replica A100;6;70;8.57;3.99;17.47
+McNemar exacto (p);17 vs 6 discordantes;23;0.03469;;

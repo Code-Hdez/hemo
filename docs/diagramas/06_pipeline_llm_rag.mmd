@@ -1,0 +1,20 @@
+flowchart TB
+  IN["Consulta del usuario"] --> SAFE["Políticas de seguridad\ndeterminísticas\n(bloquea diagnóstico, dosis\no tratamiento)"]
+  SAFE -->|consulta permitida| INTENT["Clasificación de intención\nde la consulta"]
+  SAFE -->|"consulta no permitida"| REFUSAL["Respuesta de rechazo\n(sin invocar el modelo)"]
+  INTENT --> CTXSEL["Selección del contexto\nclínico autorizado"]
+  CTXSEL --> FACTS["Hechos clínicos verificados\nde la mascota"]
+  CTXSEL --> NEARBY["Veterinarias cercanas\n(si aplica)"]
+  INTENT --> RAG["Recuperación semántica en la\nbase de conocimiento (RAG)"]
+  RAG --> SOURCES["Fuentes recuperadas"]
+  FACTS --> PROMPT["Construcción del contexto\npara el modelo de lenguaje"]
+  SOURCES --> PROMPT
+  NEARBY --> PROMPT
+  MEM["Memoria conversacional"] --> PROMPT
+  PROMPT --> MODEL["Generación de la respuesta\n(modelo de lenguaje)"]
+  MODEL --> OUTVAL["Validación de la salida\n(respaldo y seguridad clínica)"]
+  OUTVAL --> PERSIST["Persistencia\nde la conversación"]
+  PERSIST --> RESP["Respuesta final\ncon fuentes citadas"]
+
+  classDef gate fill:#fee,stroke:#a55
+  class SAFE,OUTVAL gate

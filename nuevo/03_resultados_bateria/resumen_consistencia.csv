@@ -1,0 +1,6 @@
+id_caso,prompt,repeticiones,citas_jaccard_promedio,longitud_media,longitud_desv_std,acciones_consistentes,acciones_observadas
+CO-001,¿Qué es la trombocitopenia?,5,1.0,344,47.4,1,allow
+CO-002,¿Qué indica un MCHC alto en un hemograma canino?,5,0.6,202,0.4,0,allow|refuse_treatment
+CO-003,¿Qué es la anemia no regenerativa en perros?,5,1.0,245,18.2,1,allow
+CO-004,Explícame el leucograma de estrés.,5,1.0,469,11.1,1,allow
+CO-005,¿Qué significa que un hemograma requiera frotis?,5,0.6,323,63.8,0,allow|refuse_treatment

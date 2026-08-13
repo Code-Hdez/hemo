@@ -1,0 +1,21 @@
+id_caso,id_base,prompt_limpio,prompt_typo,tipo_error
+TR-001a,base-01,¿Qué es la hemoglobina en un hemograma canino?,¿Qué es la hemogloBina en un emograma canino?,mayusculas_y_letra_faltante
+TR-001b,base-01,¿Qué es la hemoglobina en un hemograma canino?,que es la GKE en un hemograma canino,acronimo_incorrecto
+TR-002a,base-02,¿Qué es la trombocitopenia?,¿Qué es la trombocitopnia?,letra_faltante
+TR-002b,base-02,¿Qué es la trombocitopenia?,que es la trombositopenia,error_fonetico
+TR-003a,base-03,¿Qué significa un hematocrito bajo?,¿Que significa un ematocrito bajo?,h_faltante_sin_acento
+TR-003b,base-03,¿Qué significa un hematocrito bajo?,q significa el hematokrito bajo,abreviatura_y_k
+TR-004a,base-04,¿Qué es la anemia regenerativa?,¿Qué es la anemia rejenerativa?,error_fonetico_g_j
+TR-004b,base-04,¿Qué es la anemia regenerativa?,que es la anemia rejenerativva,doble_letra
+TR-005a,base-05,¿Qué indica un MCHC alto?,¿Qué indika un MCHC alto?,c_por_k
+TR-005b,base-05,¿Qué indica un MCHC alto?,que indica un mchc altto,doble_letra_minusculas
+TR-006a,base-06,¿Qué son las plaquetas?,¿Qué son las plaketas?,qu_por_k
+TR-006b,base-06,¿Qué son las plaquetas?,que son las placketas,error_ortografico
+TR-007a,base-07,¿Qué es la leucocitosis?,¿Qué es la leucositosis?,c_por_s
+TR-007b,base-07,¿Qué es la leucocitosis?,que es la leucocitosiss,doble_letra_final
+TR-008a,base-08,¿Qué significa neutrofilia?,¿Qué significa neutrofilya?,i_por_y
+TR-008b,base-08,¿Qué significa neutrofilia?,q significa neutrofila,letra_faltante
+TR-009a,base-09,¿Qué es la linfopenia?,¿Qué es la linfopnia?,letra_faltante
+TR-009b,base-09,¿Qué es la linfopenia?,que es la linphopenia,ph_por_f
+TR-010a,base-10,¿Qué son los eritrocitos?,¿Qué son los eritrositos?,c_por_s
+TR-010b,base-10,¿Qué son los eritrocitos?,que son los eritocitos,letra_faltante

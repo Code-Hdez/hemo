@@ -1,0 +1,15 @@
+flowchart TD
+  LOGIN["Autenticación\n(inicio de sesión / registro)"] --> PETS_PAGE["Gestión de mascotas"]
+  PETS_PAGE --> PET_DETAIL["Perfil de la mascota\n(datos + veterinarias cercanas)"]
+  PET_DETAIL --> ANALYSIS["Carga del hemograma"]
+  ANALYSIS --> RESULT["Resultado interpretativo\n(patrones y valores)"]
+  RESULT --> ASSISTANT["Consulta conversacional\nsobre el resultado"]
+  PET_DETAIL --> HISTORY["Historial de análisis"]
+  HISTORY --> ASSISTANT
+  PETS_PAGE --> SURVEILLANCE["Vigilancia comunitaria"]
+  PETS_PAGE --> DASHBOARD["Panel de calidad\ndel modelo"]
+  PETS_PAGE --> LIBRARY["Biblioteca y glosario"]
+  PETS_PAGE --> ACCOUNT["Cuenta del usuario"]
+
+  classDef page fill:#eef,stroke:#88a
+  class LOGIN,PETS_PAGE,PET_DETAIL,ANALYSIS,RESULT,ASSISTANT,HISTORY,SURVEILLANCE,DASHBOARD,LIBRARY,ACCOUNT page

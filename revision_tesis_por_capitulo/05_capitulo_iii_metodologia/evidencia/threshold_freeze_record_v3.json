@@ -1,0 +1,84 @@
+{
+  "version": "3.0.0",
+  "frozen_at": "2026-05-25T01:41:59.947010+00:00",
+  "frozen_from_split": "val",
+  "policy_version": "1.1.0",
+  "thresholds_version": "1.1.0",
+  "thresholds_sha256": "da6be9da2ae88170d2162b62973aa6ca49a61fc61a1b653d750af1646527f2e0",
+  "policy_sha256": "1e8e7d6e707befd4f7a15de92ff68681dd0979a8dd10d1a72979a7fcff098521",
+  "decision_note": "Thresholds evaluados y congelados unicamente con validation.",
+  "records": [
+    {
+      "label": "QC_REQUIERE_FROTIS",
+      "threshold": 0.5224204063415527,
+      "sensitivity_val": 0.7692307692307693,
+      "specificity_val": 0.957983193277311,
+      "f1_val": 0.8333333333333334,
+      "support_val": 130,
+      "tp": 100,
+      "fp": 10,
+      "tn": 228,
+      "fn": 30
+    },
+    {
+      "label": "PATRON_INFLAMATORIO",
+      "threshold": 0.5189647674560547,
+      "sensitivity_val": 0.9771428571428571,
+      "specificity_val": 0.9792746113989638,
+      "f1_val": 0.9771428571428571,
+      "support_val": 175,
+      "tp": 171,
+      "fp": 4,
+      "tn": 189,
+      "fn": 4
+    },
+    {
+      "label": "PATRON_LEUCOGRAMA_ESTRES",
+      "threshold": 0.5609767436981201,
+      "sensitivity_val": 0.9221556886227545,
+      "specificity_val": 0.9601990049751243,
+      "f1_val": 0.9361702127659575,
+      "support_val": 167,
+      "tp": 154,
+      "fp": 8,
+      "tn": 193,
+      "fn": 13
+    },
+    {
+      "label": "PATRON_ANEMIA_NO_REGENERATIVA",
+      "threshold": 0.3750866651535034,
+      "sensitivity_val": 0.8723404255319149,
+      "specificity_val": 0.940809968847352,
+      "f1_val": 0.7663551401869159,
+      "support_val": 47,
+      "tp": 41,
+      "fp": 19,
+      "tn": 302,
+      "fn": 6
+    },
+    {
+      "label": "PATRON_HEMOLISIS_MCHC",
+      "threshold": 0.7073880434036255,
+      "sensitivity_val": 0.95,
+      "specificity_val": 0.9930555555555556,
+      "f1_val": 0.9620253164556962,
+      "support_val": 80,
+      "tp": 76,
+      "fp": 2,
+      "tn": 286,
+      "fn": 4
+    },
+    {
+      "label": "PATRON_POLICITEMIA",
+      "threshold": 0.9956258535385132,
+      "sensitivity_val": 1.0,
+      "specificity_val": 1.0,
+      "f1_val": 1.0,
+      "support_val": 27,
+      "tp": 27,
+      "fp": 0,
+      "tn": 341,
+      "fn": 0
+    }
+  ]
+}

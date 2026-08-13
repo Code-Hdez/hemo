@@ -1,0 +1,159 @@
+{
+  "version": "3.0.0",
+  "model": "xgb_v3_reticulocytes",
+  "n_labels": 7,
+  "labels": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA",
+    "PATRON_ANEMIA_REGENERATIVA"
+  ],
+  "prauc_macro": 0.9577,
+  "reticulocyte_features": [
+    "Reticulocytes",
+    "Reticulocytes_pct",
+    "flag_reticulocytosis_pct_gt2",
+    "flag_reticulocytopenia_abs_lt10",
+    "flag_regen_anemia_proxy"
+  ],
+  "regen_promotion_gate": {
+    "criteria": {
+      "min_test_pr_auc": 0.7,
+      "min_test_f1": 0.45,
+      "min_test_recall": 0.65,
+      "min_val_pr_auc": 0.8
+    },
+    "metrics": {
+      "pr_auc": 0.886,
+      "roc_auc": 0.994,
+      "f1_optimal_thresh": 0.5,
+      "precision_optimal_thresh": 0.3571,
+      "recall_optimal_thresh": 0.8333,
+      "threshold_used": 0.3795106112957001,
+      "n_positive_test": 6,
+      "val_pr_auc": 0.9419,
+      "val_f1_threshold": 0.875,
+      "val_precision_threshold": 0.8235,
+      "val_recall_threshold": 0.9333,
+      "brier_val": 0.011897441931068897,
+      "brier_test": 0.02103082649409771
+    },
+    "checks": {
+      "test_pr_auc": true,
+      "test_f1": true,
+      "test_recall": true,
+      "val_pr_auc": true
+    },
+    "passed": true
+  },
+  "metrics": {
+    "QC_REQUIERE_FROTIS": {
+      "pr_auc": 0.8605,
+      "roc_auc": 0.8758,
+      "f1_optimal_thresh": 0.7111,
+      "precision_optimal_thresh": 0.8989,
+      "recall_optimal_thresh": 0.5882,
+      "threshold_used": 0.6362369060516357,
+      "n_positive_test": 136,
+      "val_pr_auc": 0.9103,
+      "val_f1_threshold": 0.8255,
+      "val_precision_threshold": 0.9238,
+      "val_recall_threshold": 0.7462,
+      "brier_val": 0.09345554560422897,
+      "brier_test": 0.12613452970981598
+    },
+    "PATRON_INFLAMATORIO": {
+      "pr_auc": 0.9936,
+      "roc_auc": 0.9946,
+      "f1_optimal_thresh": 0.9875,
+      "precision_optimal_thresh": 0.9801,
+      "recall_optimal_thresh": 0.9949,
+      "threshold_used": 0.5466579794883728,
+      "n_positive_test": 198,
+      "val_pr_auc": 0.9857,
+      "val_f1_threshold": 0.9771,
+      "val_precision_threshold": 0.9771,
+      "val_recall_threshold": 0.9771,
+      "brier_val": 0.024084899574518204,
+      "brier_test": 0.011943154036998749
+    },
+    "PATRON_LEUCOGRAMA_ESTRES": {
+      "pr_auc": 0.9861,
+      "roc_auc": 0.9899,
+      "f1_optimal_thresh": 0.9716,
+      "precision_optimal_thresh": 0.95,
+      "recall_optimal_thresh": 0.9942,
+      "threshold_used": 0.39073964953422546,
+      "n_positive_test": 172,
+      "val_pr_auc": 0.9811,
+      "val_f1_threshold": 0.9341,
+      "val_precision_threshold": 0.9341,
+      "val_recall_threshold": 0.9341,
+      "brier_val": 0.05013946443796158,
+      "brier_test": 0.02477334998548031
+    },
+    "PATRON_ANEMIA_NO_REGENERATIVA": {
+      "pr_auc": 0.9853,
+      "roc_auc": 0.9985,
+      "f1_optimal_thresh": 0.9882,
+      "precision_optimal_thresh": 0.9767,
+      "recall_optimal_thresh": 1.0,
+      "threshold_used": 0.7930853366851807,
+      "n_positive_test": 42,
+      "val_pr_auc": 0.9697,
+      "val_f1_threshold": 0.9462,
+      "val_precision_threshold": 0.9565,
+      "val_recall_threshold": 0.9362,
+      "brier_val": 0.01423558872193098,
+      "brier_test": 0.0037834825925529003
+    },
+    "PATRON_HEMOLISIS_MCHC": {
+      "pr_auc": 0.9924,
+      "roc_auc": 0.9988,
+      "f1_optimal_thresh": 0.9362,
+      "precision_optimal_thresh": 0.9565,
+      "recall_optimal_thresh": 0.9167,
+      "threshold_used": 0.7721141576766968,
+      "n_positive_test": 48,
+      "val_pr_auc": 0.9834,
+      "val_f1_threshold": 0.9682,
+      "val_precision_threshold": 0.987,
+      "val_recall_threshold": 0.95,
+      "brier_val": 0.016104672104120255,
+      "brier_test": 0.009859045967459679
+    },
+    "PATRON_POLICITEMIA": {
+      "pr_auc": 1.0,
+      "roc_auc": 1.0,
+      "f1_optimal_thresh": 0.9333,
+      "precision_optimal_thresh": 1.0,
+      "recall_optimal_thresh": 0.875,
+      "threshold_used": 0.9951086640357971,
+      "n_positive_test": 32,
+      "val_pr_auc": 1.0,
+      "val_f1_threshold": 1.0,
+      "val_precision_threshold": 1.0,
+      "val_recall_threshold": 1.0,
+      "brier_val": 6.956554443604546e-06,
+      "brier_test": 8.030534445424564e-06
+    },
+    "PATRON_ANEMIA_REGENERATIVA": {
+      "pr_auc": 0.886,
+      "roc_auc": 0.994,
+      "f1_optimal_thresh": 0.5,
+      "precision_optimal_thresh": 0.3571,
+      "recall_optimal_thresh": 0.8333,
+      "threshold_used": 0.3795106112957001,
+      "n_positive_test": 6,
+      "val_pr_auc": 0.9419,
+      "val_f1_threshold": 0.875,
+      "val_precision_threshold": 0.8235,
+      "val_recall_threshold": 0.9333,
+      "brier_val": 0.011897441931068897,
+      "brier_test": 0.02103082649409771
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "hemovet.gpu-runtime-release/v1",
+  "source_contract": "hemovet.release/v1",
+  "release_id": "af5ab60b418bc931c4c4cabc8b8ef92893325fb6",
+  "revision_state": "pending_boot_validation",
+  "apply_on": "next_boot",
+  "update_while_running": false,
+  "runtime": {
+    "reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/ollama-runtime@sha256:de0833bd3afd746a50281ba867b1504a836bcde54b493bf9c65c3d9c2a389179",
+    "digest": "sha256:de0833bd3afd746a50281ba867b1504a836bcde54b493bf9c65c3d9c2a389179"
+  },
+  "startup": {
+    "contract_version": "hemovet.gpu-startup/v1",
+    "bundle_digest": "sha256:5b6419fcd4f1bd6290d3a93c979f3e0ed8ebc629de2285f4212a2a4a8279320d"
+  },
+  "model": {
+    "name": "qwen3.6:27b-q4_K_M",
+    "digest": "sha256:a50eda8ed977ab48a12431878896b27ffd5cef552c17af3317d9623b939a7f1e",
+    "quantization": "Q4_K_M"
+  }
+}

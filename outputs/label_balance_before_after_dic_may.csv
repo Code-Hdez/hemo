@@ -1,0 +1,11 @@
+label,historical_positive,dic_may_positive,combined_positive,absolute_gain,relative_gain_pct,status
+QC_REQUIERE_FROTIS,867,0,867,0,0.0,sin_incremento_dic_may
+QC_AGREGADOS_PLAQUETARIOS,125,0,125,0,0.0,sin_incremento_dic_may
+QC_INTERFERENCIA_GR,26,0,26,0,0.0,sin_incremento_dic_may
+QC_UNIDAD_NO_CONVERTIDA,89,0,89,0,0.0,sin_incremento_dic_may
+PATRON_INFLAMATORIO,1143,0,1143,0,0.0,sin_incremento_dic_may
+PATRON_LEUCOGRAMA_ESTRES,1108,0,1108,0,0.0,sin_incremento_dic_may
+PATRON_ANEMIA_NO_REGENERATIVA,252,0,252,0,0.0,sin_incremento_dic_may
+PATRON_HEMOLISIS_MCHC,345,0,345,0,0.0,sin_incremento_dic_may
+PATRON_POLICITEMIA,168,0,168,0,0.0,sin_incremento_dic_may
+PATRON_ANEMIA_REGENERATIVA,108,0,108,0,0.0,sin_incremento_dic_may

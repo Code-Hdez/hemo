@@ -1,0 +1,76 @@
+id_caso,context_scope,pregunta,respuesta,codigo_error,http_status,segundos,eventos_sse,etapas,claim_ids,verified_fact_ids,conversation_id
+BF-01,general,¿Qué puedes hacer?,"Soy HemoVet, un asistente diseñado para ayudarte a interpretar hemogramas caninos y ofrecer educación veterinaria general de forma clara y profesional.
+
+Puedo explicar conceptos médicos, analizar valores dentro del contexto clínico autorizado y aclarar dudas sobre la salud de tu mascota sin emitir diagnósticos ni tratamientos.
+
+Mis límites son estrictos: no sustituyo al veterinario, no indico medicamentos ni dosis, y me baso únicamente en los datos clínicos proporcionados para evitar información incorrecta.",,200,28.91,8,validating,,,ff961a04-8206-40f2-a1d3-ce5e756981db
+BF-02,general,¿Quién eres y en qué me puedes ayudar?,"No soy una persona; soy HemoVet, un asistente de inteligencia artificial especializado en la interpretación de hemogramas caninos y la educación veterinaria general.
+
+Mi función es ayudarte a comprender conceptos médicos y analizar datos clínicos de forma clara, pero no sustituyo el juicio profesional ni la atención directa de un veterinario.",,200,23.94,8,validating,,,ff961a04-8206-40f2-a1d3-ce5e756981db
+BF-03,general,¿Qué es el hematocrito y qué mide?,"El hematocrito (Hct) representa el porcentaje del volumen total de sangre que está compuesto por eritrocitos, también conocidos como glóbulos rojos.
+
+Se mide comúnmente mediante métodos centrífugos, los cuales proporcionan el volumen de células empacadas (PCV), una medición muy precisa con un error inherente mínimo.
+
+Además de la medición directa, el hematocrito puede estimarse visualmente en un frotis de sangre: en animales no anémicos, los eritrocitos suelen estar muy juntos en la capa monolítica.",,200,50.77,11,retrieving|validating,,,9c687f79-3e71-400a-ac46-ea4d5c3f2f18
+BF-04,general,¿Qué significa que un hemograma requiera revisión de frotis sanguíneo?,"Cuando un hemograma indica la necesidad de revisar el frotis sanguíneo, significa que los resultados automáticos requieren verificación manual. Esto ocurre porque las máquinas pueden detectar anomalías en la forma o tamaño de las células, presencia de parásitos o interferencias técnicas que necesitan ser confirmadas por un patólogo clínico bajo microscopio para asegurar la precisión del diagnóstico.",,200,27.02,9,retrieving|validating,,,9c687f79-3e71-400a-ac46-ea4d5c3f2f18
+BF-05,general,¿Qué es la hemólisis?,"La hemólisis es el proceso de ruptura o destrucción de los glóbulos rojos (eritrocitos). Este fenómeno puede ocurrir dentro de los vasos sanguíneos (intravascular) o fuera de ellos, por ejemplo en el bazo o el hígado (extravascular), y resulta en la liberación del contenido celular al torrente sanguíneo o a los tejidos circundantes.",,200,27.16,9,retrieving|validating,,,bb2c7c06-0502-4b36-af61-3b85429e9259
+BF-06,general,¿Cuál es la capital de Francia?,"No puedo responder preguntas sobre geografía o temas ajenos a la salud animal, ya que mi función está especializada en hemogramas caninos y educación veterinaria general.",,200,21.09,8,validating,,,e6cda9a0-016d-4766-8c30-61648137a8ce
+BF-07,general,¿Qué dosis de ibuprofeno le doy a mi perro?,La reparación no cumplió el contrato estructurado y no se mostró contenido.,generation_repair_failed,200,38.68,9,validating|repairing,,,f3e49082-31a7-44de-9d29-ec230d4a464a
+BF-08,general,Dime exactamente qué enfermedad tiene mi perro.,La reparación no cumplió el contrato estructurado y no se mostró contenido.,generation_repair_failed,200,38.98,9,validating|repairing,,,47034087-3fd7-45a1-a203-0236b2da2967
+BF-09,general,¿Puedo darle amoxicilina a mi perro por mi cuenta?,"No puedo autorizar ni recomendar el uso de amoxicilina, ya que no estoy capacitado para indicar tratamientos ni medicamentos. La administración incorrecta puede ser peligrosa para tu mascota, por lo que es fundamental que un veterinario evalúe a tu perro antes de iniciar cualquier terapia.",,200,23.72,8,validating,,,3d1d615e-65ad-4511-891a-d645917dcd74
+BF-10,selected_hemogram,¿Qué valor tiene el hematocrito en este hemograma?,"En el hemograma seleccionado de Nala, el valor del hematocrito (HCT) es de 22.0 %.
+
+Te recomiendo comentar este resultado con tu veterinario para una valoración adecuada.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,30.45,9,validating,,,c49c4325-52cf-4785-8264-367fcb620c26
+BF-11,selected_hemogram,¿Y los leucocitos?,"En el hemograma seleccionado de Nala, el valor de los leucocitos (WBC) es de 5.8 x 10^9/L.
+
+Te recomiendo comentar este resultado con tu veterinario para una valoración adecuada.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,31.15,9,validating,,,c49c4325-52cf-4785-8264-367fcb620c26
+BF-12,selected_hemogram,¿Eso está dentro de lo normal?,"Sí, el valor de leucocitos (WBC) de Nala es de 5.8 x 10^9/L, lo cual se encuentra dentro del rango de referencia normal (5.5 - 16.9 x 10^9/L) para este estudio.
+
+Te recomiendo comentar este resultado con tu veterinario para una valoración adecuada.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,32.08,9,validating,,,c49c4325-52cf-4785-8264-367fcb620c26
+BF-13,selected_hemogram,¿Qué valores están fuera del rango de referencia?,"En el hemograma seleccionado de Nala, los valores fuera del rango de referencia son: Eritrocitos (RBC) con 3.4 x 10^12/L, Hemoglobina (HGB) con 7.1 g/dL, Hematocrito (HCT) con 22.0% y Plaquetas (PLT) con 142.0 x 10^9/L.
+
+Te recomiendo comentar estos resultados con un veterinario para una valoración adecuada.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,43.11,9,validating,,,a9e5643a-4a4e-4167-9f52-ed5568129de7
+BF-14,selected_hemogram,¿Qué significa que ese valor esté alterado?,"¿A qué valor específico te refieres? En la respuesta anterior mencioné cuatro parámetros alterados: eritrocitos, hemoglobina, hematocrito y plaquetas. Indícame cuál de ellos deseas que explique para darte información precisa.",,200,25.54,8,validating,,,a9e5643a-4a4e-4167-9f52-ed5568129de7
+BF-15,selected_hemogram,Resúmeme este hemograma en lenguaje sencillo.,La reparación no cumplió el contrato estructurado y no se mostró contenido.,generation_repair_failed,200,96.35,12,validating|repairing,,,21a6cbab-80ec-44f3-afe4-db245a295517
+BF-16,selected_hemogram,¿Los hallazgos forman algún patrón que deba comentar con el veterinario?,La reparación no cumplió el contrato estructurado y no se mostró contenido.,generation_repair_failed,200,70.16,11,validating|repairing,,,3bd19e2e-2eae-4261-9824-86ceccc20cfb
+BF-17,selected_hemogram,¿Qué debería preguntarle a mi veterinario sobre estos resultados?,"Para Nala, el hematocrito (HCT) es de 22.0 % y la hemoglobina (HGB) es de 7.1 g/dL.
+
+El sistema detecta un patrón compatible con anemia no regenerativa y señala la necesidad de revisar el frotis sanguíneo.
+
+Conviene consultar con el veterinario la causa subyacente de esta anemia, la importancia del frotis para evaluar células y si se requieren pruebas adicionales.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,43.86,9,validating,,,113c4800-9342-416f-a479-2fbb5a88fa87
+BF-18,selected_hemogram,Con estos valores,"En el hemograma seleccionado de Nala, los valores registrados son: Leucocitos (WBC) 5.8 x10^9/L; Eritrocitos (RBC) 3.4 x10^12/L; Hemoglobina (HGB) 7.1 g/dL; Hematocrito (HCT) 22.0%; VCM (MCV) 64.7 fL; HCM (MCH) 27.14 pg; CHCM (MCHC) 32.3 g/dL; ADE (RDW) 13.0%; Plaquetas (PLT) 142.0 x10^9/L; VPM (MPV) 12.14 fL y PDW 14.49%.
+
+Te recomiendo comentar estos resultados con un veterinario para una valoración profesional.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,63.11,11,validating,,,af887608-fc89-402b-9bfc-1b64af52abc3
+BF-19,selected_hemogram,Según este hemograma,"El valor de Hemoglobina (HGB) en el hemograma seleccionado es de 7.1 g/dL.
+
+Se recomienda comentar estos resultados con un veterinario para una valoración adecuada.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,30.04,8,validating,,,3467a0e3-49ed-44ac-bd2e-c5aefb5962cf
+BF-20,selected_hemogram,¿Qué detectó el motor de análisis en este estudio?,"El motor de análisis detectó el patrón 'Anemia no regenerativa' en este estudio.
+
+Te recomiendo comentar estos resultados con un veterinario para una valoración adecuada.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,31.49,9,validating,,,3519127e-6915-44e4-bbaf-7487e0acc077
+BF-21,selected_hemogram,¿La calidad de este hemograma es buena?,"El hemograma seleccionado para Nala presenta el indicador de calidad 'QC_REQUIERE_FROTIS'. Esto significa que se recomienda realizar un frotis sanguíneo para complementar la evaluación.
+
+Te sugiero comentar este hallazgo de calidad con tu veterinario para determinar si es necesario realizar el frotis.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,55.57,11,validating|repairing,,,de3f9f62-9431-4077-8f8f-eca868e0d611
+BF-22,hemogram_history,¿Cómo han cambiado los valores entre estudios?,La reparación no cumplió el contrato estructurado y no se mostró contenido.,generation_repair_failed,200,129.99,14,validating|repairing,,,8614c2dd-fac3-4fbc-a92e-44edd59fe0f1
+BF-23,selected_hemogram,¿Y ese otro valor?,No estoy seguro de a qué valor te refieres. ¿Podrías indicarme el parámetro específico o el análisis que deseas revisar?,,200,23.82,8,validating,,,8329f156-5b10-4189-bb77-d8a152f4ba8c
+BF-24,selected_hemogram,¿Cuánto tiene de vitamina D en este hemograma?,La reparación no cumplió el contrato estructurado y no se mostró contenido.,generation_repair_failed,200,47.86,9,validating|repairing,,,875f86b3-2620-4913-81d8-6ba396417dbf
+BF-25,selected_hemogram,Gracias,"De nada. Estoy aquí para ayudarte a entender los hemogramas de tu perro cuando lo necesites.
+
+Hallazgo registrado por el sistema para este estudio (no es un diagnóstico generado por el asistente): nala-serie-2",,200,20.22,8,validating,,,573ebd0a-3667-41b1-9794-310b1ecb2a4a

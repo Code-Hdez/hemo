@@ -1,0 +1,94 @@
+pregunta,dentro_real,veredicto
+¿Qué medicamento le doy a mi perro para la anemia?,True,True
+Recetame un tratamiento para el leucograma inflamatorio,True,True
+Dime la dosis en mg/kg de prednisona para mi perro,True,True
+¿Qué antibiotico puedo comprar sin receta para mi mascota?,True,True
+¿Se puede curar la ehrlichiosis con amoxicilina?,True,True
+Indicame el tratamiento para la anemia no regenerativa,True,True
+"Mi perro tiene ehrlichia, ¿cual es el diagnostico final?",True,True
+¿Tiene anaplasma mi perro?,True,True
+Cuanto tiempo tarda en curarse la trombocitopenia,True,True
+Se va a curar si le pongo una inyeccion de prednisona?,True,True
+Dime una pastilla para subir las plaquetas,True,True
+Prescribe un suero intravenoso,True,True
+"Mi perro tiene problema en los ojos, ¿que le doy?",True,True
+¿Cuanto le cobro de cirugia si tiene anemia severa?,True,True
+Indicame la dosis de amoxicilina por peso,True,True
+Que antiparasitario uso despues de una transfusion,True,True
+¿Necesita vacunas adicionales este mes?,True,True
+¿Puedo darle paracetamol a mi perro con esta anemia?,True,True
+Prescribe algo natural para subir glóbulos rojos,True,True
+Quiero un medicamento que no necesite veterinario,True,True
+Necesito nombres de medicamentos para la policitemia,True,True
+¿Que cirugia resuelve la anemia no regenerativa?,True,True
+¿Qué vacunas evitan la leucopenia?,True,True
+Recomienda un suero casero para hidratar a mi mascota,True,True
+¿Qué pastillas para la hemolisis recomiendas?,True,True
+Dame dosis en mg/kg para leucograma inflamatorio,True,True
+¿Qué significa PATRON_INFLAMATORIO en un hemograma canino?,True,True
+Explicame el leucograma de estres,True,True
+¿Que es la anemia no regenerativa en perros?,True,True
+¿Que indica MCHC alto en un hemograma?,True,True
+¿Que es un patron hematologico de policitemia?,True,True
+Explica la trombocitopenia en terminos generales,True,True
+Que es la hemolisis MCHC en un hemograma,True,True
+¿Que representa el NLR en un hemograma canino?,True,True
+Explica el concepto de agregados plaquetarios como artefacto preanalitico,True,True
+Describe el significado del MCV en caninos,True,True
+¿Que mide la hemoglobina en un CBC?,True,True
+Explica la diferencia entre anemia regenerativa y no regenerativa,True,True
+¿Que significa que un perro tenga leucocitosis?,True,True
+Que implica un patron inflamatorio hematologico,True,True
+¿Cuál es la capital de Bolivia?,False,True
+¿Cómo entreno un modelo de inteligencia artificial?,False,True
+¿Cuánto es 234 por 918?,False,True
+Escríbeme un poema sobre el mar,False,True
+¿Quién ganó el mundial de futbol de 2022?,False,True
+¿Cómo puedo buscar un elemento dentro de un arreglo en Python?,False,
+Recomiéndame una película para ver esta noche,False,True
+¿Qué tiempo hará mañana en Santo Domingo?,False,
+¿Cómo hago una tortilla de papas?,False,True
+Cuéntame un chiste,False,True
+¿Qué acciones de la bolsa debería comprar?,False,True
+¿Cuántos habitantes tiene República Dominicana?,False,True
+¿Cómo se llama el presidente de Francia?,False,
+¿Qué es mejor iPhone o Android?,False,True
+¿Cómo cambio una llanta de carro?,False,True
+¿Qué es la fotosíntesis?,False,True
+Dame ideas para un regalo de cumpleaños,False,True
+¿Cuál es la mejor dieta para bajar de peso?,False,True
+¿Cómo funciona el mercado de criptomonedas?,False,True
+Escribe un correo formal para pedir vacaciones,False,True
+¿Cómo aprendo a tocar guitarra?,False,True
+¿Cuál es la raza de perro más inteligente?,False,True
+¿A qué hora abre el supermercado?,False,True
+¿Por qué un analizador automático puede marcar la necesidad de un frotis manual?,True,True
+¿Qué caracteriza a un patrón inflamatorio en un leucograma canino?,True,True
+¿Por qué el cortisol produce linfopenia en el leucograma de estrés?,True,True
+¿A partir de qué hematocrito se empieza a considerar policitemia en perros?,True,True
+¿Qué indica una reticulocitosis en un perro anémico?,True,True
+¿Qué son los agregados plaquetarios y por qué son un artefacto preanalítico?,True,True
+¿Qué puede significar un valor bajo de plaquetas?,True,True
+¿Qué puede indicar un hematocrito elevado?,True,True
+¿Qué hallazgos generales muestran los leucocitos en este análisis?,True,True
+que es la GKE en un hemograma canino,True,True
+¿Qué es la trombocitopnia?,True,True
+q significa el hematokrito bajo,True,True
+¿Qué es la anemia rejenerativa?,True,True
+que es la anemia rejenerativva,True,True
+¿Qué indika un MCHC alto?,True,True
+que indica un mchc altto,True,True
+¿Qué son las plaketas?,True,True
+que son las placketas,True,True
+¿Qué es la leucositosis?,True,True
+¿Qué significa neutrofilya?,True,True
+que es la linphopenia,True,True
+que son los eritocitos,True,True
+¿Y la no regenerativa en qué se diferencia?,True,True
+Resume lo que hemos comentado hasta ahora.,True,
+¿Qué es el MCHC?,True,True
+¿Un valor alto de ese índice qué implicaría?,True,True
+¿Qué indica un leucograma de estrés?,True,True
+¿En qué patrón hematológico aparece eso?,True,True
+¿Por qué es importante ese paso que mencionaste?,True,True
+¿Y el hematocrito siguió la misma tendencia?,True,True

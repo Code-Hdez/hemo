@@ -1,0 +1,12 @@
+flowchart TB
+  OLD["Medición previa\n(no representativa del\nsistema en producción)"] -.->|reemplazada por| NEW["Medición actual\n(sobre el pipeline real)"]
+  NEW --> A["Batería A:\námbito y seguridad"]
+  NEW --> B["Batería B:\nrobustez ortográfica"]
+  NEW --> C["Batería C:\nmemoria multi-turno"]
+  NEW --> D["Batería D:\nconsistencia de fuentes"]
+  NEW --> E["Batería E: exactitud de\ncontenido (evaluación\nveterinaria, pendiente)"]
+
+  classDef done fill:#dfd,stroke:#5a5
+  classDef pending fill:#fee,stroke:#a55
+  class A,B,C,D done
+  class E pending

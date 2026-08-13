@@ -1,0 +1,154 @@
+# Operating system and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+!.env.production.example
+*.local
+!deploy/Caddyfile.local
+tools/llm_cbc_eval/config/eval.config.json
+
+# Python cache, virtualenvs and test artifacts
+# .cache/ es donde caen los pesos de los modelos locales (fastembed y, si se
+# enciende, el verificador de entrañamiento): gigabytes que nunca deben entrar
+# en el repositorio.
+.cache/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.venv/
+venv/
+env/
+ENV/
+.ipynb_checkpoints/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+.vite/
+coverage/
+backend/media/
+
+# Project-local workspaces and scratch folders
+REVISAR/
+info/
+data2/
+FINALES/
+Sin Limpieza/
+externo/
+data/raw/
+extraccion_ejemplos/
+images/
+
+# Knowledge base: ignore the local workspace by default and allow only
+# reproducible pipeline source plus the curated production corpus.
+knowledge_base/*
+!knowledge_base/README.md
+
+!knowledge_base/scripts/
+knowledge_base/scripts/**
+!knowledge_base/scripts/**/
+!knowledge_base/scripts/**/*.py
+!knowledge_base/scripts/**/*.txt
+
+!knowledge_base/manifests/
+knowledge_base/manifests/*
+!knowledge_base/manifests/example_sources_manifest.json
+!knowledge_base/manifests/sources_manifest.json
+!knowledge_base/manifests/curation_rules.json
+!knowledge_base/manifests/production_corpus_manifest.json
+
+!knowledge_base/microcards/
+knowledge_base/microcards/**
+!knowledge_base/microcards/**/
+!knowledge_base/microcards/**/*.json
+
+!knowledge_base/policies/
+knowledge_base/policies/**
+!knowledge_base/policies/**/
+!knowledge_base/policies/**/*.json
+
+!knowledge_base/raw_md/
+knowledge_base/raw_md/*
+!knowledge_base/raw_md/hemograma_canino_prueba.md
+
+!knowledge_base/expert_review/
+knowledge_base/expert_review/*
+!knowledge_base/expert_review/approved/
+knowledge_base/expert_review/approved/**
+!knowledge_base/expert_review/approved/**/
+!knowledge_base/expert_review/approved/**/*.md
+
+# Local notes and generated planning artifacts
+llm.txt
+.claude/
+.codex/
+.gitnexus
+# Runtime data: keep bulky datasets ignored, but track small manifests/policies
+# required by the backend readiness gates.
+data/*
+!data/processed/
+data/processed/*
+!data/processed/artifact_manifest_v2.json
+!data/processed/analysis_metadata.csv
+!data/processed/ingestion_manifest.csv
+!data/processed/policy_freeze_v3.json
+!data/processed/policy_preregistered_v3.json
+!data/metadata/
+data/metadata/*
+!data/metadata/location_overrides.csv
+
+outputs/tmp_thesis_test/
+outputs/tmp_rag_service/
+outputs/docx_paragraphs.json
+outputs/notebook_summaries.txt
+outputs/ppt_slide_dump.json
+outputs/ppt_media/
+
+knowledge_base.rar
+word/*.backup-original.docx
+
+test/
+!frontend_4/src/test/
+!frontend_4/src/test/setup.ts
+
+**/.agents/**
+**/agents/**
+**/.skills/**
+**/skills/**
+**/.claude/**
+**/.codex/**
+**/AGENTS.md
+**/CLAUDE.md
+**/SKILLS.md
+**/skills-lock.json
+
+# Transcripciones de sesiones de agentes: ruido de trabajo, no fuente del proyecto
+/*.jsonl
+rollout-*.jsonl
+
+# Repositorio de terceros clonado para el análisis del 2026-08-06
+# (ANALISIS_SOCRATIC_TUTOR_2026-08-06.md cita sus rutas). Son 53 MB de código
+# ajeno con su propio historial: se consulta, no se versiona aquí.
+/socratic-tutor/

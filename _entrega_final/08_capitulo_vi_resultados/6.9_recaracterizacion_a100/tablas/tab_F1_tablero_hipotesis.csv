@@ -1,0 +1,11 @@
+id;enunciado;medido;veredicto
+H-1;El decode en la A100 será más rápido pero con MBU menor que el 73,7 % atribuido a la L4;MBU 34,90 %;CONSISTENTE, NO CONFIRMADA
+H-2;La sobrecarga de gramática es ≥10 ms/token;0,332 ms/token frente a ≥ 10;REFUTADA
+H-3;La tasa de fallos terminales no cambia apreciablemente (17/70 dentro de [10,24]);κ = -0,145: poblaciones distintas;NO EVALUADA
+H-4;Los ids de fallo se conservan aunque cambie el recuento;0 de 17 ids coinciden;NO EVALUADA, EVALUABLE
+H-5;El p50 por turno baja ≥50 % respecto a 59,1 s;−60,6 % (Wilcoxon pareado, n = 64);NO EVALUADA
+H-6;En las preguntas de frontera (13/14/15) el sistema confabula en vez de declinar;reporta ventana truncada, no confabula;REFUTADA en su predicción
+H-7;El num_ctx efectivo ha cambiado por el salto de VRAM;num_ctx fijado por petición;REFUTADA POR CONFIGURACIÓN
+H-8;ttft_per_1k_in crece a lo largo de los 15 turnos (sin reutilización de KV de prefijo);campo no expuesto por la API;NO EVALUABLE por camino B
+H-9;La tasa de alucinación numérica en modo HEMOGRAMA es distinta de cero;0 de 9 · IC de Wilson hasta 29,9 %;NO CONCLUYENTE
+H-10;La VM de CPU nueva cambia el tok/s por sí sola, vía enmascarado GBNF;n = 1 máquina;NO EVALUABLE POR DISEÑO

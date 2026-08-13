@@ -1,0 +1,88 @@
+{
+  "version": "3.0.0",
+  "generated_at": "2026-05-25T02:09:23.591350+00:00",
+  "runtime_artifacts": [
+    {
+      "path": "models/best_model_v2.pkl",
+      "sha256": "337d5f08dece33364e1613b95d111d412f35607fe3dda3acf9c30573b704415a"
+    },
+    {
+      "path": "models/model_metadata_v2.json",
+      "sha256": "659fb1efefb5658cdbe084612c4e045331a2803404ffaafe2239aebdf54c4e93"
+    },
+    {
+      "path": "models/calibrators_v2.pkl",
+      "sha256": "926248e52d1fa532c317e37da24ed652ae64110f8219cb5e061668bd3091f048"
+    },
+    {
+      "path": "data/processed/feature_columns.json",
+      "sha256": "3b7fd9ecf29b99e9e271339cd8ab2443799c42154bb8d408b3e2f657126512e8"
+    },
+    {
+      "path": "data/processed/decision_thresholds_v2.json",
+      "sha256": "bfc72495f39e968013a0334a69605ae4dcd355d28354e912c7c5e7288b891cb3"
+    },
+    {
+      "path": "data/processed/imputer_medians.csv",
+      "sha256": "1791f33bcab7a0e3a185782bce9d2cf31c2bf325df16b5e9ac6b053247a48354"
+    },
+    {
+      "path": "data/processed/final_label_policy.json",
+      "sha256": "ef0ef7b8f26374ee961991cbb8487419cfc675c5ed43fd629782ce75d55ac652"
+    }
+  ],
+  "support_artifacts": [
+    {
+      "path": "models/best_model_v3.pkl",
+      "sha256": "707d1c4fce52fb749e18af7457ebb5cbc1d86a1fa0bd0ba2f9a4210479c7621e"
+    },
+    {
+      "path": "models/model_metadata_v3.json",
+      "sha256": "659fb1efefb5658cdbe084612c4e045331a2803404ffaafe2239aebdf54c4e93"
+    },
+    {
+      "path": "models/calibrators_v3.pkl",
+      "sha256": "926248e52d1fa532c317e37da24ed652ae64110f8219cb5e061668bd3091f048"
+    },
+    {
+      "path": "data/processed/decision_thresholds_v3.json",
+      "sha256": "e97dbdec34b56e700eb986c2fb45f64e52dbeb638cfffc339dd218da8e26e284"
+    },
+    {
+      "path": "data/processed/metrics_test_v2.json",
+      "sha256": "5ebb29f59e2b669ce97cc17436da6bb1536615495d4a88a99b00ad4468ca5a35"
+    },
+    {
+      "path": "data/processed/metrics_test_v3.json",
+      "sha256": "5ebb29f59e2b669ce97cc17436da6bb1536615495d4a88a99b00ad4468ca5a35"
+    },
+    {
+      "path": "data/processed/train.csv",
+      "sha256": "cf77c756ac68babe9390b0e9b6fd5451a09f7698af3ffee63c1e4ca5ebf381e6"
+    },
+    {
+      "path": "data/processed/val.csv",
+      "sha256": "a72c6256e4f29342daf1b627cebf8e0c7438e1881bf94f3e4ab040e0047f69d7"
+    },
+    {
+      "path": "data/processed/test.csv",
+      "sha256": "e1dd5a5fe4ff928baa87a2c1a4444b3180091707f56ccda6916d4cf4ca22443c"
+    },
+    {
+      "path": "data/processed/policy_preregistered_v3.json",
+      "sha256": "9887b4f50914558062ed62a8ef9d28c3022f826e60764857b9a7c00d9f563397"
+    },
+    {
+      "path": "data/processed/policy_freeze_v3.json",
+      "sha256": "4a5ba78893c2f78f05261cc2d12972f966339d6e6635d81bbd02c719a8a174ed"
+    },
+    {
+      "path": "outputs/final_system_state.json",
+      "sha256": "642142b12d98a13557bd5918a39595b0d428fcb60be54c4c2eaaf7438421c0ac"
+    },
+    {
+      "path": "outputs/reticulocyte_model_v3_comparison.csv",
+      "sha256": "a3ec4f777712ec5f8c2c6814107efec2def48a55d2201dc57fff10bf7d6e9ecd"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "batches": 60,
+  "casos_totales": 526,
+  "casos_evaluables_con_modelo": 509,
+  "semanas": 4,
+  "evaluadores": 2,
+  "modelo_v3_semanas": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "modelo_v4_semanas": [
+    "S4"
+  ],
+  "periodo": "25 mayo – 18 junio 2026",
+  "etiquetas": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA",
+    "PATRON_ANEMIA_REGENERATIVA",
+    "QC_AGREGADOS_PLAQUETARIOS"
+  ],
+  "desglose_semanas": {
+    "S1": {
+      "batches": 12,
+      "casos": 116,
+      "modelo": "v3",
+      "periodo": "25-29 may 2026"
+    },
+    "S2": {
+      "batches": 12,
+      "casos": 100,
+      "modelo": "v3",
+      "periodo": "2-7 jun 2026"
+    },
+    "S3": {
+      "batches": 12,
+      "casos": 105,
+      "modelo": "v3",
+      "periodo": "9-13 jun 2026"
+    },
+    "S4": {
+      "batches": 24,
+      "casos": 205,
+      "modelo": "v4",
+      "periodo": "14-18 jun 2026"
+    }
+  },
+  "carpeta": "/home/edwinb/tesis/hemogramas-proyectoICC/validacion_clinica/resultados",
+  "nota": "Evaluación retrospectiva de HemoVet con dos evaluadores veterinarios. M1 sirvió como referencia principal para el ajuste del modelo v4."
+}

@@ -1,0 +1,141 @@
+{
+  "model_version": "2.0.0",
+  "policy_version": "1.1.0",
+  "n_cases": 4,
+  "cases": [
+    {
+      "id": "A",
+      "titulo": "Trombocitopenia inflamatoria",
+      "esperado": [
+        "QC_REQUIERE_FROTIS",
+        "PATRON_INFLAMATORIO"
+      ],
+      "activas": [
+        {
+          "label": "PATRON_INFLAMATORIO",
+          "prob": 0.9947,
+          "source": "model"
+        },
+        {
+          "label": "PATRON_LEUCOGRAMA_ESTRES",
+          "prob": 0.9941,
+          "source": "model"
+        }
+      ],
+      "probabilidades_modelo": {
+        "QC_REQUIERE_FROTIS": 0.0894,
+        "PATRON_INFLAMATORIO": 0.9947,
+        "PATRON_LEUCOGRAMA_ESTRES": 0.9941,
+        "PATRON_ANEMIA_NO_REGENERATIVA": 0.0018,
+        "PATRON_HEMOLISIS_MCHC": 0.0021,
+        "PATRON_POLICITEMIA": 0.0019
+      },
+      "umbral_por_etiqueta_activa": {
+        "PATRON_INFLAMATORIO": 0.519,
+        "PATRON_LEUCOGRAMA_ESTRES": 0.561
+      },
+      "status": "success",
+      "latency_ms": 16.35,
+      "mchc_input": 35.2,
+      "mchc_hemolysis_suppressed": false
+    },
+    {
+      "id": "B",
+      "titulo": "Leucograma de estres",
+      "esperado": [
+        "PATRON_LEUCOGRAMA_ESTRES"
+      ],
+      "activas": [
+        {
+          "label": "QC_REQUIERE_FROTIS",
+          "prob": 0.9972,
+          "source": "model"
+        },
+        {
+          "label": "PATRON_INFLAMATORIO",
+          "prob": 0.9925,
+          "source": "model"
+        },
+        {
+          "label": "PATRON_LEUCOGRAMA_ESTRES",
+          "prob": 0.9932,
+          "source": "model"
+        }
+      ],
+      "probabilidades_modelo": {
+        "QC_REQUIERE_FROTIS": 0.9972,
+        "PATRON_INFLAMATORIO": 0.9925,
+        "PATRON_LEUCOGRAMA_ESTRES": 0.9932,
+        "PATRON_ANEMIA_NO_REGENERATIVA": 0.0011,
+        "PATRON_HEMOLISIS_MCHC": 0.0016,
+        "PATRON_POLICITEMIA": 0.0018
+      },
+      "umbral_por_etiqueta_activa": {
+        "QC_REQUIERE_FROTIS": 0.5224,
+        "PATRON_INFLAMATORIO": 0.519,
+        "PATRON_LEUCOGRAMA_ESTRES": 0.561
+      },
+      "status": "success",
+      "latency_ms": 13.27,
+      "mchc_input": 35.0,
+      "mchc_hemolysis_suppressed": false
+    },
+    {
+      "id": "C",
+      "titulo": "Anemia no regenerativa (HCT 28%, HGB 9.2, normocitica normocromica)",
+      "esperado": [
+        "PATRON_ANEMIA_NO_REGENERATIVA"
+      ],
+      "activas": [
+        {
+          "label": "PATRON_ANEMIA_NO_REGENERATIVA",
+          "prob": 0.9724,
+          "source": "model"
+        }
+      ],
+      "probabilidades_modelo": {
+        "QC_REQUIERE_FROTIS": 0.2352,
+        "PATRON_INFLAMATORIO": 0.0019,
+        "PATRON_LEUCOGRAMA_ESTRES": 0.0051,
+        "PATRON_ANEMIA_NO_REGENERATIVA": 0.9724,
+        "PATRON_HEMOLISIS_MCHC": 0.0015,
+        "PATRON_POLICITEMIA": 0.0018
+      },
+      "umbral_por_etiqueta_activa": {
+        "PATRON_ANEMIA_NO_REGENERATIVA": 0.3751
+      },
+      "status": "success",
+      "latency_ms": 13.91,
+      "mchc_input": 34.5,
+      "mchc_hemolysis_suppressed": false
+    },
+    {
+      "id": "D",
+      "titulo": "Artefacto MCHC (53 g/dL) + agregados plaquetarios (regla Modulo 2)",
+      "esperado": [
+        "QC_AGREGADOS_PLAQUETARIOS (regla Modulo 2)",
+        "PATRON_HEMOLISIS_MCHC suprimido por politica de artefacto"
+      ],
+      "activas": [
+        {
+          "label": "QC_AGREGADOS_PLAQUETARIOS",
+          "prob": null,
+          "source": "rule_module2"
+        }
+      ],
+      "probabilidades_modelo": {
+        "QC_REQUIERE_FROTIS": 0.1372,
+        "PATRON_INFLAMATORIO": 0.0023,
+        "PATRON_LEUCOGRAMA_ESTRES": 0.004,
+        "PATRON_ANEMIA_NO_REGENERATIVA": 0.1673,
+        "PATRON_HEMOLISIS_MCHC": 0.0,
+        "PATRON_POLICITEMIA": 0.0018
+      },
+      "umbral_por_etiqueta_activa": {},
+      "status": "success",
+      "latency_ms": 12.65,
+      "mchc_input": 53.0,
+      "mchc_hemolysis_suppressed": true
+    }
+  ]
+}

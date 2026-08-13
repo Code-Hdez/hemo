@@ -1,0 +1,30 @@
+{
+  "gate": "geocoding_quality_v1",
+  "status": "warn",
+  "checked_at": "2026-05-24T20:54:47.211944+00:00",
+  "checks": [
+    {
+      "name": "Metadata geografica disponible",
+      "passed": true,
+      "detail": "analysis_metadata.csv esta disponible."
+    },
+    {
+      "name": "Tasa geocodificada IDEXX suficiente",
+      "passed": true,
+      "detail": "geocoded_rate IDEXX=1.000."
+    },
+    {
+      "name": "Concentracion geografica documentada",
+      "passed": false,
+      "detail": "La cohorte esta casi completamente concentrada en una ubicacion (top_location_share=1.000); documentar sesgo."
+    }
+  ],
+  "summary": {
+    "total_checks": 3,
+    "passed_checks": 2,
+    "failed_checks": 1
+  },
+  "idexx_rows": 2454,
+  "geocoded_rate": 1.0,
+  "top_location_share": 0.999593
+}

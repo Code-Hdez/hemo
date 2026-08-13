@@ -1,0 +1,28 @@
+=== ASERCIONES ===
+OK    TPOT p50 (ms)                      recalc=24.4802 publicado=24.4802 tol=0.01
+OK    decode p50 (tok/s)                 recalc=40.8494 publicado=40.849 tol=0.05
+OK    MBU (%)                            recalc=34.9002 publicado=34.9 tol=0.05
+OK    techo teorico (tok/s)              recalc=117.0465 publicado=117.0 tol=0.1
+OK    delta gramatica (ms/token)         recalc=0.332 publicado=0.332 tol=0.001
+OK    ids coincidentes                   recalc=0 publicado=0 tol=0
+OK    kappa entre corridas               recalc=-0.1451 publicado=-0.145 tol=0.002
+OK    p50 vieja pareada (s)              recalc=54.3825 publicado=54.4 tol=0.1
+OK    p50 nueva pareada (s)              recalc=21.4121 publicado=21.4 tol=0.1
+FALLA n verificables (publicado ~20)     recalc=9 publicado=20 tol=0
+OK    IC bootstrap TPOT (inf, ms)        recalc=24.4701 publicado=24.4701 tol=1e-09
+
+figuras: 36
+paneles de ausencia: 9
+toda figura con procedencia: True
+toda figura con tabla: True
+toda figura con n: True
+
+=== COMPROBACIONES ===
+sin twinx/twiny (doble eje): True
+sin graficos de tarta: True
+toda figura con nota de lectura o ausencia: True
+toda figura exporta pdf+svg+png: True
+toda proporcion dibujada lleva IC: True
+todo eje truncado lleva marca de corte: True
+aserciones ejecutadas: 11
+aserciones que fallan y quedan declaradas: 1

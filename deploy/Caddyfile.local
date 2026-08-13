@@ -1,0 +1,24 @@
+:80 {
+	@compressible not path /api/v1/chat/stream /api/v1/epidemiology/stream
+	encode @compressible zstd gzip
+
+	@stream path /api/v1/chat/stream /api/v1/epidemiology/stream
+	handle @stream {
+		reverse_proxy backend:8000 {
+			flush_interval -1
+			header_down Cache-Control "no-cache, no-transform"
+			header_down X-Accel-Buffering "no"
+			transport http {
+				compression off
+			}
+		}
+	}
+
+	handle /api/v1/* {
+		reverse_proxy backend:8000
+	}
+
+	handle {
+		reverse_proxy frontend:80
+	}
+}

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="438.48pt" height="310.398281pt" viewBox="0 0 438.48 310.398281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:44.821625</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 310.398281 
+L 438.48 310.398281 
+L 438.48 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 31.841957 
+L 30.293465 31.841957 
+L 30.293465 42.630281 
+L 7.2 42.630281 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 7.2 46.825741 
+L 30.293465 46.825741 
+L 30.293465 57.614065 
+L 7.2 57.614065 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 7.2 61.809524 
+L 30.293465 61.809524 
+L 30.293465 72.597849 
+L 7.2 72.597849 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 7.2 76.793308 
+L 30.293465 76.793308 
+L 30.293465 87.581633 
+L 7.2 87.581633 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 7.2 91.777092 
+L 30.293465 91.777092 
+L 30.293465 102.565416 
+L 7.2 102.565416 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 7.2 106.760876 
+L 30.293465 106.760876 
+L 30.293465 117.5492 
+L 7.2 117.5492 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 7.2 121.74466 
+L 30.293465 121.74466 
+L 30.293465 132.532984 
+L 7.2 132.532984 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 7.2 136.728443 
+L 30.293465 136.728443 
+L 30.293465 147.516768 
+L 7.2 147.516768 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 7.2 151.712227 
+L 30.293465 151.712227 
+L 30.293465 162.500552 
+L 7.2 162.500552 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 7.2 166.696011 
+L 30.293465 166.696011 
+L 30.293465 177.484335 
+L 7.2 177.484335 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 7.2 181.679795 
+L 30.293465 181.679795 
+L 30.293465 192.468119 
+L 7.2 192.468119 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 7.2 196.663579 
+L 30.293465 196.663579 
+L 30.293465 207.451903 
+L 7.2 207.451903 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 7.2 211.647362 
+L 30.293465 211.647362 
+L 30.293465 222.435687 
+L 7.2 222.435687 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 7.2 226.631146 
+L 30.293465 226.631146 
+L 30.293465 237.41947 
+L 7.2 237.41947 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 7.2 241.61493 
+L 30.293465 241.61493 
+L 30.293465 252.403254 
+L 7.2 252.403254 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 7.2 256.598714 
+L 30.293465 256.598714 
+L 30.293465 267.387038 
+L 7.2 267.387038 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 7.2 271.582497 
+L 30.293465 271.582497 
+L 30.293465 282.370822 
+L 7.2 282.370822 
+z
+" clip-path="url(#p6cce97c8f8)" style="fill: #ec835a"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 9.299406 291.211254 
+L 21.056079 291.211254 
+L 21.056079 297.504443 
+L 9.299406 297.504443 
+z
+" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 185.649505 291.211254 
+L 197.406178 291.211254 
+L 197.406178 297.504443 
+L 185.649505 297.504443 
+z
+" style="fill: #ec835a"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="38.950572" transform="rotate(-0 18.956673 38.950572)">1</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="39.028771" transform="rotate(-0 38.691089 39.028771)">El rendimiento de la L4 no es verificable</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="53.934356" transform="rotate(-0 18.956673 53.934356)">2</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="54.012555" transform="rotate(-0 38.691089 54.012555)">No consta el digest del modelo del 7-ago</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="68.91814" transform="rotate(-0 18.956673 68.91814)">3</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="69.134339" transform="rotate(-0 38.691089 69.134339)">§6.2 (equivalencia inter-máquina) es inconstruible</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="83.901924" transform="rotate(-0 18.956673 83.901924)">4</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="84.118123" transform="rotate(-0 38.691089 84.118123)">`a` y `B_efectivo` no están separados por regresión</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="98.885707" transform="rotate(-0 18.956673 98.885707)">5</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="99.101907" transform="rotate(-0 38.691089 99.101907)">El prefill medido (91,9 tok/s) no es prefill en régimen</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="113.869491" transform="rotate(-0 18.956673 113.869491)">6</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="113.94769" transform="rotate(-0 38.691089 113.94769)">Sin log de throttling concurrente</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="128.853275" transform="rotate(-0 18.956673 128.853275)">7</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="129.069474" transform="rotate(-0 38.691089 129.069474)">La ablación midió decode puro</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="143.837059" transform="rotate(-0 18.956673 143.837059)">8</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="144.053258" transform="rotate(-0 38.691089 144.053258)">El fixture histórico tiene 2 estudios, no ≥3</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="158.820842" transform="rotate(-0 18.956673 158.820842)">9</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="159.037042" transform="rotate(-0 38.691089 159.037042)">Potencia estadística</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="173.804626" transform="rotate(-0 18.956673 173.804626)">10</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="174.020825" transform="rotate(-0 38.691089 174.020825)">La definición de útil/calla/muere es provisional</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="188.78841" transform="rotate(-0 18.956673 188.78841)">11</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="189.004609" transform="rotate(-0 38.691089 189.004609)">La base «63» de los informes antiguos no se deriva de ningún campo</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="203.772194" transform="rotate(-0 18.956673 203.772194)">12</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="203.988393" transform="rotate(-0 38.691089 203.988393)">El nivel de LLAMADA del esquema está vacío, y el validador lo marca como fallo</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="218.755978" transform="rotate(-0 18.956673 218.755978)">13</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="218.972177" transform="rotate(-0 38.691089 218.972177)">Ejes 2 y 5 de la rúbrica NO puntuados</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="233.739761" transform="rotate(-0 18.956673 233.739761)">14</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="233.817961" transform="rotate(-0 38.691089 233.817961)">H-8 es inevaluable por camino B</text>
+   </g>
+   <g id="text_29">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: end; fill: #d03b3b" x="429.180594" y="233.739761" transform="rotate(-0 429.180594 233.739761)">H-8</text>
+   </g>
+   <g id="text_30">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="248.723545" transform="rotate(-0 18.956673 248.723545)">15</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="248.801475" transform="rotate(-0 38.691089 248.801475)">R=1</text>
+   </g>
+   <g id="text_32">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="263.707329" transform="rotate(-0 18.956673 263.707329)">16</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="263.923528" transform="rotate(-0 38.691089 263.923528)">Los 2 fallos observados son de arranque en frío</text>
+   </g>
+   <g id="text_34">
+    <text style="font-weight: 700; font-size: 6.6px; font-family: 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #fcfcfb" x="18.956673" y="278.691113" transform="rotate(-0 18.956673 278.691113)">17</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 6.9px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="38.691089" y="278.769312" transform="rotate(-0 38.691089 278.769312)">Sin log de throttling</text>
+   </g>
+   <g id="text_36">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #2a78d6" x="24.83501" y="296.430241" transform="rotate(-0 24.83501 296.430241)">11 declaradas ANTES de medir</text>
+   </g>
+   <g id="text_37">
+    <text style="font-weight: 700; font-size: 7.4px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #ec835a" x="201.185109" y="297.049991" transform="rotate(-0 201.185109 297.049991)">6 declaradas DESPUÉS de medir</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.998281" transform="rotate(-0 7.2 15.998281)">Las limitaciones declaradas y en qué momento se declararon</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p6cce97c8f8">
+   <rect x="7.2" y="25.998281" width="424.08" height="277.2"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,191 @@
+{
+ "hojas": [
+  "06_analisis/grises/HOJA_GRISES_1.png",
+  "06_analisis/grises/HOJA_GRISES_2.png",
+  "06_analisis/grises/HOJA_GRISES_3.png",
+  "06_analisis/grises/HOJA_GRISES_4.png"
+ ],
+ "n_figuras": 45,
+ "por_figura": [
+  {
+   "id": "E4",
+   "tonos_de_gris_relevantes": 11
+  },
+  {
+   "id": "D7",
+   "tonos_de_gris_relevantes": 9
+  },
+  {
+   "id": "A1",
+   "tonos_de_gris_relevantes": 15
+  },
+  {
+   "id": "A2",
+   "tonos_de_gris_relevantes": 7
+  },
+  {
+   "id": "A4",
+   "tonos_de_gris_relevantes": 10
+  },
+  {
+   "id": "A5",
+   "tonos_de_gris_relevantes": 15
+  },
+  {
+   "id": "B1",
+   "tonos_de_gris_relevantes": 4
+  },
+  {
+   "id": "B3",
+   "tonos_de_gris_relevantes": 7
+  },
+  {
+   "id": "B4",
+   "tonos_de_gris_relevantes": 9
+  },
+  {
+   "id": "C1",
+   "tonos_de_gris_relevantes": 16
+  },
+  {
+   "id": "C2",
+   "tonos_de_gris_relevantes": 24
+  },
+  {
+   "id": "C4",
+   "tonos_de_gris_relevantes": 16
+  },
+  {
+   "id": "C6",
+   "tonos_de_gris_relevantes": 9
+  },
+  {
+   "id": "C8",
+   "tonos_de_gris_relevantes": 9
+  },
+  {
+   "id": "D1",
+   "tonos_de_gris_relevantes": 13
+  },
+  {
+   "id": "D2",
+   "tonos_de_gris_relevantes": 15
+  },
+  {
+   "id": "D3",
+   "tonos_de_gris_relevantes": 25
+  },
+  {
+   "id": "D9",
+   "tonos_de_gris_relevantes": 10
+  },
+  {
+   "id": "E1",
+   "tonos_de_gris_relevantes": 86
+  },
+  {
+   "id": "E2",
+   "tonos_de_gris_relevantes": 22
+  },
+  {
+   "id": "E3",
+   "tonos_de_gris_relevantes": 13
+  },
+  {
+   "id": "E5",
+   "tonos_de_gris_relevantes": 13
+  },
+  {
+   "id": "F1",
+   "tonos_de_gris_relevantes": 25
+  },
+  {
+   "id": "F4",
+   "tonos_de_gris_relevantes": 10
+  },
+  {
+   "id": "A3",
+   "tonos_de_gris_relevantes": 15
+  },
+  {
+   "id": "B2",
+   "tonos_de_gris_relevantes": 9
+  },
+  {
+   "id": "C3",
+   "tonos_de_gris_relevantes": 11
+  },
+  {
+   "id": "C5",
+   "tonos_de_gris_relevantes": 12
+  },
+  {
+   "id": "C7",
+   "tonos_de_gris_relevantes": 8
+  },
+  {
+   "id": "D4",
+   "tonos_de_gris_relevantes": 13
+  },
+  {
+   "id": "D5",
+   "tonos_de_gris_relevantes": 29
+  },
+  {
+   "id": "D6",
+   "tonos_de_gris_relevantes": 7
+  },
+  {
+   "id": "D8",
+   "tonos_de_gris_relevantes": 31
+  },
+  {
+   "id": "E6",
+   "tonos_de_gris_relevantes": 10
+  },
+  {
+   "id": "F2",
+   "tonos_de_gris_relevantes": 8
+  },
+  {
+   "id": "F3",
+   "tonos_de_gris_relevantes": 14
+  },
+  {
+   "id": "X1",
+   "tonos_de_gris_relevantes": 10
+  },
+  {
+   "id": "X2",
+   "tonos_de_gris_relevantes": 7
+  },
+  {
+   "id": "X3",
+   "tonos_de_gris_relevantes": 7
+  },
+  {
+   "id": "X4",
+   "tonos_de_gris_relevantes": 8
+  },
+  {
+   "id": "X5",
+   "tonos_de_gris_relevantes": 8
+  },
+  {
+   "id": "X6",
+   "tonos_de_gris_relevantes": 8
+  },
+  {
+   "id": "X7",
+   "tonos_de_gris_relevantes": 8
+  },
+  {
+   "id": "X8",
+   "tonos_de_gris_relevantes": 7
+  },
+  {
+   "id": "X9",
+   "tonos_de_gris_relevantes": 9
+  }
+ ]
+}

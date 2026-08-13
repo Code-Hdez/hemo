@@ -1,0 +1,25 @@
+flowchart LR
+  subgraph S1["1. Carga y extracción\ndel hemograma"]
+    direction TB
+    A["El usuario carga\nel hemograma"] --> B["El sistema recibe\nel archivo"]
+    B --> C["Extracción automática\nde valores"]
+  end
+
+  subgraph S2["2. Clasificación\nhematológica"]
+    direction TB
+    D["Construcción de\ncaracterísticas"] --> E["El motor de clasificación\nevalúa los patrones"]
+    E --> F["Resultado: patrones y\nvalores relevantes"]
+  end
+
+  subgraph S3["3. Consulta\nconversacional"]
+    direction TB
+    G["Se construye el resumen\nclínico del caso"] --> H["Se asocia a la\nclasificación obtenida"]
+    H --> I["El usuario consulta\nal asistente"]
+    I --> J["Recuperación de fuentes\ny generación de la respuesta"]
+    J --> K["Respuesta con\nfuentes citadas"]
+  end
+
+  S1 --> S2 --> S3
+
+  classDef step fill:#eef,stroke:#88a
+  class A,B,C,D,E,F,G,H,I,J,K step

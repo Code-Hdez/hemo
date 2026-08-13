@@ -1,0 +1,4 @@
+cohort,pdf_files,unique_hashes,extracted_records_current,pending_files_current,metadata_records,unique_dogs,date_min,date_max,geocoded_rate
+baseline_historico,298.0,298.0,2480.0,0.0,2454.0,1735.0,2022-11-24,2026-02-19,1.0
+dic_may_2026,59.0,59.0,267.0,0.0,,,,,
+dap_external,,,,,1301.0,907.0,,,0.0

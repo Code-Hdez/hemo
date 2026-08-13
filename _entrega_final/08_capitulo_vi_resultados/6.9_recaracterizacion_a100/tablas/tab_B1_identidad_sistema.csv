@@ -1,0 +1,9 @@
+campo;valor
+modelo;qwen3.6:27b-q4_K_M
+digest;a50eda8ed977ab48…
+tamaño (B);17 420 432 739
+tamaño (GiB / GB);16,224 / 17,420
+Ollama;0.32.6
+GPU;A100-SXM4-40GB
+driver / CUDA;580.159.03 / 13.0
+num_ctx por petición;16 384

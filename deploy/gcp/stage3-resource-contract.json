@@ -1,0 +1,67 @@
+{
+  "schema_version": "hemovet.gcp-artifacts/v1",
+  "project_id": "project-5b36701c-f44f-4c03-a12",
+  "project_number": "371832959385",
+  "region": "us-central1",
+  "required_apis": [
+    "artifactregistry.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "iam.googleapis.com",
+    "iamcredentials.googleapis.com",
+    "sts.googleapis.com"
+  ],
+  "repository": {
+    "name": "hemovet-images",
+    "format": "DOCKER",
+    "mode": "STANDARD_REPOSITORY",
+    "immutable_tags": true,
+    "canonical_prefix": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images",
+    "packages": [
+      "backend",
+      "frontend",
+      "ollama-runtime"
+    ],
+    "tag_template": "sha-{github_sha}",
+    "deployment_reference": "digest",
+    "cleanup_policy_file": "deploy/gcp/artifact-registry-cleanup-policy.json",
+    "cleanup_dry_run": true
+  },
+  "service_accounts": {
+    "github_cicd": "hemovet-github-cicd@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com",
+    "production_runtime": "hemovet-prod-runtime@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com",
+    "gpu_runtime": "hemovet-gpu-runtime@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com"
+  },
+  "repository_iam": [
+    {
+      "principal": "serviceAccount:hemovet-github-cicd@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com",
+      "role": "roles/artifactregistry.writer"
+    },
+    {
+      "principal": "serviceAccount:hemovet-prod-runtime@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com",
+      "role": "roles/artifactregistry.reader"
+    },
+    {
+      "principal": "serviceAccount:hemovet-gpu-runtime@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com",
+      "role": "roles/artifactregistry.reader"
+    }
+  ],
+  "workload_identity": {
+    "pool_id": "hemovet-github",
+    "provider_id": "github-main-production",
+    "issuer_uri": "https://token.actions.githubusercontent.com",
+    "service_account": "hemovet-github-cicd@project-5b36701c-f44f-4c03-a12.iam.gserviceaccount.com",
+    "principal_set": "principalSet://iam.googleapis.com/projects/371832959385/locations/global/workloadIdentityPools/hemovet-github/attribute.repository/xPshycho/hemogramas-proyectoICC",
+    "impersonation_role": "roles/iam.workloadIdentityUser",
+    "attribute_mapping": {
+      "google.subject": "assertion.sub",
+      "attribute.repository": "assertion.repository",
+      "attribute.repository_owner": "assertion.repository_owner",
+      "attribute.repository_id": "assertion.repository_id",
+      "attribute.repository_owner_id": "assertion.repository_owner_id",
+      "attribute.ref": "assertion.ref",
+      "attribute.workflow_ref": "assertion.workflow_ref",
+      "attribute.environment": "assertion.environment"
+    },
+    "attribute_condition": "assertion.repository == \"xPshycho/hemogramas-proyectoICC\" && assertion.repository_id == \"1148021152\" && assertion.repository_owner == \"xPshycho\" && assertion.repository_owner_id == \"115911218\" && assertion.ref == \"refs/heads/main\" && assertion.workflow_ref == \"xPshycho/hemogramas-proyectoICC/.github/workflows/deploy.yml@refs/heads/main\" && assertion.environment == \"production\""
+  }
+}

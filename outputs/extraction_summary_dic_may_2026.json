@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-05-24T20:54:25.447133+00:00",
+  "cohort_filter": "dic_may_2026",
+  "pdf_files": 59,
+  "records_extracted": 267,
+  "errors": 0,
+  "output": "data/interim/idexx_dic_may_extracted.csv",
+  "errors_output": "outputs/idexx_dic_may_extraction_errors.csv",
+  "cohort_counts": {
+    "dic_may_2026": 267
+  }
+}

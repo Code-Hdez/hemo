@@ -1,0 +1,942 @@
+[
+ {
+  "id": "E4",
+  "titulo": "La puerta de aceptación: coincidencia de identificadores de fallo",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_E4_puerta_kappa.pdf",
+   "svg": "06_analisis/figuras/fig_E4_puerta_kappa.svg",
+   "png": "06_analisis/figuras/fig_E4_puerta_kappa.png"
+  },
+  "sha256": {
+   "pdf": "163e0d62b65bfcf7c0c6efa9259fb47865f4c2759a219def5d7cbfbc94d943cd",
+   "svg": "57b7b703b2e38b7c33b434a4b966158d278c7cfbb02c8cff468f323a9ec78795",
+   "png": "2d608fd14a588780eff9b755b825b4139992408ab2ce1f0423b1f9d12c135deb"
+  },
+  "tabla": "06_analisis/tablas/tab_E4_puerta_kappa.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 70,
+  "marca": "MEDIDO",
+  "nota_lectura": "Criterio sellado del proyecto, literal: «si la cuenta cuadra y los ids no, el aparato no sirve». Aquí ni siquiera cuadra la cuenta. Un κ negativo significa acuerdo peor que el azar. Esta figura NO debe leerse como que la GPU arregló los fallos: los 17 antiguos son de contrato (generation_repair_failed) y los 6 nuevos son timeouts — fenómenos distintos. Confusores vivos: el encadenado de sesión del original no consta (D-2) y el digest del modelo del 7-ago tampoco."
+ },
+ {
+  "id": "D7",
+  "titulo": "Tasa de alucinación numérica y su intervalo de confianza",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D7_alucinacion_wilson.pdf",
+   "svg": "06_analisis/figuras/fig_D7_alucinacion_wilson.svg",
+   "png": "06_analisis/figuras/fig_D7_alucinacion_wilson.png"
+  },
+  "sha256": {
+   "pdf": "9621454522dfa1a53a69849615c7784a8684b04b1f6278c76753eaea3e0eb864",
+   "svg": "71626865838440836aa28469566c732ba8835f6d0da9fe7ee9727f8e1538227a",
+   "png": "bc73ba6e691aa4d41ba6fdcca67741954719127b098fb953114c939d7e6ba51d"
+  },
+  "tabla": "06_analisis/tablas/tab_D7_alucinacion_wilson.csv",
+  "procedencia": [
+   "02_fixtures/verdad.json",
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 9,
+  "marca": "DERIVADO",
+  "nota_lectura": "Cero casos observados NO demuestra ausencia: el diseño solo excluye tasas superiores al 29,9 %. Con n = 9 preguntas verificables la cota es ancha; acotarla al 5 % exigiría del orden de 60 observaciones, y al 1 %, unas 300. Esta figura existe precisamente para impedir que un cero se lea como «no alucina». DISCREPANCIA: el informe publico una cota del 16,8 % asumiendo ~20 preguntas verificables; verdad.json contiene 9, y la cota correcta es 29,9 %. La cifra publicada subestimaba la incertidumbre."
+ },
+ {
+  "id": "A1",
+  "titulo": "Ventanas de GPU: lo que el log registra y lo que sólo consta en las trazas",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_A1_ventanas_gpu.pdf",
+   "svg": "06_analisis/figuras/fig_A1_ventanas_gpu.svg",
+   "png": "06_analisis/figuras/fig_A1_ventanas_gpu.png"
+  },
+  "sha256": {
+   "pdf": "326e75cd37fca3f2cb3508d9af01b1455bb1cfeab08861677534c981021bb168",
+   "svg": "5b63e38b657ecd3b846d603589684a7b65fa48817b2b2e89a634b16a684003fb",
+   "png": "1979ac5b7d774297e7313ba04a80c8235788cf6672d2abd073d3520eb1c366ef"
+  },
+  "tabla": "06_analisis/tablas/tab_A1_ventanas_gpu.csv",
+  "procedencia": [
+   "99_operacion/log_instancia.md",
+   "04_trazas/turns.ndjson",
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 6,
+  "marca": "MEDIDO",
+  "nota_lectura": "El log de operación sólo registra encendido y apagado de tres ventanas. De las otras tres no consta ni la hora de arranque ni la de apagado, así que su duración NO es recuperable: lo que se dibuja con trama es el intervalo entre la primera y la última marca de tiempo de sus turnos, que es una cota INFERIOR —no incluye el arranque de la VM ni la carga del modelo, que en el arranque en frío medido en D2 costó más de dos minutos—. Los dos totales no se suman en uno solo porque no son la misma magnitud."
+ },
+ {
+  "id": "A2",
+  "titulo": "Composición del corpus de evidencia previa",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_A2_corpus_evidencia.pdf",
+   "svg": "06_analisis/figuras/fig_A2_corpus_evidencia.svg",
+   "png": "06_analisis/figuras/fig_A2_corpus_evidencia.png"
+  },
+  "sha256": {
+   "pdf": "dc5df838d74d31b340a5fdc9a2b59e13de88bce653a3626f5b48c5afe201eb3b",
+   "svg": "7a23e7ffd5ad36ad3ae8699f6f44f3b1e596e3ab424deed086210fc0f0927478",
+   "png": "5dffecbec24dab9c6f75b85f1f87b0c9c0957ade93d1398dce5897d7d20d7496"
+  },
+  "tabla": "06_analisis/tablas/tab_A2_corpus_evidencia.csv",
+  "procedencia": [
+   "01_auditoria_previa/inventario.ndjson"
+  ],
+  "n": 208,
+  "marca": "MEDIDO",
+  "nota_lectura": "_CONTIENE_SECRETOS va con trama: hasheado y contado, jamás muestreado. 208/208 hashes verificados intactos tras la copia."
+ },
+ {
+  "id": "A4",
+  "titulo": "Reconstrucción del protocolo del 7-ago: semáforo de las quince preguntas",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_A4_semaforo_protocolo.pdf",
+   "svg": "06_analisis/figuras/fig_A4_semaforo_protocolo.svg",
+   "png": "06_analisis/figuras/fig_A4_semaforo_protocolo.png"
+  },
+  "sha256": {
+   "pdf": "0731502dab4bf3c36f75318b8171002c3defe3e24fd6c356a386971879887a1c",
+   "svg": "5586a93ceaff631e369f27fd485b00cfbaf68677bc6d759735f326bca1f0d90f",
+   "png": "33d5ebdaf9524e28bac1e2dca00c2577bd3a3fea8927834f00ca4a7475586085"
+  },
+  "tabla": "06_analisis/tablas/tab_A4_semaforo_protocolo.csv",
+  "procedencia": [
+   "01_auditoria_previa/protocolo_antiguo_reconstruido.md"
+  ],
+  "n": 15,
+  "marca": "MEDIDO",
+  "nota_lectura": "«NO CONSTA» es un resultado, no un fallo del análisis. Dos filas decidieron la campaña: los 17 ids SÍ constan (por eso H-4 fue evaluable) y el digest del modelo NO consta."
+ },
+ {
+  "id": "A5",
+  "titulo": "Veredicto doble de comparabilidad",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_A5_veredicto_doble.pdf",
+   "svg": "06_analisis/figuras/fig_A5_veredicto_doble.svg",
+   "png": "06_analisis/figuras/fig_A5_veredicto_doble.png"
+  },
+  "sha256": {
+   "pdf": "7b7d9acc4bac0bd9eea4ae2b464a27cdfe76d901642cd3ca31da0803257bebec",
+   "svg": "b69d2cfcdb4563afdf7489ffb1bc51ccf940bc5b12731f5ff205a7e4043003ea",
+   "png": "d50ed5e4d8df0908e1c69b03b34e528ea46a3161d3e88633b43fa42659727291"
+  },
+  "tabla": "06_analisis/tablas/tab_A5_veredicto_doble.csv",
+  "procedencia": [
+   "01_auditoria_previa/veredicto_comparabilidad.md"
+  ],
+  "n": 2,
+  "marca": "DERIVADO",
+  "nota_lectura": "La física de la L4 no es verificable: toda cifra de decode, MBU o TPOT de esta tesis es caracterización absoluta de la A100, no comparación entre GPU."
+ },
+ {
+  "id": "B1",
+  "titulo": "Ficha de identidad del sistema medido",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_B1_identidad_sistema.pdf",
+   "svg": "06_analisis/figuras/fig_B1_identidad_sistema.svg",
+   "png": "06_analisis/figuras/fig_B1_identidad_sistema.png"
+  },
+  "sha256": {
+   "pdf": "0bf2e8dbb8bd4b7d50c825ed5a4a29f6370a68748755c7495de71f919eadb32b",
+   "svg": "62a343c3d94493752c883506c1396f3da1a6ea07eba5f6dfe8ff6c39efea715c",
+   "png": "13c06deb228d89c2fc0d305a7f30bcce5f526ce441f11ad39be11bf87e40dc34"
+  },
+  "tabla": "06_analisis/tablas/tab_B1_identidad_sistema.csv",
+  "procedencia": [
+   "06_analisis/fase2_canario_y_ic.json"
+  ],
+  "n": 8,
+  "marca": "MEDIDO",
+  "nota_lectura": "Dos correcciones que la medición impuso sobre el plan: el peso real es 17 420 432 739 B (16,224 GiB / 17,420 GB), no los 16,93 GB declarados; y Ollama es 0.32.6, no 0.32.5."
+ },
+ {
+  "id": "B3",
+  "titulo": "Verificación de identidad de modelo en cada respuesta",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_B3_identidad_por_respuesta.pdf",
+   "svg": "06_analisis/figuras/fig_B3_identidad_por_respuesta.svg",
+   "png": "06_analisis/figuras/fig_B3_identidad_por_respuesta.png"
+  },
+  "sha256": {
+   "pdf": "b9e9ba66a16ad9e4751d59ca19c600cab2b46695dc53998fe805ef3886f118e0",
+   "svg": "43c570dbb9a1a110a0f20962fb296ccf0124c1430088fc75661f250fbe6136cb",
+   "png": "96c33a7eaecfeb0c4d8a58443a91739466aed06825d7d94c94bfe80f5fb7b719"
+  },
+  "tabla": "06_analisis/tablas/tab_B3_identidad_por_respuesta.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson",
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 115,
+  "marca": "MEDIDO",
+  "nota_lectura": "Aquí cero SÍ es censo, no muestra: se verificó el campo model en TODAS las respuestas, no en un subconjunto. Es distinto del caso de D7, donde cero necesita intervalo. La comprobación fue necesaria porque el 4B sigue instalado y la guarda del código no protege."
+ },
+ {
+  "id": "B4",
+  "titulo": "Modelos presentes en el servidor de producción",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_B4_modelos_instalados.pdf",
+   "svg": "06_analisis/figuras/fig_B4_modelos_instalados.svg",
+   "png": "06_analisis/figuras/fig_B4_modelos_instalados.png"
+  },
+  "sha256": {
+   "pdf": "b725f219dc51d219e88cffee990840829740d952ca79d808d4cc452210ca92a6",
+   "svg": "32c4e733c08bdd559bd6b2cd0ca9e2fb08d43348b18b7ad17c5fcad8d6f356f7",
+   "png": "63c1dfd8193bb101937e02782e470119d84bcfbf26e622f15194260367dcb1dc"
+  },
+  "tabla": "06_analisis/tablas/tab_B4_modelos_instalados.csv",
+  "procedencia": [
+   "06_analisis/fase2_canario_y_ic.json"
+  ],
+  "n": 2,
+  "marca": "MEDIDO",
+  "nota_lectura": "Que el 4B esté instalado no implica que se usara: ver B3, donde se verifica respuesta a respuesta."
+ },
+ {
+  "id": "C1",
+  "titulo": "Techos de decodificación y rendimiento medido",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C1_techos_decode.pdf",
+   "svg": "06_analisis/figuras/fig_C1_techos_decode.svg",
+   "png": "06_analisis/figuras/fig_C1_techos_decode.png"
+  },
+  "sha256": {
+   "pdf": "873530d4eb3ab129c13fd787c11fb449f16f800a17a3f904368c970235f17aac",
+   "svg": "bc8bdc3f8ec334ba8f084144e03dd488e474e9286aa24af3b3139c4af3ac0352",
+   "png": "0871199a9506f8420fddf07c2ee94948612c15f302decfaa7b73b97f467e17a6"
+  },
+  "tabla": "06_analisis/tablas/tab_C1_techos_decode.csv",
+  "procedencia": [
+   "05_derivados/tpot_serie_n100.json"
+  ],
+  "n": 100,
+  "marca": "DERIVADO",
+  "nota_lectura": "Techo = ancho de banda / tamaño del modelo. El tamaño se toma en GB decimales (17,42 GB), no en GiB (16,22 GiB): confundirlos infla el techo un 7,4 %. La L4 NO aparece: su física no es verificable."
+ },
+ {
+  "id": "C2",
+  "titulo": "Distribución del tiempo por token de salida (TPOT)",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C2_tpot_distribucion.pdf",
+   "svg": "06_analisis/figuras/fig_C2_tpot_distribucion.svg",
+   "png": "06_analisis/figuras/fig_C2_tpot_distribucion.png"
+  },
+  "sha256": {
+   "pdf": "bd571d5e81eded4ae4d3b44884b2bf8d963536256af27351b45d927951f5a586",
+   "svg": "9692698cad49226f4bae9d78c8bfbd42e0eb653a2d4c8b05633ac6d6040a972a",
+   "png": "376d9ddfce0be50515758682b862ec566cc26a5dfd4b9e2bb1079c2098263656"
+  },
+  "tabla": "06_analisis/tablas/tab_C2_tpot_distribucion.csv",
+  "procedencia": [
+   "05_derivados/tpot_serie_n100.json"
+  ],
+  "n": 100,
+  "marca": "MEDIDO",
+  "nota_lectura": "Un CV del 0,65 % NO significa que el usuario vea esta estabilidad: son 100 generaciones consecutivas con el modelo ya cargado, temperature 0, top_k 1, semilla fija y sin concurrencia. Mide la máquina en su mejor caso, no el servicio. La serie de origen lleva ADVERTENCIA_DE_PROCEDENCIA: el arnés de la Fase 2 no la volcó a disco y estos 100 valores se rescataron de su salida estándar, de modo que su cadena de custodia es más débil que la del resto de artefactos."
+ },
+ {
+  "id": "C4",
+  "titulo": "Utilización del ancho de banda de memoria (MBU) en contexto",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C4_mbu.pdf",
+   "svg": "06_analisis/figuras/fig_C4_mbu.svg",
+   "png": "06_analisis/figuras/fig_C4_mbu.png"
+  },
+  "sha256": {
+   "pdf": "eb8489c50826918173a7c12ce2959f55dd9a964e258dabfa9f01f3eae706a70c",
+   "svg": "7b00e5712991c5bf32797ef83e2aaa50eabf1d398e3daa554bb8b490c826d9fd",
+   "png": "766a439496256d8c829caad164213da9549ac7c4dfdaada3fb7fdc0a2f87a60b"
+  },
+  "tabla": "06_analisis/tablas/tab_C4_mbu.csv",
+  "procedencia": [
+   "05_derivados/tpot_serie_n100.json"
+  ],
+  "n": 100,
+  "marca": "DERIVADO",
+  "nota_lectura": "Un MBU bajo NO indica ineficiencia del despliegue: el MBU baja al subir el ancho de banda porque la sobrecarga fija por token no escala. Enlaza con H-1, «consistente, no confirmada»."
+ },
+ {
+  "id": "C6",
+  "titulo": "Lo predicho frente a lo medido: la sobrecarga de gramática",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C6_gramatica_predicho_medido.pdf",
+   "svg": "06_analisis/figuras/fig_C6_gramatica_predicho_medido.svg",
+   "png": "06_analisis/figuras/fig_C6_gramatica_predicho_medido.png"
+  },
+  "sha256": {
+   "pdf": "726da7d70235ac62fc2ac4ba23b4d9e432c79a773c1eefe35e38a13b63a4b49a",
+   "svg": "75883afe35b23678373d07a64f05ba56f8ae457d54d580f97e5a36d48e98e6b1",
+   "png": "751e748b79d598535e75353a32103b633ad3d6a235850900fae29f814a9052ae"
+  },
+  "tabla": "06_analisis/tablas/tab_C6_gramatica_predicho_medido.csv",
+  "procedencia": [
+   "05_derivados/ablacion_gramatica.json"
+  ],
+  "n": 60,
+  "marca": "MEDIDO",
+  "nota_lectura": "El residual de 20,20 ms/token atribuido a la L4 NO era la gramática; dónde estaba sigue abierto. Esto no dice que la literatura esté mal: dice que en ESTE despliegue no aplica."
+ },
+ {
+  "id": "C8",
+  "titulo": "Prefill y decodificación sobre el mismo eje",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C8_prefill_decode.pdf",
+   "svg": "06_analisis/figuras/fig_C8_prefill_decode.svg",
+   "png": "06_analisis/figuras/fig_C8_prefill_decode.png"
+  },
+  "sha256": {
+   "pdf": "6b34594f7a094d7e68511561a59c1016fc4ffddf14496eec2af1c4396aa6c998",
+   "svg": "04d7f4146bd9a61039846bcee1e16def8b005ae833eab0189dc7d9f8a58c4c67",
+   "png": "dcc4dd98ad7142247e9e7fb8d5f2aeefec78739ad38fc4e187e30c900c0ff0dc"
+  },
+  "tabla": "06_analisis/tablas/tab_C8_prefill_decode.csv",
+  "procedencia": [
+   "06_analisis/fase2_canario_y_ic.json"
+  ],
+  "n": 100,
+  "marca": "MEDIDO",
+  "nota_lectura": "Comparten eje porque comparten unidad, pero NO son comparables como rendimiento: el prefill se midió con prompts de 17–22 tokens y a esa escala lo domina la sobrecarga fija, así que la cifra está inflada respecto a lo que daría un prompt largo. Que el prefill supere al decode es lo esperado —procesa el prompt en paralelo mientras la decodificación va token a token— y no significa que el prefill sea el punto rápido del sistema."
+ },
+ {
+  "id": "D1",
+  "titulo": "Desenlace de los turnos por modo",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D1_desenlaces_modo.pdf",
+   "svg": "06_analisis/figuras/fig_D1_desenlaces_modo.svg",
+   "png": "06_analisis/figuras/fig_D1_desenlaces_modo.png"
+  },
+  "sha256": {
+   "pdf": "3f31459a13edf40a2a81a8f13bee0332ecf611da5468b47bb7df09c3ae3f61c1",
+   "svg": "5e87da6df1cb86aba006c9a1c3c4e68fbe27d0816198c4cdb3a0bd144863a5ce",
+   "png": "5031abe44467cfa1de0576212e0c91e962533fd1a3253abb5a0893926a904682"
+  },
+  "tabla": "06_analisis/tablas/tab_D1_desenlaces_modo.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 45,
+  "marca": "MEDIDO",
+  "nota_lectura": "Con n = 15 por modo, estas proporciones NO sostienen comparación entre modos: los intervalos se solapan ampliamente."
+ },
+ {
+  "id": "D2",
+  "titulo": "Latencia por posición de turno y modo",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D2_latencia_por_turno.pdf",
+   "svg": "06_analisis/figuras/fig_D2_latencia_por_turno.svg",
+   "png": "06_analisis/figuras/fig_D2_latencia_por_turno.png"
+  },
+  "sha256": {
+   "pdf": "914ed6dfa8feed024dab2a75d7025e7f6203c527c136b64d0f098e06f2b6e109",
+   "svg": "4bb5f9223e9cb29eede4cb77aeaa7a27ce41c816b8181d0a7dc5af789e75d52a",
+   "png": "c31594480f03ab20312c8e1fdad63a51ad3ccb1bd1799b7ad71fab2b0bdda8ba"
+  },
+  "tabla": "06_analisis/tablas/tab_D2_latencia_por_turno.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 45,
+  "marca": "MEDIDO",
+  "nota_lectura": "La línea conecta observaciones consecutivas; NO modela una tendencia ni hay ajuste. Los dos turnos con X son cargas en frío (HTTP 504) y se muestran, no se recortan."
+ },
+ {
+  "id": "D3",
+  "titulo": "Distribución de latencia por modo",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D3_latencia_distribucion.pdf",
+   "svg": "06_analisis/figuras/fig_D3_latencia_distribucion.svg",
+   "png": "06_analisis/figuras/fig_D3_latencia_distribucion.png"
+  },
+  "sha256": {
+   "pdf": "df30fd2854cf012644c1522d2d3113e034cc3c7a6e2ad11dae46b833dec2572f",
+   "svg": "20e18bcb548cf1c14549665e174cc4cc9fe42e14cc7c05a85de5daacd126b9bd",
+   "png": "b3e2b200d33e008ecaca89a4eea7271c85a2f7e695b6f1091d99bd6f71ec5bf1"
+  },
+  "tabla": "06_analisis/tablas/tab_D3_latencia_distribucion.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 45,
+  "marca": "MEDIDO",
+  "nota_lectura": "Con n = 15 solo se reportan mediana y rango: no hay p90 ni p95. Los puntos van superpuestos porque una caja sobre 15 observaciones oculta más de lo que muestra."
+ },
+ {
+  "id": "D9",
+  "titulo": "El hemograma de referencia",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D9_fixture_hemograma.pdf",
+   "svg": "06_analisis/figuras/fig_D9_fixture_hemograma.svg",
+   "png": "06_analisis/figuras/fig_D9_fixture_hemograma.png"
+  },
+  "sha256": {
+   "pdf": "d8c3bc64fe773c4038631d0d68831a9de7ae9f52b9d80d3ea20064a90883062d",
+   "svg": "d37ea0310d3a63581a93cf7b500f8eb8e25ab7a7f2711d0ac72d98726e72b1a2",
+   "png": "64606e056e9c497fdaf218e1387539d91ccfd50d73d07b83f82ff7a387768b9c"
+  },
+  "tabla": "06_analisis/tablas/tab_D9_fixture_hemograma.csv",
+  "procedencia": [
+   "02_fixtures/fixture_hemograma.json"
+  ],
+  "n": 18,
+  "marca": "MEDIDO",
+  "nota_lectura": "Describe un fixture de PRUEBA (mascota b573826b…, 'hola'/'test'), no un caso clínico real, y no constituye diagnóstico. Es la misma mascota que usó la línea base, lo cual es lo mejor posible para la comparabilidad."
+ },
+ {
+  "id": "E1",
+  "titulo": "Latencia por caso: L4 → A100",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_E1_slopegraph_pareado.pdf",
+   "svg": "06_analisis/figuras/fig_E1_slopegraph_pareado.svg",
+   "png": "06_analisis/figuras/fig_E1_slopegraph_pareado.png"
+  },
+  "sha256": {
+   "pdf": "d055a6843f88fc78ac390da1d609ca26296191aa8944b71b5faf439167c09e67",
+   "svg": "af6c70d429b48d453693ae1ee92f8ed56227d747cf95a977cce39e3351bd6017",
+   "png": "f934964da4bc701b4e0585caeb08df5ef6616d8e36825df218323f9d63bcea46"
+  },
+  "tabla": "06_analisis/tablas/tab_E1_slopegraph_pareado.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 64,
+  "marca": "MEDIDO",
+  "nota_lectura": "La mejora de latencia es atribuible al CONJUNTO de la migración, no aisladamente a la GPU. Desviaciones declaradas: D-1 (no es réplica byte a byte, el original no registró prompts renderizados ni digest) y D-2 (el encadenado de sesión del original no consta)."
+ },
+ {
+  "id": "E2",
+  "titulo": "Distribución de las diferencias pareadas",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_E2_diferencias_pareadas.pdf",
+   "svg": "06_analisis/figuras/fig_E2_diferencias_pareadas.svg",
+   "png": "06_analisis/figuras/fig_E2_diferencias_pareadas.png"
+  },
+  "sha256": {
+   "pdf": "60d0b867c7768bfd98c42020a15a6ffce3404c1f1a84d71c1fe4246ed8955b14",
+   "svg": "b91c54c5b3afb9e3b9219a962810c605889c4dd31902e2d393aecabb3e9a025a",
+   "png": "5af2dc7a2476ab3f22bbacc7f41e8cc54896afbde97081a97d0c5214485bafe6"
+  },
+  "tabla": "06_analisis/tablas/tab_E2_diferencias_pareadas.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 64,
+  "marca": "DERIVADO",
+  "nota_lectura": "Wilcoxon de rangos con signo, pareado por id_caso. El IC no cruza cero: es el sustento de H-5. El criterio pre-registrado era «baja ≥ 50 %» y se cumple."
+ },
+ {
+  "id": "E3",
+  "titulo": "Función de distribución acumulada de la latencia",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_E3_ecdf_latencia.pdf",
+   "svg": "06_analisis/figuras/fig_E3_ecdf_latencia.svg",
+   "png": "06_analisis/figuras/fig_E3_ecdf_latencia.png"
+  },
+  "sha256": {
+   "pdf": "3b4e307fb0579f1e29a51971192895cfce5348b5574c45307fd6bbdfab04c8bf",
+   "svg": "0a88938f06dfa25b265a2541eb2fb5fdcde1c17cdec2918bd0e69f80a8377a3e",
+   "png": "7347d75bf09af72ee7b30d54c28dad8ca9ea0e7dccfd7a5a55e0e02ef6536eae"
+  },
+  "tabla": "06_analisis/tablas/tab_E3_ecdf_latencia.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 64,
+  "marca": "MEDIDO",
+  "nota_lectura": "Las dos series NO comparten protocolo: ver desviaciones D-1 y D-2 en E1. La línea base recalculada desde los crudos da p50 58,59 s frente a los 59,1 s publicados en los informes antiguos."
+ },
+ {
+  "id": "E5",
+  "titulo": "Naturaleza de los fallos: dos fenómenos distintos",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_E5_clases_fallo.pdf",
+   "svg": "06_analisis/figuras/fig_E5_clases_fallo.svg",
+   "png": "06_analisis/figuras/fig_E5_clases_fallo.png"
+  },
+  "sha256": {
+   "pdf": "2e41c742d60e3cc88e596f0e4c95952f1b939beab94f1fd8f61d99044b6db22f",
+   "svg": "5c4819491b5cb49d45aa2995ca69efaeb51910782ee47e33be60bdc61d862a9e",
+   "png": "c7f86b09aab9e2f36a940228626906dc484f2e28f17faba2f2b5bc5a35aa793a"
+  },
+  "tabla": "06_analisis/tablas/tab_E5_clases_fallo.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 23,
+  "marca": "MEDIDO",
+  "nota_lectura": "Nunca apilar ambos en la misma barra: sugeriría continuidad entre fenómenos que no la tienen."
+ },
+ {
+  "id": "F1",
+  "titulo": "Tablero de las diez hipótesis pre-registradas",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_F1_tablero_hipotesis.pdf",
+   "svg": "06_analisis/figuras/fig_F1_tablero_hipotesis.svg",
+   "png": "06_analisis/figuras/fig_F1_tablero_hipotesis.png"
+  },
+  "sha256": {
+   "pdf": "0d99791699381687be281fa49aa74d8c1120c8245c01f177a6c0ab08b0bf23b0",
+   "svg": "1ced732c4203a2ee9b702c1b0e14c360fd9ecab75e6da2b140283f975072eb05",
+   "png": "30b42f51622091305511bde61e4590448195e79ab5f14e959dfb736123eb2a7b"
+  },
+  "tabla": "06_analisis/tablas/tab_F1_tablero_hipotesis.csv",
+  "procedencia": [
+   "03_hipotesis/preregistro.md",
+   "07_informes/INFORME_RECARACTERIZACION_A100.md"
+  ],
+  "n": 10,
+  "marca": "DERIVADO",
+  "nota_lectura": "Hash del pre-registro: 5d6a0a71081e385e… — firmado ANTES de medir. Las tres filas marcadas con ▲ tienen un veredicto sellado que dice «NO EVALUADA» y una medición que ya existe: la tabla de veredictos del informe se escribió ANTES de correr el brazo de réplica estricta y no se actualizó después. La figura no sustituye el veredicto sellado por el mío; lo muestra tal cual y señala la discrepancia, que es un encargo pendiente sobre el informe. «No evaluable» tampoco significa «no hay efecto»: significa que este diseño no puede verlo. Los enunciados van recortados a 96 caracteres; el íntegro está en el pre-registro."
+ },
+ {
+  "id": "F4",
+  "titulo": "Potencia del diseño",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_F4_potencia.pdf",
+   "svg": "06_analisis/figuras/fig_F4_potencia.svg",
+   "png": "06_analisis/figuras/fig_F4_potencia.png"
+  },
+  "sha256": {
+   "pdf": "55d63273ca010de33fbbeb7564f61b3ed2b60e6306a014525ab7af6aad4387cd",
+   "svg": "108e190044e443e28868d33ae09461b446f3c8e17a441b5ffc46e97235e60038",
+   "png": "eaebab3e42cf0bd95c138b8f6f9f32846bd5844c83031a1f26136080e73b521b"
+  },
+  "tabla": "06_analisis/tablas/tab_F4_potencia.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 6,
+  "marca": "DERIVADO",
+  "nota_lectura": "La curva se detiene en 10 puntos porque con una tasa base del 10 % no existe una diferencia mayor. Ninguno de los tamaños de muestra disponibles alcanza los 431 que harían falta para distinguir 10 % de 5 % con potencia del 80 %: este diseño distingue un efecto grande de ninguno, y no distingue uno mediano. Es la razón cuantitativa de que H-3 y H-9 no se sostengan y de que H-5 sí, porque su efecto es enorme."
+ },
+ {
+  "id": "A3",
+  "titulo": "Qué registra cada instrumento: cobertura comparada",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_A3_cobertura_instrumento.pdf",
+   "svg": "06_analisis/figuras/fig_A3_cobertura_instrumento.svg",
+   "png": "06_analisis/figuras/fig_A3_cobertura_instrumento.png"
+  },
+  "sha256": {
+   "pdf": "b1dc9d1ed44091b787a70257c5aa40390691fb025e59c220eaf4e2338d80ea5a",
+   "svg": "da0515239bccb17047a80dc6807611d4077fa721ccf37c232163f203ec1292ce",
+   "png": "1fdadcb42c8c86ac0621503feff92d600cae38838174882070312d442f420765"
+  },
+  "tabla": "06_analisis/tablas/tab_A3_cobertura_instrumento.csv",
+  "procedencia": [
+   "01_auditoria_previa/copia/bateria_latencias_2026-08-07.jsonl",
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 17,
+  "marca": "MEDIDO",
+  "nota_lectura": "La cobertura NO crece de forma monótona: el instrumento antiguo registraba ttfb_s, etapas, duración por etapa, eventos SSE y reparaciones —70/70 turnos— y el nuevo no registra ninguna. El nuevo aporta trazabilidad (hashes, sello de corrida, verificabilidad) que el antiguo no tenía. Son instrumentos distintos, no uno mejor. Ninguno de los dos captura los crudos de Ollama, que es la carencia que bloquea X1, X3 y H-8."
+ },
+ {
+  "id": "B2",
+  "titulo": "Las limitaciones declaradas y en qué momento se declararon",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_B2_limitaciones_declaradas.pdf",
+   "svg": "06_analisis/figuras/fig_B2_limitaciones_declaradas.svg",
+   "png": "06_analisis/figuras/fig_B2_limitaciones_declaradas.png"
+  },
+  "sha256": {
+   "pdf": "f0c2c582640d66ce23d5e3af4dde6bbd9cfb13b6d426783de2ae69b72874e109",
+   "svg": "68eab890e08f182cd80859458240beae1bac8a894e024b903156b2073ea63d25",
+   "png": "ddb92a8589c33d9f9a7d9578c980fa6467e85e8de153ef8f7d2c025637b60e4d"
+  },
+  "tabla": "06_analisis/tablas/tab_B2_limitaciones_declaradas.csv",
+  "procedencia": [
+   "07_informes/LIMITACIONES.md"
+  ],
+  "n": 17,
+  "marca": "MEDIDO",
+  "nota_lectura": "El catálogo de figuras planificaba «18 confusores». Esa cifra aparece una sola vez en toda la campaña, en la tabla de presupuesto de 99_operacion/log_instancia.md («Fase 1 · sellado + 18 confusores»), y ningún fichero llega a enumerarlos: los códigos E-n del corpus antiguo son identificadores de EXPERIMENTO, no de confusor. Lo que sí consta sellado son 17 limitaciones, y es lo que se dibuja. 6 de ellas se declararon sólo después de medir: el pre-registro no las anticipó."
+ },
+ {
+  "id": "C3",
+  "titulo": "Distribución bootstrap de la mediana del TPOT",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C3_bootstrap_tpot.pdf",
+   "svg": "06_analisis/figuras/fig_C3_bootstrap_tpot.svg",
+   "png": "06_analisis/figuras/fig_C3_bootstrap_tpot.png"
+  },
+  "sha256": {
+   "pdf": "58045bbfe339981f1a68ee14376f53b1e15d51b1a61ffb322810541b2f7adf49",
+   "svg": "94243d7f568b195267713c19c5931e8d0c5eda1e38e2ee524ecec67a32d3c7fc",
+   "png": "fbf3f1541f7fd605c00d513201415209402952419b0986e9dd894cddd5b29972"
+  },
+  "tabla": "06_analisis/tablas/tab_C3_bootstrap_tpot.csv",
+  "procedencia": [
+   "05_derivados/tpot_serie_n100.json"
+  ],
+  "n": 100,
+  "marca": "DERIVADO",
+  "nota_lectura": "La distribución es multimodal a propósito de la aritmética, no del sistema: la mediana de un remuestreo de 100 valores discretos sólo puede caer en un número reducido de valores, y por eso el histograma es escalonado en vez de acampanado. El intervalo es estrechísimo (CV 0,65 %) porque mide la precisión de la mediana bajo condiciones fijas y un único modelo cargado: NO es un intervalo sobre el rendimiento que vería un usuario. La serie de origen lleva ADVERTENCIA_DE_PROCEDENCIA: el arnés no la volcó a disco y se rescató de la salida estándar."
+ },
+ {
+  "id": "C5",
+  "titulo": "Ablación de la gramática: los dos brazos por separado",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C5_ablacion_brazos.pdf",
+   "svg": "06_analisis/figuras/fig_C5_ablacion_brazos.svg",
+   "png": "06_analisis/figuras/fig_C5_ablacion_brazos.png"
+  },
+  "sha256": {
+   "pdf": "61e7fd946cb01dd4eb4fac7dd36096d8b89528684d948d16794a3b5c6df7fc6d",
+   "svg": "b3663c8173b15f93f081c20f70df5e26399f455ef27e78ef15892f0e486fd6db",
+   "png": "3732d1e283a0c4937c3c0e0c80af83b9e903f63b1f371cead91c4ae9a2d0bf07"
+  },
+  "tabla": "06_analisis/tablas/tab_C5_ablacion_brazos.csv",
+  "procedencia": [
+   "05_derivados/ablacion_gramatica.json"
+  ],
+  "n": 60,
+  "marca": "MEDIDO",
+  "nota_lectura": "No es un diagrama de violín ni de caja completo: los 60 valores crudos NO se persistieron, sólo mediana e IQR por brazo, así que se dibuja exactamente eso. Los IQR se solapan. Ambos brazos toparon en num_predict = 200 con done_reason «length», de modo que esto mide el coste de la gramática en decodificación pura y NO en la terminación, que es donde la evidencia antigua situaba el fallo duro."
+ },
+ {
+  "id": "C7",
+  "titulo": "Determinismo intra-máquina: 20 prompts × 5 repeticiones",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_C7_determinismo_canario.pdf",
+   "svg": "06_analisis/figuras/fig_C7_determinismo_canario.svg",
+   "png": "06_analisis/figuras/fig_C7_determinismo_canario.png"
+  },
+  "sha256": {
+   "pdf": "5cb29f416299af733e84e3dd8442d1bad2a270f73144eed7d033ddaf08a5229e",
+   "svg": "3aa11f7bd3b047f2e84efcfb04d748794c9cd85c6c3b9a8907939a6458afc096",
+   "png": "5ffece3e3827386634ee9287ac5e648831bcafdcaa9cc854f2ebe16f4d33f3ed"
+  },
+  "tabla": "06_analisis/tablas/tab_C7_determinismo_canario.csv",
+  "procedencia": [
+   "06_analisis/fase2_canario_y_ic.json"
+  ],
+  "n": 100,
+  "marca": "DERIVADO",
+  "nota_lectura": "Los hashes celda a celda NO se persistieron: lo que consta es el agregado «0 prompts con más de un hash» sobre 20. La rejilla es la representación fiel de ese agregado, no 100 hashes registrados de forma independiente. El fixture planificaba 10 repeticiones y la corrida ejecutó 5. Esto NO demuestra equivalencia entre máquinas: §6.2 quedó cancelada porque no constan los prompts renderizados del 7-ago."
+ },
+ {
+  "id": "D4",
+  "titulo": "La frontera de la ventana, turno a turno y modo a modo",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D4_frontera_matriz.pdf",
+   "svg": "06_analisis/figuras/fig_D4_frontera_matriz.svg",
+   "png": "06_analisis/figuras/fig_D4_frontera_matriz.png"
+  },
+  "sha256": {
+   "pdf": "f2f24f633f336ed38eed6bbe522e16d6b1090d695e9ba3eb30f754104547dcdb",
+   "svg": "75b1798e1cc719e6c7ad14849d2aac719296bb4860c41a3103f6ea8d1e2296b1",
+   "png": "5a73864d7a240ddbd76ba02ce17dc02a9c92f8713e03149a1a4eb64571e1fb0f"
+  },
+  "tabla": "06_analisis/tablas/tab_D4_frontera_matriz.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 9,
+  "marca": "MEDIDO",
+  "nota_lectura": "Los nueve turnos de frontera respondieron: ninguno murió ni calló. El tamaño de la ventana NO se mide aquí — se infiere de una sola observación (GENERAL-14 devuelve el turno 2 como «primera pregunta»), y con n = 1 y history_messages_count nulo en las nueve celdas no sostiene una cifra. Por eso la anotación dice «inferida»."
+ },
+ {
+  "id": "D5",
+  "titulo": "Qué responde el sistema al preguntarle por el principio de la conversación",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D5_frontera_conducta.pdf",
+   "svg": "06_analisis/figuras/fig_D5_frontera_conducta.svg",
+   "png": "06_analisis/figuras/fig_D5_frontera_conducta.png"
+  },
+  "sha256": {
+   "pdf": "6db9d97261871e9ec81734bfdc63196d54f974488ee28ee31fe8e29477e78ad8",
+   "svg": "bbdd4645a040f8633e6e2a930d7a3f3befe8cba610c9806919b4a4fbac1acaf6",
+   "png": "65a369eb736431f45d56fe10c03b3f88a06da76d1ed0624e874218ae83b8253a"
+  },
+  "tabla": "06_analisis/tablas/tab_D5_frontera_conducta.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 3,
+  "marca": "MEDIDO",
+  "nota_lectura": "H-6 predecía confabulación y no la hubo: el sistema reporta lo que conserva. El fallo real es distinto y más sutil — no declara el límite de su ventana. GENERAL-14 responde «¿De qué está compuesto?», que fue el turno 2 y no el 1, y lo hace prologado con «según el historial de esta sesión»: un error factual expresado con la misma seguridad que un acierto. Eso es lo que un usuario clínico no puede detectar. Los textos van truncados a 250 caracteres; el íntegro está en la tabla gemela."
+ },
+ {
+  "id": "D6",
+  "titulo": "Verificación mecánica contra la tabla de verdad sellada",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D6_verdad_verificacion.pdf",
+   "svg": "06_analisis/figuras/fig_D6_verdad_verificacion.svg",
+   "png": "06_analisis/figuras/fig_D6_verdad_verificacion.png"
+  },
+  "sha256": {
+   "pdf": "d466f091bace255090e721bc83a42f02aa819cf8164db1648e2124fac044135c",
+   "svg": "2ef38e5536c361c9e2ead543b2b30b528dcba1a87d3cd5066da1c7ceaaac1f61",
+   "png": "85de45d1c427bfebb19d3ffc84cebce14b026a95978977df684b22047702d294"
+  },
+  "tabla": "06_analisis/tablas/tab_D6_verdad_verificacion.csv",
+  "procedencia": [
+   "02_fixtures/verdad.json",
+   "04_trazas/turns.ndjson"
+  ],
+  "n": 9,
+  "marca": "MEDIDO",
+  "nota_lectura": "«NO CONTIENE» no es sinónimo de alucinación y la figura no lo afirma. HEMO-04 no contiene el rango [5,5 · 16,9] porque respondió otra cosa —enumeró los 18 parámetros— sin afirmar ningún rango falso. HEMO-08 dice «10^12/L» donde el fixture selló «x10⁶/µL»: es la misma magnitud en otro convenio, no un número inventado. HEMO-01 murió y no entregó texto. De ahí que el denominador efectivo de la tasa de alucinación de D7 sea aún menor que 9, y su intervalo aún más ancho."
+ },
+ {
+  "id": "D8",
+  "titulo": "Cobertura real de la rúbrica de cinco ejes",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_D8_rubrica_cobertura.pdf",
+   "svg": "06_analisis/figuras/fig_D8_rubrica_cobertura.svg",
+   "png": "06_analisis/figuras/fig_D8_rubrica_cobertura.png"
+  },
+  "sha256": {
+   "pdf": "d0746a373c988a060b51daba5b3ec9b4ce93b7e3625d45aad3932ae16cacd7d3",
+   "svg": "7419356dd9dcfa3df8d8b684bb8f16cb7bc5dfb868035a291d2fb1ae2e6274bd",
+   "png": "5563196f3442a0d2236e65ffbc409d7de8014db0e254777a4bc4383450044c3f"
+  },
+  "tabla": "06_analisis/tablas/tab_D8_rubrica_cobertura.csv",
+  "procedencia": [
+   "07_informes/LIMITACIONES.md",
+   "02_fixtures/criterios.md",
+   "03_hipotesis/preregistro.md"
+  ],
+  "n": 5,
+  "marca": "MEDIDO",
+  "nota_lectura": "Éste es un resultado incómodo y se dibuja igual de bien que los demás. De los cinco ejes previstos sólo el 1 se puntuó. Los ejes 2 y 5 son inevaluables por una carencia del instrumento —la API no devuelve el prompt renderizado ni el recuento de mensajes—, y de los ejes 3 y 4 no consta definición operativa en ningún artefacto sellado, pese a que criterios.md los invoca. Puntuarlos ahora sería juicio disfrazado de medida."
+ },
+ {
+  "id": "E6",
+  "titulo": "Proporción de turnos sin respuesta, con intervalo de confianza",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_E6_desenlaces_wilson.pdf",
+   "svg": "06_analisis/figuras/fig_E6_desenlaces_wilson.svg",
+   "png": "06_analisis/figuras/fig_E6_desenlaces_wilson.png"
+  },
+  "sha256": {
+   "pdf": "7d3478e156210252652986f40fe7ecd10d41f97c135a5e596a5c3b05afe9d613",
+   "svg": "24c41a6dd441f7c5a9bc2db1c24f162587b7edaf89f9f5b08817df2f8cac6c7b",
+   "png": "f2a4dabb0498c893f17b5ce2d95f77b0e865d0db7c928ca5098d9a594ff29c6b"
+  },
+  "tabla": "06_analisis/tablas/tab_E6_desenlaces_wilson.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson"
+  ],
+  "n": 70,
+  "marca": "DERIVADO",
+  "nota_lectura": "Los dos intervalos de Wilson SÍ se solapan, y por eso no bastan para concluir nada: son intervalos independientes aplicados a datos pareados. El contraste correcto, McNemar exacto sobre los 23 turnos discordantes, da p = 0,035, de modo que la caída de proporción sí es significativa al 5 %. Que lo sea NO significa que la GPU arreglara los fallos antiguos: los 17 de la línea base son de contrato (generation_repair_failed) y los 6 nuevos son de transporte (4 × HTTP 502, 2 × HTTP 422), y κ = −0,145 sobre los identificadores dice que ni un solo caso coincide. Desapareció una población de fallos y apareció otra distinta."
+ },
+ {
+  "id": "F2",
+  "titulo": "Los cinco efectos medidos, cada uno en su escala",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_F2_tamanos_efecto.pdf",
+   "svg": "06_analisis/figuras/fig_F2_tamanos_efecto.svg",
+   "png": "06_analisis/figuras/fig_F2_tamanos_efecto.png"
+  },
+  "sha256": {
+   "pdf": "0542e6c1f144257948e616741d54bf3e3c96798e2171b15b059ea9c6ec30458e",
+   "svg": "3e190b9ee744e1718dfa592626d5bfa4bd6f4bfe1597a196b4c794c3d5fa475f",
+   "png": "98a5858bba9801dae85fd2bb7344dcfd6de6bf9bb720f79865d49c9876c7074a"
+  },
+  "tabla": "06_analisis/tablas/tab_F2_tamanos_efecto.csv",
+  "procedencia": [
+   "04_trazas/turns_replica_estricta.ndjson",
+   "05_derivados/ablacion_gramatica.json",
+   "02_fixtures/verdad.json"
+  ],
+  "n": 5,
+  "marca": "DERIVADO",
+  "nota_lectura": "No es un forest plot canónico y no debe leerse como tal: las unidades son incomparables entre sí, por eso cada panel lleva su propia escala en vez de compartir un eje que sugeriría magnitudes comparables. Tres de los cinco efectos no tienen intervalo de confianza y lo dicen en el propio panel: la ausencia de IC es información, no un detalle de formato."
+ },
+ {
+  "id": "F3",
+  "titulo": "Qué niveles del esquema de trazas llegó a poblar la campaña",
+  "rutas": {
+   "pdf": "06_analisis/figuras/fig_F3_cobertura_esquema.pdf",
+   "svg": "06_analisis/figuras/fig_F3_cobertura_esquema.svg",
+   "png": "06_analisis/figuras/fig_F3_cobertura_esquema.png"
+  },
+  "sha256": {
+   "pdf": "37ce57c102082874d0a96f02f9cdd9e197c578de3d2e12b88e4220c3d4f39211",
+   "svg": "e13c032e18fe373930ce60fade6558dc7acd31374ce817ee27b35856be6ffc68",
+   "png": "6e9ea2eeb7036a5d248b9347beb34817f55f780a2d8d83a68522ae37b05e5ad1"
+  },
+  "tabla": "06_analisis/tablas/tab_F3_cobertura_esquema.csv",
+  "procedencia": [
+   "04_trazas/turns.ndjson",
+   "04_trazas/turns_replica_estricta.ndjson",
+   "07_informes/LIMITACIONES.md"
+  ],
+  "n": 115,
+  "marca": "MEDIDO",
+  "nota_lectura": "Poblar calls_in_turn = null para que el validador de trazas pasara habría sido el patrón «condición necesaria tratada como suficiente» aplicado al propio instrumento. Se dejó fallar y se declaró. Los niveles vacíos son exactamente los que bloquean X1, X3 y H-8."
+ },
+ {
+  "id": "X1",
+  "titulo": "Descomposición prefill/decode por turno",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X1.pdf",
+   "svg": "06_analisis/figuras/ausencia_X1.svg",
+   "png": "06_analisis/figuras/ausencia_X1.png"
+  },
+  "sha256": {
+   "pdf": "b130a7a00e29aca3be06b3cbb579b1846c0c6eafbaca5891d046f8cefe91aad9",
+   "svg": "614c32aa6e1e8af59a7bc16bb2e34ed9cc8d32dd5b015d94cd2b5829a1a88b1d",
+   "png": "0237dcaceb87a9aadfc3cef0275f24935e93e4aba147a68c8a9c510ce7a31f3a"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "El nivel de LLAMADA está vacío: la API pública del camino B no expone eval_count, eval_duration, load_duration ni done_reason."
+ },
+ {
+  "id": "X2",
+  "titulo": "Crecimiento del prefill a lo largo de los 15 turnos",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X2.pdf",
+   "svg": "06_analisis/figuras/ausencia_X2.svg",
+   "png": "06_analisis/figuras/ausencia_X2.png"
+  },
+  "sha256": {
+   "pdf": "0a87e6e417441b1b9e30192d1f019188cf06def810ec9605f2ce820d0ee88be0",
+   "svg": "704c52912b624424b1600b55897b51e4d171736905f7cc7e84221f0d0e16d68b",
+   "png": "313918c70a115fafef9d3810a95ffd609fc1996895e76100364b763ee919423a"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "history_messages_count vino null en los 45 turnos: la API no lo devuelve."
+ },
+ {
+  "id": "X3",
+  "titulo": "ttft_per_1k_in por posición de turno",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X3.pdf",
+   "svg": "06_analisis/figuras/ausencia_X3.svg",
+   "png": "06_analisis/figuras/ausencia_X3.png"
+  },
+  "sha256": {
+   "pdf": "c386f312f7a4ca7e68ae8f70dd7c00609353986cb3c9ec85f64e45cd7abf52f6",
+   "svg": "2b03ea708903078dd630e8210f01ae6dbe7b8613fdeafa085185b5bd99593b8c",
+   "png": "75c894c564fdfd840bdaf00230d883aa0b3c145ca2ca1819a63db3ff38c983ec"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "Sin streaming y sin prompt_eval_duration por turno, la métrica no es calculable por el camino B."
+ },
+ {
+  "id": "X4",
+  "titulo": "Relojes, temperatura y potencia durante la medición",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X4.pdf",
+   "svg": "06_analisis/figuras/ausencia_X4.svg",
+   "png": "06_analisis/figuras/ausencia_X4.png"
+  },
+  "sha256": {
+   "pdf": "346b179dc196893d0f08698d51af85737dd2d3364aa262caab3636e2e8752872",
+   "svg": "00a0dc7ff763dcef9791ae32beec18031cf2df0d3dd31d87591872b41b379b55",
+   "png": "86118a4b7bc4d292336e942d16963d88242f407ba42598abdd9ca08811db5b0b"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "No se capturó log de nvidia-smi concurrente en ninguna de las 6 ventanas identificadas en A1."
+ },
+ {
+  "id": "X5",
+  "titulo": "Comparación de decode, MBU o TPOT entre L4 y A100",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X5.pdf",
+   "svg": "06_analisis/figuras/ausencia_X5.svg",
+   "png": "06_analisis/figuras/ausencia_X5.png"
+  },
+  "sha256": {
+   "pdf": "30ae98bc0e6a8b4a183910f6950720df5420bd7b7f98b1babbd7b5b5fbf03121",
+   "svg": "ef1e64c987689280e3eb54f16a01a4bc065353e2c6b7be8634b52b1233248c05",
+   "png": "79658330c61f79702d2ab4817626fd30b44e3ae8722655b1c7ad46952082aa51"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "La línea base del 7-ago no contiene NINGUNA métrica de servidor: solo reloj de cliente."
+ },
+ {
+  "id": "X6",
+  "titulo": "Verificación de identidad de modelo entre corridas",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X6.pdf",
+   "svg": "06_analisis/figuras/ausencia_X6.svg",
+   "png": "06_analisis/figuras/ausencia_X6.png"
+  },
+  "sha256": {
+   "pdf": "b2001a99f6a2322e4eb7676175595171d1acdff9738a30167c84be4ab15c8a2a",
+   "svg": "460b72c741226ed3ab71419f3128e6e959d7f1fcc74c8ce7549192c5c511689b",
+   "png": "f78375eb6b7170393613fe160597fe73b972c1b47f66843ea36730f69499f0cd"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "El digest del modelo del 7-ago no consta en ningún fichero de la evidencia."
+ },
+ {
+  "id": "X7",
+  "titulo": "Canario de equivalencia inter-máquina",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X7.pdf",
+   "svg": "06_analisis/figuras/ausencia_X7.svg",
+   "png": "06_analisis/figuras/ausencia_X7.png"
+  },
+  "sha256": {
+   "pdf": "a3987a7438800cfac915b5ffb59c5a1b7980779b69e3d50c727a19390b9d8973",
+   "svg": "b3473d9c3192b6ef1700e782450854a69583c8f783bf5c6c6411bc9e3fd92f1c",
+   "png": "3ec4c9eb6aaa9df2359a09e9703dc496ca28dfe3b56f5fb8b6a4628d54dd8219"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "Los prompts renderizados del 7-ago no constan: el instrumento antiguo solo guardaba el texto lógico."
+ },
+ {
+  "id": "X8",
+  "titulo": "Tendencia de parámetros en el historial",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X8.pdf",
+   "svg": "06_analisis/figuras/ausencia_X8.svg",
+   "png": "06_analisis/figuras/ausencia_X8.png"
+  },
+  "sha256": {
+   "pdf": "64e4d9195e687b6a80d39f24d8195bbc5224ca1926e25292b6417bd55ba0fc5a",
+   "svg": "80cc7b033b0ffc9acdb6f132aaa134c413191cdbac48a2d64ed3561bcb304633",
+   "png": "cca821b1c39eeac3c53a2c115b044cfeb75e9493bcea574ee18d1d140630a104"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "El fixture tiene n_estudios = 2: dos puntos definen siempre una recta, así que 'tendencia' no es medible."
+ },
+ {
+  "id": "X9",
+  "titulo": "Radar completo de los cinco ejes de la rúbrica",
+  "rutas": {
+   "pdf": "06_analisis/figuras/ausencia_X9.pdf",
+   "svg": "06_analisis/figuras/ausencia_X9.svg",
+   "png": "06_analisis/figuras/ausencia_X9.png"
+  },
+  "sha256": {
+   "pdf": "e78a185ea72e12a097ebadc7810d33532498e0729d39b3ca8780dcb5dc2c45fb",
+   "svg": "1b84f35b1e8078d3eac5e0be44cd41923873a22f50012a94c19e78db0044d396",
+   "png": "0649d4511ed9e8355f42682ffa31a7987f67fa6b9a3e7a149b99a7d71b042e32"
+  },
+  "tabla": null,
+  "procedencia": [],
+  "n": null,
+  "marca": "AUSENCIA",
+  "motivo": "Los ejes 2 y 5 no son puntuables: §9.4 exige decidir referente_recuperable sobre el prompt renderizado real, que no existe."
+ }
+]

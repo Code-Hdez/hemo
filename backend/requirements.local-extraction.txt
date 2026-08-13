@@ -1,0 +1,6 @@
+pandas
+pdfplumber
+pypdfium2
+openpyxl
+pytesseract
+python-docx

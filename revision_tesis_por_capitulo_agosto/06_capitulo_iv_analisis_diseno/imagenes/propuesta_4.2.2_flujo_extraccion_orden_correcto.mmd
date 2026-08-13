@@ -1,0 +1,12 @@
+flowchart TD
+  IN["Hemograma cargado\n(PDF, imagen o CSV)"] --> A["Intento 1: extracción asistida\n(Gemini)"]
+  A -->|sin éxito| B["Intento 2: extracción asistida\n(modelo alternativo)"]
+  B -->|sin éxito| C["Intento 3: extracción asistida\n(otro modelo)"]
+  C -->|sin éxito| D["Extracción local\n(respaldo final, sin dependencia externa)"]
+  A -->|éxito| OUT["Valores extraídos,\nsujetos a revisión del usuario"]
+  B -->|éxito| OUT
+  C -->|éxito| OUT
+  D -->|último recurso| OUT
+
+  classDef step fill:#eef,stroke:#88a
+  class A,B,C,D step

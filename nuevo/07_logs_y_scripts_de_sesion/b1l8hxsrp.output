@@ -1,0 +1,40 @@
+
+
+T0 2026-08-09T01:56:14+00:00  size_vram=16926501764
+--- provocando la discordancia: /api/generate con num_ctx=65536, keep_alive=-1 ---
+T1 2026-08-09T01:57:56+00:00  recarga a 65536 tardo 101 s   size_vram=18889436036
+--- observando el rearmado del poller (max 300 s) ---
+   +5s  size_vram=18889436036
+   +10s  size_vram=18889436036
+   +15s  size_vram=18889436036
+   +20s  size_vram=18889436036
+   +25s  size_vram=18889436036
+   +30s  size_vram=18889436036
+   +35s  size_vram=18889436036
+   +40s  size_vram=18889436036
+   +45s  size_vram=18889436036
+   +50s  size_vram=18889436036
+   +55s  size_vram=18889436036
+   +60s  size_vram=18889436036
+   +65s  size_vram=18889436036
+   +70s  size_vram=18889436036
+   +75s  size_vram=18889436036
+   +80s  size_vram=18889436036
+   +85s  size_vram=18889436036
+   +90s  size_vram=18889436036
+   +95s  size_vram=18889436036
+   +100s  size_vram=18889436036
+   +105s  size_vram=18889436036
+   +110s  size_vram=18889436036
+   +115s  size_vram=18889436036
+   +120s  size_vram=18889436036
+   +125s  size_vram=18889436036
+   +130s  size_vram=18889436036
+   +135s  size_vram=18889436036
+   +140s  size_vram=18889436036
+   +145s  size_vram=18889436036
+   +150s  size_vram=18889436036
+   +155s  size_vram=18889436036
+   +160s  size_vram=18889436036
+   +165s  size_vram=18889436036
+   +170s  size_vram=18889436036

@@ -1,0 +1,282 @@
+# docker-compose.yml -- HemoVet application base
+#
+# Servicios:
+#   db       - PostgreSQL 16 (persistencia de analisis)
+#   chroma   - Almacen vectorial y recuperacion RAG
+#   backend  - FastAPI + modelo ML (uvicorn)
+#   frontend - React build servido por nginx (proxy /api/v1/ al backend)
+#
+# Este archivo no contiene un runtime LLM. Desarrollo agrega Ollama mediante
+# docker-compose.local.yml; produccion usa docker-compose.prod.yml y consume el
+# proveedor remoto configurado por OLLAMA_BASE_URL.
+#
+# Uso local:
+#   cp .env.example .env        # ajustar credenciales si se desea
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+
+services:
+
+  # --- ChromaDB vector store interno ---
+  chroma:
+    image: chromadb/chroma:1.5.9@sha256:1e0b73a187a28757c572acba508c46f48c9e8b0acaf5c20e6d95cdedce1acdf6
+    restart: unless-stopped
+    volumes:
+      - chroma-data:/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8000; printf \"GET /api/v2/heartbeat HTTP/1.1\\r\\nHost: 127.0.0.1\\r\\nConnection: close\\r\\n\\r\\n\" >&3; IFS= read -r status <&3; [[ \"$$status\" == *\" 200 \"* ]]'",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  # --- Ingesta RAG inicial ---
+  # Se ejecuta una vez al levantar el stack para indexar el corpus curado.
+  rag_ingest:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        INSTALL_LOCAL_ML: "${INSTALL_LOCAL_ML:-1}"
+        INSTALL_LOCAL_EXTRACTION: "${INSTALL_LOCAL_EXTRACTION:-1}"
+        HEMOVET_BUILD_REVISION: "${HEMOVET_BUILD_REVISION:-dev}"
+    restart: "no"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-hemovet}:${POSTGRES_PASSWORD:-hemovet_dev_2026}@db:5432/${POSTGRES_DB:-hemovet}"
+      SECRET_KEY: "${SECRET_KEY:-dev-secret-key-change-me-please-1234567890}"
+      HEMOVET_PROJECT_ROOT: "/app"
+      HEMOVET_ENABLE_LOCAL_ML: "${HEMOVET_ENABLE_LOCAL_ML:-1}"
+      HEMOVET_ENABLE_LOCAL_EXTRACTION: "${HEMOVET_ENABLE_LOCAL_EXTRACTION:-1}"
+      CHROMA_HOST: "chroma"
+      CHROMA_PORT: "8000"
+      CHROMA_SSL: "0"
+      RAG_SOURCE_DIR: "${RAG_SOURCE_DIR:-knowledge_base/expert_review/approved}"
+      RAG_COLLECTION_NAME: "${RAG_COLLECTION_NAME:-hemovet_canine_hematology_v2}"
+      RAG_SCHEMA_VERSION: "${RAG_SCHEMA_VERSION:-hemovet-rag-v2}"
+      RAG_SOURCE_MANIFEST: "${RAG_SOURCE_MANIFEST:-knowledge_base/manifests/sources_manifest.json}"
+      RAG_ALLOW_TEST_DOCUMENTS: "${RAG_ALLOW_TEST_DOCUMENTS:-0}"
+      RAG_ALLOW_AI_PROVISIONAL: "${RAG_ALLOW_AI_PROVISIONAL:-0}"
+    volumes:
+      - ./models:/app/models:ro
+      - ./data/processed:/app/data/processed:ro
+      - ./outputs:/app/outputs:ro
+      - ./knowledge_base:/app/knowledge_base:ro
+      - embedding-cache:/app/.cache/fastembed
+    depends_on:
+      db:
+        condition: service_healthy
+      chroma:
+        condition: service_healthy
+    command:
+      - python
+      - scripts/ingest_rag.py
+      - index
+      - --prune
+
+  # --- Base de datos ---
+  db:
+    image: postgres:16-alpine@sha256:57c72fd2a128e416c7fcc499958864df5301e940bca0a56f58fddf30ffc07777
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-hemovet}"
+      POSTGRES_USER: "${POSTGRES_USER:-hemovet}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-hemovet_dev_2026}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # --- Backend FastAPI ---
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        INSTALL_LOCAL_ML: "${INSTALL_LOCAL_ML:-1}"
+        INSTALL_LOCAL_EXTRACTION: "${INSTALL_LOCAL_EXTRACTION:-1}"
+        HEMOVET_BUILD_REVISION: "${HEMOVET_BUILD_REVISION:-dev}"
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-hemovet}:${POSTGRES_PASSWORD:-hemovet_dev_2026}@db:5432/${POSTGRES_DB:-hemovet}"
+      SECRET_KEY: "${SECRET_KEY:-dev-secret-key-change-me-please-1234567890}"
+      OTEL_ENABLED: "${OTEL_ENABLED:-0}"
+      OTEL_SERVICE_NAME: "${OTEL_SERVICE_NAME:-hemovet-backend}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}"
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:-}"
+      OTEL_EXPORTER_OTLP_METRICS_ENDPOINT: "${OTEL_EXPORTER_OTLP_METRICS_ENDPOINT:-}"
+      OTEL_EXPORTER_OTLP_HEADERS: "${OTEL_EXPORTER_OTLP_HEADERS:-}"
+      OTEL_IDENTIFIER_HMAC_SECRET: "${OTEL_IDENTIFIER_HMAC_SECRET:-}"
+      OTEL_TRACES_SAMPLER: "${OTEL_TRACES_SAMPLER:-parentbased_traceidratio}"
+      OTEL_TRACES_SAMPLER_ARG: "${OTEL_TRACES_SAMPLER_ARG:-1.0}"
+      OTEL_FASTAPI_INSTRUMENTATION_ENABLED: "${OTEL_FASTAPI_INSTRUMENTATION_ENABLED:-1}"
+      CORS_ORIGINS: "${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173}"
+      HEMOVET_ENABLE_LOCAL_ML: "${HEMOVET_ENABLE_LOCAL_ML:-1}"
+      HEMOVET_ENABLE_LOCAL_EXTRACTION: "${HEMOVET_ENABLE_LOCAL_EXTRACTION:-1}"
+      HEMOVET_ANALYSIS_CONCURRENCY: "${HEMOVET_ANALYSIS_CONCURRENCY:-2}"
+      BACKEND_WEB_CONCURRENCY: "${BACKEND_WEB_CONCURRENCY:-1}"
+      OLLAMA_BASE_URL: "${OLLAMA_BASE_URL:-http://host.docker.internal:11434/}"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-qwen3:4b-instruct-2507-q4_K_M}"
+      OLLAMA_EXPECTED_MODEL_DIGEST: "${OLLAMA_EXPECTED_MODEL_DIGEST:-}"
+      OLLAMA_EXPECTED_QUANTIZATION: "${OLLAMA_EXPECTED_QUANTIZATION:-}"
+      OLLAMA_TEMPERATURE: "${OLLAMA_TEMPERATURE:-0.1}"
+      OLLAMA_TOP_P: "${OLLAMA_TOP_P:-0.9}"
+      OLLAMA_TOP_K: "${OLLAMA_TOP_K:-40}"
+      OLLAMA_REPEAT_PENALTY: "${OLLAMA_REPEAT_PENALTY:-1.1}"
+      OLLAMA_MAX_RETRIES: "${OLLAMA_MAX_RETRIES:-1}"
+      OLLAMA_CONNECT_TIMEOUT_SECONDS: "${OLLAMA_CONNECT_TIMEOUT_SECONDS:-5}"
+      OLLAMA_WRITE_TIMEOUT_SECONDS: "${OLLAMA_WRITE_TIMEOUT_SECONDS:-15}"
+      OLLAMA_POOL_TIMEOUT_SECONDS: "${OLLAMA_POOL_TIMEOUT_SECONDS:-5}"
+      OLLAMA_HTTP_MAX_CONNECTIONS: "${OLLAMA_HTTP_MAX_CONNECTIONS:-8}"
+      OLLAMA_HTTP_MAX_KEEPALIVE_CONNECTIONS: "${OLLAMA_HTTP_MAX_KEEPALIVE_CONNECTIONS:-4}"
+      OLLAMA_HTTP_KEEPALIVE_EXPIRY_SECONDS: "${OLLAMA_HTTP_KEEPALIVE_EXPIRY_SECONDS:-30}"
+      OLLAMA_KEEP_ALIVE: "${OLLAMA_KEEP_ALIVE:-30m}"
+      OLLAMA_CONTEXT_LENGTH: "${OLLAMA_CONTEXT_LENGTH:-4096}"
+      OLLAMA_NUM_PREDICT: "${OLLAMA_NUM_PREDICT:-384}"
+      OLLAMA_TIMEOUT_SECONDS: "${OLLAMA_TIMEOUT_SECONDS:-120}"
+      OLLAMA_THINK: "${OLLAMA_THINK:-0}"
+      OLLAMA_WARMUP_ENABLED: "${OLLAMA_WARMUP_ENABLED:-1}"
+      OLLAMA_WARMUP_TIMEOUT_SECONDS: "${OLLAMA_WARMUP_TIMEOUT_SECONDS:-120}"
+      CHAT_LLM_PROVIDER: "${CHAT_LLM_PROVIDER:-ollama}"
+      OPENAI_COMPATIBLE_BASE_URL: "${OPENAI_COMPATIBLE_BASE_URL:-}"
+      OPENAI_COMPATIBLE_MODEL: "${OPENAI_COMPATIBLE_MODEL:-qwen3:8b}"
+      OPENAI_COMPATIBLE_API_KEY: "${OPENAI_COMPATIBLE_API_KEY:-}"
+      CHROMA_HOST: "chroma"
+      CHROMA_PORT: "8000"
+      CHROMA_SSL: "0"
+      RAG_SOURCE_DIR: "${RAG_SOURCE_DIR:-knowledge_base/expert_review/approved}"
+      RAG_COLLECTION_NAME: "${RAG_COLLECTION_NAME:-hemovet_canine_hematology_v2}"
+      RAG_SCHEMA_VERSION: "${RAG_SCHEMA_VERSION:-hemovet-rag-v2}"
+      RAG_SOURCE_MANIFEST: "${RAG_SOURCE_MANIFEST:-knowledge_base/manifests/sources_manifest.json}"
+      RAG_ALLOW_TEST_DOCUMENTS: "${RAG_ALLOW_TEST_DOCUMENTS:-0}"
+      RAG_ALLOW_AI_PROVISIONAL: "${RAG_ALLOW_AI_PROVISIONAL:-0}"
+      CHAT_MESSAGE_MAX_CHARS: "${CHAT_MESSAGE_MAX_CHARS:-2000}"
+      CHAT_STRUCTURED_OUTPUT_ENABLED: "${CHAT_STRUCTURED_OUTPUT_ENABLED:-1}"
+      CHAT_REQUIRE_BROWSER_SESSION_ID: "${CHAT_REQUIRE_BROWSER_SESSION_ID:-0}"
+      CHAT_HISTORY_LIMIT: "${CHAT_HISTORY_LIMIT:-12}"
+      CHAT_SUMMARY_MAX_CHARS: "${CHAT_SUMMARY_MAX_CHARS:-3200}"
+      CHAT_SUMMARY_MAX_TOKENS: "${CHAT_SUMMARY_MAX_TOKENS:-800}"
+      CHAT_MAX_INPUT_TOKENS: "${CHAT_MAX_INPUT_TOKENS:-3200}"
+      CHAT_CONTEXT_RESERVE_TOKENS: "${CHAT_CONTEXT_RESERVE_TOKENS:-256}"
+      CHAT_PROFILE_GENERAL_CONTEXT_LENGTH: "${CHAT_PROFILE_GENERAL_CONTEXT_LENGTH:-}"
+      CHAT_PROFILE_SELECTED_CONTEXT_LENGTH: "${CHAT_PROFILE_SELECTED_CONTEXT_LENGTH:-}"
+      CHAT_PROFILE_HISTORY_CONTEXT_LENGTH: "${CHAT_PROFILE_HISTORY_CONTEXT_LENGTH:-}"
+      CHAT_REPAIR_CONTEXT_LENGTH: "${CHAT_REPAIR_CONTEXT_LENGTH:-}"
+      CHAT_REPAIR_MAX_INPUT_TOKENS: "${CHAT_REPAIR_MAX_INPUT_TOKENS:-}"
+      CHAT_REPAIR_NUM_PREDICT: "${CHAT_REPAIR_NUM_PREDICT:-512}"
+      # Estrictamente positiva: config.py declara gt=0 porque una reparación a
+      # temperatura 0 reproduce el borrador rechazado. Con 0.0 el backend ni
+      # siquiera arranca (ValidationError en Settings).
+      CHAT_REPAIR_TEMPERATURE: "${CHAT_REPAIR_TEMPERATURE:-0.1}"
+      CHAT_REPAIR_TOP_P: "${CHAT_REPAIR_TOP_P:-0.9}"
+      CHAT_REPAIR_TOP_K: "${CHAT_REPAIR_TOP_K:-40}"
+      CHAT_REPAIR_REPEAT_PENALTY: "${CHAT_REPAIR_REPEAT_PENALTY:-1.1}"
+      CHAT_REPAIR_THINK: "${CHAT_REPAIR_THINK:-0}"
+      # Diagnóstico puntual: si apunta a un directorio, cada envelope que el
+      # validador estructurado rechace se escribe ahí completo. Escribe texto
+      # clínico a disco, así que se enciende para un diagnóstico y se apaga
+      # después. Vacío = apagado, que es el estado normal.
+      CHAT_STRUCTURED_DEBUG_DIR: "${CHAT_STRUCTURED_DEBUG_DIR:-}"
+      CHAT_MAX_GENERATION_ATTEMPTS: "${CHAT_MAX_GENERATION_ATTEMPTS:-2}"
+      CHAT_REPAIR_MIN_REMAINING_SECONDS: "${CHAT_REPAIR_MIN_REMAINING_SECONDS:-30}"
+      CHAT_CLINICAL_FACT_MIN_COUNT: "${CHAT_CLINICAL_FACT_MIN_COUNT:-12}"
+      CHAT_CLINICAL_FACT_MAX_COUNT: "${CHAT_CLINICAL_FACT_MAX_COUNT:-64}"
+      CHAT_CLINICAL_FACT_TOKENS_PER_ITEM: "${CHAT_CLINICAL_FACT_TOKENS_PER_ITEM:-96}"
+      CHAT_MEMORY_TOPIC_LIMIT: "${CHAT_MEMORY_TOPIC_LIMIT:-12}"
+      CHAT_MEMORY_RECENT_QUESTION_LIMIT: "${CHAT_MEMORY_RECENT_QUESTION_LIMIT:-40}"
+      CHAT_MEMORY_CLINICAL_FACT_LIMIT: "${CHAT_MEMORY_CLINICAL_FACT_LIMIT:-24}"
+      CHAT_MEMORY_SUMMARIZED_MESSAGE_ID_LIMIT: "${CHAT_MEMORY_SUMMARIZED_MESSAGE_ID_LIMIT:-200}"
+      CHAT_MEMORY_ANSWER_EXCERPT_CHARS: "${CHAT_MEMORY_ANSWER_EXCERPT_CHARS:-420}"
+      CHAT_MEMORY_QUESTION_EXCERPT_CHARS: "${CHAT_MEMORY_QUESTION_EXCERPT_CHARS:-240}"
+      CHAT_MEMORY_SUMMARY_ENTRY_CHARS: "${CHAT_MEMORY_SUMMARY_ENTRY_CHARS:-260}"
+      CHAT_SESSION_TTL_SECONDS: "${CHAT_SESSION_TTL_SECONDS:-3600}"
+      CHAT_TURN_LEASE_GRACE_SECONDS: "${CHAT_TURN_LEASE_GRACE_SECONDS:-5}"
+      CHAT_QUEUE_TIMEOUT_SECONDS: "${CHAT_QUEUE_TIMEOUT_SECONDS:-60}"
+      CHAT_TOTAL_TIMEOUT_SECONDS: "${CHAT_TOTAL_TIMEOUT_SECONDS:-240}"
+      CHAT_MAX_CONCURRENT_GENERATIONS: "${CHAT_MAX_CONCURRENT_GENERATIONS:-1}"
+      CHAT_DB_BLOCKING_MAX_CONCURRENCY: "${CHAT_DB_BLOCKING_MAX_CONCURRENCY:-4}"
+      CHAT_STREAM_HEARTBEAT_SECONDS: "${CHAT_STREAM_HEARTBEAT_SECONDS:-15}"
+      CHAT_TOKENIZER_JSON: "${CHAT_TOKENIZER_JSON:-}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+      GEMINI_MODEL: "${GEMINI_MODEL:-gemini-3.1-flash-lite}"
+      GEMINI_TIMEOUT_SECONDS: "${GEMINI_TIMEOUT_SECONDS:-90}"
+      GEMINI_FILE_POLL_SECONDS: "${GEMINI_FILE_POLL_SECONDS:-2}"
+      GEMINI_FILE_POLL_MAX_ATTEMPTS: "${GEMINI_FILE_POLL_MAX_ATTEMPTS:-30}"
+      GEMINI_INLINE_TEXT_MAX_BYTES: "${GEMINI_INLINE_TEXT_MAX_BYTES:-200000}"
+      OPENROUTER_EXTRACTION_ENABLED: "${OPENROUTER_EXTRACTION_ENABLED:-0}"
+      MAP_MIN_ZONE_COUNT: "${MAP_MIN_ZONE_COUNT:-3}"
+      MAP_MIN_DISTINCT_PETS: "${MAP_MIN_DISTINCT_PETS:-3}"
+      MAP_PUBLIC_GRID_DEGREES: "${MAP_PUBLIC_GRID_DEGREES:-0.03}"
+      MAP_AGGREGATION_GRID_DEGREES: "${MAP_AGGREGATION_GRID_DEGREES:-0.02}"
+      VETERINARY_PLACES_OVERPASS_URL: "${VETERINARY_PLACES_OVERPASS_URL:-https://overpass-api.de/api/interpreter}"
+      VETERINARY_PLACES_TIMEOUT_SECONDS: "${VETERINARY_PLACES_TIMEOUT_SECONDS:-8}"
+      PET_MEDIA_DIR: "/app/media"
+      PET_PHOTO_MAX_BYTES: "${PET_PHOTO_MAX_BYTES:-5242880}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models:ro
+      - ./data/processed:/app/data/processed:ro
+      - ./outputs:/app/outputs:ro
+      - ./knowledge_base:/app/knowledge_base:ro
+      - embedding-cache:/app/.cache/fastembed
+      - entailment-cache:/app/.cache/entailment
+      - pet-media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      rag_ingest:
+        condition: service_completed_successfully
+      chroma:
+        condition: service_healthy
+    healthcheck:
+      # Chat/provider availability is intentionally advisory. The deployment
+      # gate validates required RAG separately, while container health tracks
+      # only the core application boundary.
+      test: ["CMD-SHELL", "python -c \"import json, sys, urllib.request; data=json.load(urllib.request.urlopen('http://127.0.0.1:8000/health/operational', timeout=5)); sys.exit(0 if data.get('core_ready') is True else 1)\""]
+      interval: 15s
+      timeout: 8s
+      retries: 10
+      start_period: 30s
+
+  # --- Frontend nginx ---
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend_4/Dockerfile
+      args:
+        VITE_API_BASE_URL: "${VITE_API_BASE_URL:-/api/v1}"
+        VITE_CHAT_MESSAGE_MAX_CHARS: "${CHAT_MESSAGE_MAX_CHARS:-2000}"
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  chroma-data:
+  embedding-cache:
+  # 1,1 GB de pesos del verificador de entailment descargados una sola vez;
+  # sin el volumen, cada release re-descarga el modelo entero.
+  entailment-cache:
+  pet-media:

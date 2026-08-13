@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      args:
+        # El stack de QA no monta artefactos entrenados; evita descargar
+        # dependencias pesadas que no pueden producir una inferencia real.
+        INSTALL_LOCAL_ML: "0"
+        INSTALL_LOCAL_EXTRACTION: "0"
+    environment:
+      APP_ENV: development
+      HEMOVET_PROJECT_ROOT: /app
+      HEMOVET_ENABLE_LOCAL_ML: "0"
+      HEMOVET_ENABLE_LOCAL_EXTRACTION: "0"
+      HEMOVET_SEED_DEMO_HISTORY: "0"
+      CORS_ORIGINS: http://127.0.0.1:13000,http://localhost:13000
+  frontend:
+    ports: !override
+      - "13000:80"

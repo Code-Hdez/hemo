@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="405pt" height="247.248pt" viewBox="0 0 405 247.248" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-11T23:12:49.788147</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 247.248 
+L 405 247.248 
+L 405 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 240.048 
+L 397.8 240.048 
+L 397.8 7.2 
+L 7.2 7.2 
+z
+" clip-path="url(#pf90d21ff76)" style="fill: #fcfcfb; stroke-dasharray: 7.2,4.8; stroke-dashoffset: 0; stroke: #c3c2b7; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #d03b3b" x="26.73" y="43.499182" transform="rotate(-0 26.73 43.499182)">FIGURA X5 — NO PRODUCIBLE</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="26.73" y="73.410438" transform="rotate(-0 26.73 73.410438)">Comparación de decode, MBU o TPOT entre L4 y A100</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="26.73" y="109.06643" transform="rotate(-0 26.73 109.06643)">Qué habría mostrado</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="26.73" y="124.61682" transform="rotate(-0 26.73 124.61682)">El salto de rendimiento físico entre ambas GPU.</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="26.73" y="159.12875" transform="rotate(-0 26.73 159.12875)">Por qué no se puede producir</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="26.73" y="173.90414" transform="rotate(-0 26.73 173.90414)">La línea base del 7-ago no contiene NINGUNA métrica de servidor: solo reloj de cliente.</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="26.73" y="209.19107" transform="rotate(-0 26.73 209.19107)">Qué haría falta</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(26.73 223.96646)">Es irrecuperable: la L4 ya no existe. La única comparación legítima es la latencia</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(26.73 235.80646)">pareada de E1.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pf90d21ff76">
+   <rect x="7.2" y="7.2" width="390.6" height="232.848"/>
+  </clipPath>
+ </defs>
+</svg>

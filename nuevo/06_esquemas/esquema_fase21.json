@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Esquemas de salida — HemoVet Fase 21 (Remediación)",
+  "descripcion": "Cada bloque del prompt maestro emite uno de estos ficheros. Regla innegociable: toda métrica lleva instrumento, n y estado. Una métrica sin 'instrumento' es invalida y se rechaza.",
+  "version": "1.0.0",
+
+  "$defs": {
+    "Metrica": {
+      "type": "object",
+      "required": ["valor", "estado", "instrumento"],
+      "properties": {
+        "valor": { "type": ["number", "string", "null"] },
+        "unidad": { "type": "string", "examples": ["s", "%", "tokens", "conteo", "razon"] },
+        "estado": {
+          "enum": ["MEDIDA", "ESTIMADA", "NO_DETERMINADA"],
+          "descripcion": "Una cifra derivada de otra NO es MEDIDA. No hay cuarta categoria."
+        },
+        "instrumento": {
+          "type": "string",
+          "descripcion": "Que la produjo, con fichero y linea si es codigo. Cinco instrumentos han fallado en este registro.",
+          "examples": ["reloj monotonico", "prompt_eval_count", "censo a mano n=63", "contador de fallo terminal corregido (no longitud cero)", "regex SIN CALIBRAR"]
+        },
+        "n": { "type": ["integer", "null"], "descripcion": "Tamano muestral. null si no aplica." },
+        "ic95": {
+          "type": ["array", "null"],
+          "items": { "type": "number" },
+          "minItems": 2, "maxItems": 2
+        },
+        "nota": { "type": "string" }
+      }
+    },
+
+    "Cabecera": {
+      "type": "object",
+      "required": ["schema_version", "generado_en", "commit", "rama"],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "generado_en": { "type": "string", "format": "date-time", "descripcion": "UTC ISO-8601" },
+        "commit": { "type": "string", "descripcion": "SHA completo del arbol medido" },
+        "rama": { "type": "string" },
+        "host": { "type": "string" },
+        "modelo": { "type": "string", "examples": ["qwen3.6:27b-q4_K_M"] },
+        "ollama_version": { "type": "string" },
+        "driver": { "type": "string" },
+        "kernel": { "type": "string" }
+      }
+    },
+
+    "ParametrosCable": {
+      "type": "object",
+      "descripcion": "El cuerpo JSON REAL capturado hacia Ollama. No lo que el codigo dice enviar: lo que sale.",
+      "required": ["capturado", "model", "num_ctx", "num_predict", "temperature", "keep_alive", "format_presente"],
+      "properties": {
+        "capturado": { "type": "boolean", "descripcion": "false => el arnes NO esta verificado" },
+        "metodo_captura": { "type": "string", "examples": ["telemetria llm_chat.perf", "proxy local", "tcpdump"] },
+        "model": { "type": "string" },
+        "num_ctx": { "type": "integer" },
+        "num_predict": { "type": "integer" },
+        "temperature": { "type": "number" },
+        "top_k": { "type": ["integer", "null"] },
+        "top_p": { "type": ["number", "null"] },
+        "repeat_penalty": { "type": ["number", "null"] },
+        "keep_alive": { "type": ["integer", "string"] },
+        "thinking": { "type": ["boolean", "null"] },
+        "format_presente": { "type": "boolean" },
+        "cuerpo_crudo": { "type": "string", "descripcion": "JSON del cuerpo, pegado literal" }
+      }
+    }
+  },
+
+  "ficheros": {
+
+    "00_contexto.json": {
+      "descripcion": "PASO 0. Sin este fichero no se sigue. Reconstruye el estado real del trabajo.",
+      "type": "object",
+      "required": ["cabecera", "ramas", "documentos_leidos", "cambios_perdidos"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "ramas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["nombre", "commit_base", "mitigaciones", "ficheros_tocados", "diff_lineas", "diff_completo_adjunto"],
+            "properties": {
+              "nombre": { "type": "string" },
+              "commit_base": { "type": "string" },
+              "mitigaciones": { "type": "array", "items": { "enum": ["M-1","M-2","M-4","M-5","M-9","M-10","M-15"] } },
+              "ficheros_tocados": { "type": "array", "items": { "type": "string" } },
+              "diff_lineas": { "type": "object", "properties": { "anadidas": {"type":"integer"}, "borradas": {"type":"integer"} } },
+              "diff_completo_adjunto": { "type": "string", "descripcion": "ruta del fichero con el diff entero, pegado sin resumir" },
+              "compila": { "type": "boolean" },
+              "suite_pasa": { "type": ["boolean", "null"] }
+            }
+          }
+        },
+        "documentos_leidos": { "type": "array", "items": { "type": "string" } },
+        "cambios_perdidos": {
+          "type": "array",
+          "descripcion": "Lo que los documentos dicen que se implemento y NO aparece en ningun diff. Vacio es una respuesta valida.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mitigacion": { "type": "string" },
+              "descrito_en": { "type": "string" },
+              "estado": { "enum": ["AUSENTE", "PARCIAL", "PRESENTE_DISTINTO"] },
+              "detalle": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "01_brazo_<id>.json": {
+      "descripcion": "Un fichero por brazo de la bateria de 70 casos. La base NO se repite: se usa la bateria del 7-ago (17/70).",
+      "type": "object",
+      "required": ["cabecera", "brazo", "instrumento", "cable", "casos", "metricas", "contraste_vs_base"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "brazo": { "enum": ["base", "M-1", "M-2", "M-4", "M-5", "combinada"] },
+        "instrumento": {
+          "type": "object",
+          "required": ["bateria", "n_casos", "contador_fallo_terminal", "factor_tokencounter_arnes"],
+          "properties": {
+            "bateria": { "const": "validacion_llm/casos/conducta_esperada_70.csv" },
+            "n_casos": { "const": 70 },
+            "contador_fallo_terminal": {
+              "type": "string",
+              "descripcion": "DEBE ser el corregido. Un fallo de contrato devuelve HTTP 200 con texto de disculpa fijo, NO longitud cero.",
+              "examples": ["clasificador de contrato (corregido Fase 13)"]
+            },
+            "factor_tokencounter_arnes": {
+              "type": "number",
+              "descripcion": "El arnes mide con 1.447; produccion con 1.725. Limitacion de validez externa: con max_input_tokens=12000 el arnes admite 8.8 pares donde produccion admite 6.2.",
+              "default": 1.447
+            },
+            "max_input_tokens": { "type": "integer", "const": 12000 },
+            "repeticiones": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "cable": { "$ref": "#/$defs/ParametrosCable" },
+        "casos": {
+          "type": "array",
+          "descripcion": "Un registro por caso. 70 entradas.",
+          "items": {
+            "type": "object",
+            "required": ["id_caso", "en_ambito", "clase", "fallo_terminal", "motivo"],
+            "properties": {
+              "id_caso": { "type": "string", "examples": ["SEL-14", "GEN-06", "MT-A-3"] },
+              "en_ambito": { "type": "boolean", "descripcion": "63 en ambito, 7 fuera" },
+              "clase": {
+                "enum": ["cumplimiento_pleno", "cumplimiento_parcial_seguro", "negativa_directa", "turno_muerto"],
+                "descripcion": "Taxonomia de tres clases + muerte (marco USR de FalseReject). La binaria clasifica mal por construccion."
+              },
+              "fallo_terminal": { "type": "boolean" },
+              "motivo": { "type": ["string", "null"], "examples": ["policy_rule_id_missing", "invalid_output_indirect_treatment_recommendation", "context_budget_exceeded", null] },
+              "prompt_truncado": { "type": "boolean" },
+              "llamadas": { "type": "integer" },
+              "regeneraciones": { "type": "integer" },
+              "latencia_s": { "type": "number" },
+              "prefill_s": { "type": "number" },
+              "prompt_eval_count": { "type": "integer" },
+              "validacion_relajada": {
+                "type": "boolean",
+                "descripcion": "true en CUALQUIER caso = RECHAZO INMEDIATO del brazo. Puerta binaria."
+              }
+            }
+          }
+        },
+        "metricas": {
+          "type": "object",
+          "required": ["fallos_terminales", "policy_rule_id_missing_completo", "policy_rule_id_missing_truncado", "usr", "latencia_mediana_s", "latencia_p90_s", "llamadas_por_turno", "segundos_regeneracion", "clinica_intencion_de_tratar", "clinica_por_protocolo"],
+          "properties": {
+            "fallos_terminales": { "$ref": "#/$defs/Metrica" },
+            "policy_rule_id_missing_completo": { "$ref": "#/$defs/Metrica" },
+            "policy_rule_id_missing_truncado": { "$ref": "#/$defs/Metrica" },
+            "usr": { "$ref": "#/$defs/Metrica", "descripcion": "(pleno + parcial_seguro) / total" },
+            "negativa_directa": { "$ref": "#/$defs/Metrica" },
+            "latencia_mediana_s": { "$ref": "#/$defs/Metrica" },
+            "latencia_p90_s": { "$ref": "#/$defs/Metrica" },
+            "llamadas_por_turno": { "$ref": "#/$defs/Metrica" },
+            "segundos_regeneracion": {
+              "$ref": "#/$defs/Metrica",
+              "descripcion": "MEDIDOS CON RELOJ. Si es n x 33.57 es una cifra circular y su estado es ESTIMADA."
+            },
+            "clinica_intencion_de_tratar": { "$ref": "#/$defs/Metrica" },
+            "clinica_por_protocolo": { "$ref": "#/$defs/Metrica" }
+          }
+        },
+        "contraste_vs_base": {
+          "type": "object",
+          "required": ["base_fallos", "brazo_fallos", "n", "fisher_p_1cola"],
+          "properties": {
+            "base_fallos": { "type": "integer", "default": 17 },
+            "brazo_fallos": { "type": "integer" },
+            "n": { "type": "integer", "default": 70 },
+            "fisher_p_1cola": { "type": "number" },
+            "decide": { "type": "boolean", "descripcion": "fisher_p_1cola < 0.05" }
+          }
+        }
+      }
+    },
+
+    "01_aceptacion.json": {
+      "descripcion": "ENTREGABLE PRINCIPAL DE LA FASE. Veredicto por mitigacion con el criterio pre-registrado, sin moverlo.",
+      "type": "object",
+      "required": ["cabecera", "criterio_preregistrado", "veredictos", "prediccion_m1"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "criterio_preregistrado": {
+          "type": "object",
+          "const": {
+            "acepta": "bajan los fallos terminales con p<0.05 (Fisher 1 cola) Y la metrica clinica por intencion de tratar no empeora Y ninguna validacion se relajo",
+            "rechaza": "alguna validacion clinica pasa algo que antes no pasaba, O por protocolo mejora mientras por intencion de tratar empeora (Goodhart)",
+            "observacion": "solo mejora la latencia sin mover ninguna metrica de utilidad"
+          }
+        },
+        "veredictos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["mitigacion", "veredicto", "justificacion", "afirmacion_defendible"],
+            "properties": {
+              "mitigacion": { "enum": ["M-1", "M-2", "M-4", "M-5", "combinada"] },
+              "veredicto": { "enum": ["ACEPTADA", "RECHAZADA", "OBSERVACION", "SIN_ACEPTAR_INDECISO"] },
+              "justificacion": { "type": "string" },
+              "afirmacion_defendible": {
+                "type": "string",
+                "descripcion": "La frase EXACTA que se puede escribir. 'Pasa' no es 'no falla'. Ej: 'reduce los fallos terminales de 17/70 a 4/70, p=0.0018'.",
+                "examples": ["reduce los fallos terminales de 17/70 a 4/70, p=0.0018"]
+              },
+              "validacion_relajada_en_algun_caso": { "type": "boolean" },
+              "listo_para_sombra": { "type": "boolean" }
+            }
+          }
+        },
+        "prediccion_m1": {
+          "type": "object",
+          "descripcion": "Pre-registrada: M-1 deberia llevar 17/70 a ~4/70.",
+          "properties": {
+            "esperado": { "type": "integer", "const": 4 },
+            "observado": { "type": "integer" },
+            "se_cumplio": { "type": "boolean" },
+            "si_no": { "type": "string", "descripcion": "Decirlo con la cifra. M-1 no rescata lo que creemos." }
+          }
+        },
+        "limitaciones_validez_externa": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["El arnes mide con factor TokenCounter 1.447 frente al 1.725 de produccion: admite 8.8 pares donde produccion admite 6.2."]
+        }
+      }
+    },
+
+    "02_m15.json": {
+      "descripcion": "M-15: alinear num_ctx del warmup a 16384. Riesgo clinico ninguno.",
+      "type": "object",
+      "required": ["cabecera", "cambio", "medicion", "desplegado"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "cambio": {
+          "type": "object",
+          "properties": {
+            "fichero": { "type": "string" },
+            "linea": { "type": "integer" },
+            "valor_antes": { "type": "integer", "const": 65536 },
+            "valor_despues": { "type": "integer", "const": 16384 },
+            "es_fichero_de_configuracion": { "type": "boolean", "descripcion": "true => PARAR y pedir autorizacion nombrando fichero y linea" },
+            "aislado": { "type": "boolean", "descripcion": "Ningun otro cambio en el mismo despliegue" }
+          }
+        },
+        "medicion": {
+          "type": "object",
+          "properties": {
+            "primer_turno_antes_s": { "$ref": "#/$defs/Metrica" },
+            "primer_turno_despues_s": { "$ref": "#/$defs/Metrica" },
+            "num_ctx_warmup_en_cable": { "type": "integer" },
+            "num_ctx_produccion_en_cable": { "type": "integer" },
+            "coinciden": { "type": "boolean" }
+          }
+        },
+        "suite_pasa": { "type": "boolean" },
+        "desplegado": {
+          "type": "object",
+          "properties": {
+            "autorizado": { "type": "boolean" },
+            "desplegado_en": { "type": ["string", "null"], "format": "date-time" },
+            "primer_turno_real_produccion_s": { "$ref": "#/$defs/Metrica" }
+          }
+        }
+      }
+    },
+
+    "03_local.json": {
+      "descripcion": "Entorno local. Sirve para iterar codigo, NO para aceptar mitigaciones.",
+      "type": "object",
+      "required": ["cabecera", "modelo_local", "verificacion_gramatica", "apto_para"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "modelo_local": { "type": "string" },
+        "vram_gb": { "type": "number" },
+        "verificacion_gramatica": {
+          "type": "object",
+          "descripcion": "NO ES TRAMITE. Todo el sistema depende de que Ollama compile format a GBNF.",
+          "required": ["sin_format_respuesta", "con_format_respuesta", "gramatica_forzada"],
+          "properties": {
+            "sin_format_respuesta": { "type": "string" },
+            "con_format_respuesta": { "type": "string" },
+            "gramatica_forzada": { "type": "boolean" },
+            "nota": { "type": "string", "default": "Hay fallos de gramatica documentados con Qwen3-8B en otros runtimes (lmstudio-bug-tracker#2230). Comprobar, no asumir." }
+          }
+        },
+        "suite_pasa": { "type": "boolean" },
+        "apto_para": {
+          "type": "array",
+          "items": { "enum": ["pruebas_de_codigo", "medicion_de_contrato", "tasas_clinicas"] },
+          "descripcion": "Si gramatica_forzada es false, SOLO pruebas_de_codigo. Nunca tasas_clinicas: otro modelo, otras tasas."
+        }
+      }
+    },
+
+    "04_despliegue.json": {
+      "descripcion": "Preparacion de sombra y canario. NO ejecutar sin autorizaciones D y E.",
+      "type": "object",
+      "required": ["cabecera", "interruptores", "sombra", "puertas_vuelta_atras"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "interruptores": {
+          "type": "array",
+          "descripcion": "Sin interruptor que apague sin desplegar, la mitigacion NO sube a canario.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mitigacion": { "type": "string" },
+              "flag": { "type": "string" },
+              "se_apaga_sin_desplegar": { "type": "boolean" },
+              "como": { "type": "string" }
+            }
+          }
+        },
+        "sombra": {
+          "type": "object",
+          "properties": {
+            "implementado": { "type": "boolean" },
+            "respuesta_candidata_se_descarta": { "type": "boolean", "descripcion": "DEBE ser true. El usuario nunca ve la rama nueva." },
+            "coste_inferencia_multiplicador": { "type": "number", "default": 2.0 },
+            "turnos_minimos_antes_de_canario": { "type": "integer", "default": 200 }
+          }
+        },
+        "puertas_vuelta_atras": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "disparador": { "type": "string" },
+              "umbral": { "type": "string" },
+              "automatica": { "type": "boolean" }
+            }
+          },
+          "default": [
+            { "disparador": "p99 de latencia", "umbral": "+40 % sobre base", "automatica": true },
+            { "disparador": "tasa de negativa", "umbral": "+5 puntos", "automatica": true },
+            { "disparador": "salida rechazada por validacion clinica que antes pasaba", "umbral": "1 sola — puerta binaria", "automatica": true },
+            { "disparador": "fallo terminal", "umbral": "por encima de la base", "automatica": true }
+          ]
+        },
+        "escalera_canario": {
+          "type": "array",
+          "items": { "type": "number" },
+          "default": [0.1, 1, 5, 20, 50, 100],
+          "descripcion": "Porcentajes. Arrancar en 0.1 % por ser aplicacion de alto riesgo."
+        }
+      }
+    },
+
+    "05_informe.json": {
+      "descripcion": "Resumen maquina-legible de toda la fase.",
+      "type": "object",
+      "required": ["cabecera", "bloques", "que_contradijo_este_trabajo", "hemovet_rescate", "no_medido"],
+      "properties": {
+        "cabecera": { "$ref": "#/$defs/Cabecera" },
+        "bloques": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bloque": { "type": "string" },
+              "estado": { "enum": ["CERRADO", "PARCIAL", "BLOQUEADO", "NO_HECHO"] },
+              "que_falta": { "type": "string" },
+              "ficheros_emitidos": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "que_contradijo_este_trabajo": {
+          "type": "array",
+          "descripcion": "Vacio es sospechoso. Cuatro de cinco bloques de la Fase 18 desmintieron algo.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "afirmacion_previa": { "type": "string" },
+              "fuente_de_la_afirmacion": { "type": "string" },
+              "valor_medido": { "type": "string" },
+              "instrumento": { "type": "string" }
+            }
+          }
+        },
+        "hemovet_rescate": {
+          "type": "object",
+          "properties": {
+            "recomendacion": { "enum": ["BORRAR", "MANTENER"] },
+            "razon": { "type": "string" },
+            "bateria_en_verde": { "type": "boolean" }
+          }
+        },
+        "no_medido": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "medicion": { "type": "string" },
+              "por_que": { "type": "string" },
+              "autorizacion_que_lo_permitiria": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

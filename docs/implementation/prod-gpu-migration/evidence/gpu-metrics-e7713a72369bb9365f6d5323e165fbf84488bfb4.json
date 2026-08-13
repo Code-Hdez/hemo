@@ -1,0 +1,21 @@
+{
+  "release_id": "e7713a72369bb9365f6d5323e165fbf84488bfb4",
+  "validated_at": "2026-08-03T08:05:50Z",
+  "runtime_reference": "us-central1-docker.pkg.dev/project-5b36701c-f44f-4c03-a12/hemovet-images/ollama-runtime@sha256:aed77e3c668587c12ac32751d484d1a287e2853b3ffb56760fe8222a5fd3cd0c",
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "model_digest": "sha256:0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+  "quantization": "Q4_K_M",
+  "gpu_active": true,
+  "inference_device": "full_gpu",
+  "latency_ms": 514,
+  "model_size_bytes": 2895118335,
+  "model_vram_bytes": 2895118335,
+  "vram_used_mib": 2996,
+  "gpu_utilization_percent": 0,
+  "peak_vram_mib": 2996,
+  "peak_gpu_utilization_percent": 32,
+  "container_memory_usage": "3.076GiB",
+  "model_volume_bytes": 2497296445,
+  "root_used_bytes": 75790782464,
+  "memory_available_kib": 14564368
+}

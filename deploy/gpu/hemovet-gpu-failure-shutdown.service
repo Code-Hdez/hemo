@@ -1,0 +1,15 @@
+[Unit]
+Description=Power off HemoVet GPU VM after a failed bootstrap
+Documentation=file:///opt/hemovet-gpu/current/deploy/gpu/README.md
+
+[Service]
+Type=oneshot
+ExecStart=/opt/hemovet-gpu/current/deploy/gpu/shutdown-on-failure.sh hemovet-gpu.service
+TimeoutStartSec=30
+StandardOutput=journal+console
+StandardError=journal+console
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/hemovet-gpu

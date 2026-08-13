@@ -1,0 +1,25 @@
+{
+  "version": "3.0.0",
+  "generated_at": "2026-05-25T02:09:23.588857+00:00",
+  "policy_file": "data/processed/final_label_policy.json",
+  "thresholds_file": "data/processed/decision_thresholds_v2.json",
+  "model_metadata_file": "models/model_metadata_v2.json",
+  "preregistered_file": "data/processed/policy_preregistered_v3.json",
+  "policy_sha256": "ef0ef7b8f26374ee961991cbb8487419cfc675c5ed43fd629782ce75d55ac652",
+  "thresholds_sha256": "e97dbdec34b56e700eb986c2fb45f64e52dbeb638cfffc339dd218da8e26e284",
+  "model_metadata_sha256": "659fb1efefb5658cdbe084612c4e045331a2803404ffaafe2239aebdf54c4e93",
+  "preregistered_sha256": "9887b4f50914558062ed62a8ef9d28c3022f826e60764857b9a7c00d9f563397",
+  "official_labels": [
+    "QC_REQUIERE_FROTIS",
+    "PATRON_INFLAMATORIO",
+    "PATRON_LEUCOGRAMA_ESTRES",
+    "PATRON_ANEMIA_NO_REGENERATIVA",
+    "PATRON_HEMOLISIS_MCHC",
+    "PATRON_POLICITEMIA",
+    "PATRON_ANEMIA_REGENERATIVA"
+  ],
+  "excluded_labels": [
+    "QC_UNIDAD_NO_CONVERTIDA"
+  ],
+  "source_split": "val"
+}

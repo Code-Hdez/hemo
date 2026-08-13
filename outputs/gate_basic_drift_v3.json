@@ -1,0 +1,99 @@
+{
+  "gate": "basic_drift_v3",
+  "status": "pass",
+  "checked_at": "2026-04-12T03:39:21.044227+00:00",
+  "checks": [
+    {
+      "name": "Artefactos requeridos para drift disponibles",
+      "passed": true,
+      "detail": "feature_columns y splits train/val/test estan disponibles."
+    },
+    {
+      "name": "Splits contienen todas las columnas de features",
+      "passed": true,
+      "detail": "train/val/test incluyen todas las columnas del contrato de features."
+    },
+    {
+      "name": "Cantidad minima de features evaluadas",
+      "passed": true,
+      "detail": "Se evaluaron 38 features con datos numericos validos."
+    },
+    {
+      "name": "Drift severo controlado en validation",
+      "passed": true,
+      "detail": "Drift severo en validation dentro de tolerancia (0 features)."
+    },
+    {
+      "name": "Drift severo controlado en test",
+      "passed": true,
+      "detail": "Drift severo en test dentro de tolerancia (0 features)."
+    },
+    {
+      "name": "Drift promedio global bajo umbral operativo",
+      "passed": true,
+      "detail": "Drift promedio de train->val/test dentro de umbral. avg_val=0.099, avg_test=0.081."
+    }
+  ],
+  "summary": {
+    "total_checks": 6,
+    "passed_checks": 6,
+    "failed_checks": 0
+  },
+  "evaluated_features": 38,
+  "severe_drift_val": [],
+  "severe_drift_test": [],
+  "avg_abs_d_val": 0.098805,
+  "avg_abs_d_test": 0.081171,
+  "top_test_drift": [
+    {
+      "feature": "PDW",
+      "abs_d_val": 0.2796432060710965,
+      "abs_d_test": 0.38943313193174645
+    },
+    {
+      "feature": "Platelets",
+      "abs_d_val": 0.35955158230319934,
+      "abs_d_test": 0.28506869354890474
+    },
+    {
+      "feature": "age_years",
+      "abs_d_val": 0.16860562549467337,
+      "abs_d_test": 0.18092854829834704
+    },
+    {
+      "feature": "flag_thrombocytopenia",
+      "abs_d_val": 0.2911034376055597,
+      "abs_d_test": 0.17793840513734643
+    },
+    {
+      "feature": "Eosinophils",
+      "abs_d_val": 0.01901628606237123,
+      "abs_d_test": 0.16209778173347736
+    },
+    {
+      "feature": "Monocytes",
+      "abs_d_val": 0.08624052099033552,
+      "abs_d_test": 0.14847855621717448
+    },
+    {
+      "feature": "flag_leukocytosis",
+      "abs_d_val": 0.00637190995942675,
+      "abs_d_test": 0.13100585979886728
+    },
+    {
+      "feature": "MCV",
+      "abs_d_val": 0.3904036826093702,
+      "abs_d_test": 0.11043493785977133
+    },
+    {
+      "feature": "Monocytes_pct",
+      "abs_d_val": 0.15326486730846312,
+      "abs_d_test": 0.1026436099759256
+    },
+    {
+      "feature": "MPV",
+      "abs_d_val": 0.11132713413146551,
+      "abs_d_test": 0.09738853383554479
+    }
+  ]
+}

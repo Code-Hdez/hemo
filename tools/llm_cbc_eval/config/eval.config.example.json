@@ -1,0 +1,41 @@
+{
+  "base_url": "http://localhost:3000/api/v1",
+  "chat_stream_path": "/chat/stream",
+  "auth": {
+    "bearer_token_env": "HEMOVET_EVAL_BEARER_TOKEN",
+    "login_email_env": "HEMOVET_EVAL_EMAIL",
+    "login_password_env": "HEMOVET_EVAL_PASSWORD"
+  },
+  "mode_map": {
+    "informacion_general": "general",
+    "hemograma_seleccionado": "selected_hemogram",
+    "hemograma_historico": "hemogram_history"
+  },
+  "context": {
+    "browser_session_id_env": "HEMOVET_EVAL_BROWSER_SESSION_ID",
+    "selected_analysis_id_env": "HEMOVET_EVAL_SELECTED_ANALYSIS_ID",
+    "historical_pet_id_env": "HEMOVET_EVAL_HISTORICAL_PET_ID"
+  },
+  "timeout_seconds": 130,
+  "retries": 0,
+  "retry_backoff_seconds": 2,
+  "output_dir": "tools/llm_cbc_eval/results",
+  "latency_warning_ms": 12000,
+  "reuse_conversation": true,
+  "validations": {
+    "empty_answer": true,
+    "inline_citations": true,
+    "medications": true,
+    "doses": true,
+    "diagnosis_certainty": true,
+    "out_of_scope": true,
+    "prompt_injection": true,
+    "internal_instructions": true,
+    "assistant_identity": true,
+    "public_case_facts": true,
+    "public_warning": true,
+    "sources": true,
+    "urgent_referral": true,
+    "latency": true
+  }
+}

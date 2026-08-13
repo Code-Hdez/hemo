@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-05-24T20:54:47.131485+00:00",
+  "status": "dic_may_pending_extraction",
+  "cohorts": {
+    "baseline_historico": {
+      "pdf_files": 298,
+      "unique_hashes": 298,
+      "extracted_records_current": 2480,
+      "pending_files_current": 0,
+      "metadata_records": 2454,
+      "unique_dogs": 1735,
+      "date_min": "2022-11-24",
+      "date_max": "2026-02-19",
+      "geocoded_rate": 1.0
+    },
+    "dic_may_2026": {
+      "pdf_files": 59,
+      "unique_hashes": 59,
+      "extracted_records_current": 267,
+      "pending_files_current": 0
+    },
+    "dap_external": {
+      "metadata_records": 1301,
+      "unique_dogs": 907,
+      "date_min": null,
+      "date_max": null,
+      "geocoded_rate": 0.0
+    }
+  },
+  "baseline_metrics": {
+    "model": "xgb_v2",
+    "prauc_macro": 0.9495,
+    "n_labels": 6
+  },
+  "notes": [
+    "Dic-May se reporta como cohorte temporal nueva antes de reentrenar.",
+    "Los nuevos PDFs aun no estan en train/val/test; el manifiesto evita colisiones de numeracion."
+  ]
+}

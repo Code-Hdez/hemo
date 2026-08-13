@@ -1,0 +1,18 @@
+n;limitacion;momento;hipotesis_bloqueadas
+1;El rendimiento de la L4 no es verificable;antes;—
+2;No consta el digest del modelo del 7-ago;antes;—
+3;§6.2 (equivalencia inter-máquina) es inconstruible;antes;—
+4;`a` y `B_efectivo` no están separados por regresión;antes;—
+5;El prefill medido (91,9 tok/s) no es prefill en régimen;antes;—
+6;Sin log de throttling concurrente;antes;—
+7;La ablación midió decode puro;antes;—
+8;El fixture histórico tiene 2 estudios, no ≥3;antes;—
+9;Potencia estadística;antes;—
+10;La definición de útil/calla/muere es provisional;antes;—
+11;La base «63» de los informes antiguos no se deriva de ningún campo;antes;—
+12;El nivel de LLAMADA del esquema está vacío, y el validador lo marca como fallo;después;—
+13;Ejes 2 y 5 de la rúbrica NO puntuados;después;—
+14;H-8 es inevaluable por camino B;después;H-8
+15;R=1;después;—
+16;Los 2 fallos observados son de arranque en frío;después;—
+17;Sin log de throttling;después;—

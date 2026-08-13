@@ -1,0 +1,12 @@
+{
+  "schema_version": "hemovet.rollback-plan/v1",
+  "release_id": "af5ab60b418bc931c4c4cabc8b8ef92893325fb6",
+  "backend_digest": "sha256:c710984c1c3d42959bf54ef387490903a06aa9eb92a4c00acdeb6c26ee5c72ae",
+  "frontend_digest": "sha256:8feb146ec8092fc4df480331015a71e5271eaa255daa8cb3b5454d97aedbb296",
+  "gpu_runtime_digest": "sha256:de0833bd3afd746a50281ba867b1504a836bcde54b493bf9c65c3d9c2a389179",
+  "model_digest": "sha256:0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+  "rag_collection": "hemovet_canine_hematology_v2__6832f37d4287",
+  "rag_fingerprint": "6832f37d428731520ce903de60d0781df543df3a10c84f1fcdbf27056bef9b60",
+  "gpu_revision_state": "pending_boot_validation",
+  "gpu_apply_on": "next_boot"
+}

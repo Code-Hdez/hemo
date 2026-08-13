@@ -1,0 +1,52 @@
+{
+  "gate": "dog_leakage_v1",
+  "status": "fail",
+  "checked_at": "2026-05-24T20:54:47.195779+00:00",
+  "checks": [
+    {
+      "name": "Artefactos para leakage por perro disponibles",
+      "passed": true,
+      "detail": "Metadata y splits estan disponibles."
+    },
+    {
+      "name": "Todos los split records tienen dog_id",
+      "passed": true,
+      "detail": "Cada registro de train/val/test se mapea a dog_id."
+    },
+    {
+      "name": "Ningun dog_id cruza splits",
+      "passed": false,
+      "detail": "131 dog_id aparecen en mas de un split."
+    }
+  ],
+  "summary": {
+    "total_checks": 3,
+    "passed_checks": 2,
+    "failed_checks": 1
+  },
+  "split_records": 2454,
+  "unique_dogs": 1735,
+  "dogs_crossing_splits": 131,
+  "top_crossing_dogs": {
+    "00a036bd244f2275822b": "test,train",
+    "018a79bfd2a1e04d5c1e": "train,val",
+    "03d1926578d262fa2643": "test,train",
+    "03e736cb780b94409318": "train,val",
+    "0b551f06ded42c27beeb": "test,train",
+    "0f5c4424a64461d60628": "train,val",
+    "13df3fa255c5a3af0aee": "train,val",
+    "1686ee3660710c195a5d": "test,train",
+    "1769ffc7ca0cc30b8411": "train,val",
+    "18f42a2875b9f6d5f7a8": "train,val",
+    "20ff5e70e7158d76c6e4": "test,train,val",
+    "246d172c52b48a2b00be": "train,val",
+    "26b6c99cbfd0521fa25e": "train,val",
+    "2c5afdd051682f81fc51": "train,val",
+    "2d238fa6744148c139b4": "test,train",
+    "2da4f4035d36f6aa01c7": "train,val",
+    "2fce19b85704a9ce2ae0": "test,train",
+    "30a060a4698ed1d0ea13": "test,train",
+    "30ae37d947e37ddfc133": "test,train",
+    "30c8201b098ee5c7ef91": "test,train"
+  }
+}
