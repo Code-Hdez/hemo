@@ -159,7 +159,11 @@ ENABLED_VARIABLES = {
     "HEMOVET_ENABLE_LOCAL_EXTRACTION",
     "RAG_ENABLED",
     "RAG_EMBEDDING_NORMALIZATION",
-    "CHAT_STRUCTURED_OUTPUT_ENABLED",
+    # CHAT_STRUCTURED_OUTPUT_ENABLED sale de aqui en la Fase 3: deja de ser un
+    # raíl fijo y pasa a ser el interruptor del contrato minimo. Su valor lo
+    # decide la Puerta 3 (>= 98 % de validez en primera pasada), no el
+    # validador de despliegue. Sigue siendo obligatorio DECLARARLO — esta en
+    # BOOLEAN_VARIABLES— para que nadie lo omita por descuido.
     "CHAT_REQUIRE_BROWSER_SESSION_ID",
     "OTEL_ENABLED",
     "OTEL_FASTAPI_INSTRUMENTATION_ENABLED",

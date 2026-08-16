@@ -1,0 +1,283 @@
+
+Auditoría terminada sin tocar nada. Informe completo.
+
+---
+Auditoría read-only del Chat LLM — HemoVet
+
+Alcance real: la VM GPU estaba TERMINATED al empezar y no la encendí, porque encenderla está expresamente prohibido. Por tanto la evidencia de runtime procede de dos orígenes: (a) observaciones que capturé hoy mismo, entre las 18:03 y 21:15 UTC del 11-ago-2026, mientras la GPU estuvo legítimamente encendida durante la tarea anterior; (b) el backend CPU, que sí está vivo y del que leí el entorno efectivo. Todo lo que sólo ollama show / /api/show sobre un runner activo podría demostrar queda marcado DESCONOCIDO.
+
+No consulté documentación oficial externa. Por eso no afirmo máximos arquitectónicos "oficiales" del modelo: los marco DESCONOCIDO en lugar de rellenarlos de memoria.
+
+A. Resumen ejecutivo
+
+┌──────────────────────────┬────────────────────────────────────────────────────────┬─────────────────────────────────────────┬─────────────────────────────────────────────────────────────────┐
+│          Campo           │                     Valor efectivo                     │            Máximo soportado             │                        Fuente principal                         │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Modelo generativo        │ qwen3.6:27b-q4_K_M                                     │ N/A                                     │ OLLAMA_MODEL en backend vivo — EXPLÍCITO                        │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Digest                   │ sha256:a50eda8e…39a7f1e                                │ N/A                                     │ last-validation.json + OLLAMA_EXPECTED_MODEL_DIGEST — OBSERVADO │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Parámetros               │ 27B (por el tag)                                       │ N/A                                     │ INFERIDO del tag; /api/show lo confirmaría                      │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Cuantización             │ Q4_K_M                                                 │ N/A                                     │ last-validation.json — OBSERVADO                                │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Ollama                   │ 0.32.6                                                 │ N/A                                     │ GET /api/version, 11-ago 21:1x UTC — OBSERVADO                  │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Contexto                 │ 16 384 (lo que gana)                                   │ 65 536 cargado; máx. modelo DESCONOCIDO │ options.num_ctx por request — OVERRIDE DE REQUEST               │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Entrada útil             │ 12 000 tokens                                          │ 14 848 (límite del invariante)          │ CHAT_MAX_INPUT_TOKENS — EXPLÍCITO                               │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Salida                   │ 1 280 tokens (1 024 en reparación)                     │ sin tope explícito de Ollama            │ OLLAMA_NUM_PREDICT — EXPLÍCITO                                  │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Thinking                 │ desactivado (think:false)                              │ soportado por el modelo                 │ OLLAMA_THINK=0 — EXPLÍCITO                                      │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Streaming                │ soportado; SSE con heartbeat 15 s                      │ —                                       │ CHAT_STREAM_HEARTBEAT_SECONDS — EXPLÍCITO                       │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Temperature              │ 0.3 general / 0.15 selected e history / 0.1 reparación │ —                                       │ entorno del backend — EXPLÍCITO                                 │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Paralelismo              │ 1 generación concurrente                               │ OLLAMA_NUM_PARALLEL=1                   │ CHAT_MAX_CONCURRENT_GENERATIONS=1 — EXPLÍCITO                   │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Keep-alive               │ -1 (nunca descarga de VRAM)                            │ —                                       │ OLLAMA_KEEP_ALIVE=-1 — EXPLÍCITO                                │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Timeout dominante        │ 120 s por llamada a Ollama, dentro de 240 s de turno   │ —                                       │ OLLAMA_TIMEOUT_SECONDS — EXPLÍCITO                              │
+├──────────────────────────┼────────────────────────────────────────────────────────┼─────────────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
+│ Apagado automático de VM │ sólo fail-closed, no por inactividad                   │ N/A                                     │ hemovet-gpu-failure-shutdown.service — EXPLÍCITO                │
+└──────────────────────────┴────────────────────────────────────────────────────────┴─────────────────────────────────────────┴─────────────────────────────────────────────────────────────────┘
+
+B. Identidad del modelo
+
+┌────────────────────────────────────────────────────────────────────┬──────────────────────────────────────────────────────────────────┬───────────────────────────────────────────────────┬───────────┐
+│                             Propiedad                              │                              Valor                               │                     Etiqueta                      │ Confianza │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ String enviado en model                                            │ qwen3.6:27b-q4_K_M                                               │ EXPLÍCITO (OLLAMA_MODEL, backend vivo)            │ Alto      │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Tipo de referencia                                                 │ tag local en el volumen hemovet_gpu_ollama_models                │ INFERIDO                                          │ Medio     │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Digest del modelo                                                  │ a50eda8ed977ab48a12431878896b27ffd5cef552c17af3317d9623b939a7f1e │ OBSERVADO (last-validation.json) + EXPLÍCITO      │ Alto      │
+│                                                                    │                                                                  │ (env)                                             │           │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Cuantización                                                       │ Q4_K_M                                                           │ OBSERVADO                                         │ Alto      │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Peso en disco / VRAM                                               │ 19 917 729 261 B volumen · 19 079 165 377 B VRAM                 │ OBSERVADO 11-ago 18:03 UTC                        │ Alto      │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Arquitectura, familias, model_info, vocabulario, RoPE, capas,      │ —                                                                │ DESCONOCIDO — requiere /api/show con GPU          │ —         │
+│ heads                                                              │                                                                  │ encendida                                         │           │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Template y system del Modelfile                                    │ —                                                                │ DESCONOCIDO — mismo motivo                        │ —         │
+├────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
+│ Licencia, adapter/LoRA                                             │ —                                                                │ DESCONOCIDO                                       │ —         │
+└────────────────────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────────┴───────────────────────────────────────────────────┴───────────┘
+
+Modelo de embeddings (distinto y en la CPU, no en Ollama): sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2, revisión fastembed-registry-0.8.0, 384 dimensiones, pooling mean, normalización activada. Corre vía fastembed en el backend; no pasa por Ollama. El motor de clasificación hematológica es una tercera pieza independiente de ambos.
+
+C. Cadena de contexto — quién gana y por qué
+
+┌────────────────────────────────────────┬─────────────────────────────────────────────────────────┬───────────────────────────────────────────────────────────┬───────────────┐
+│                  Capa                  │                          Valor                          │                         Etiqueta                          │    ¿Gana?     │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ Máximo arquitectónico del modelo       │ DESCONOCIDO                                             │ requiere /api/show                                        │ —             │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ Default de Ollama 0.32.6               │ DESCONOCIDO (no consulté fuente oficial de esa versión) │ —                                                         │ no            │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ OLLAMA_CONTEXT_LENGTH del servidor GPU │ 65 536                                                  │ EXPLÍCITO (compose.env, generado por runtime_contract.py) │ no            │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ Contexto con que arrancó el runner     │ 65 536                                                  │ OBSERVADO (/api/ps, 11-ago 18:03 UTC)                     │ no            │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ options.num_ctx por request de FastAPI │ 16 384                                                  │ OVERRIDE DE REQUEST (openai_compatible_client.py:805)     │ sí            │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ Presupuesto de la aplicación           │ 12 000 entrada + 1 280 salida + 256 reserva             │ EXPLÍCITO                                                 │ limita dentro │
+├────────────────────────────────────────┼─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────┼───────────────┤
+│ Contexto efectivo                      │ 16 384                                                  │ DERIVADO                                                  │ —             │
+└────────────────────────────────────────┴─────────────────────────────────────────────────────────┴───────────────────────────────────────────────────────────┴───────────────┘
+
+Contradicción real y documentada por el propio código. El runner se carga a 65 536 (lo hace validate-runtime.sh en cada arranque de la VM) mientras producción pide 16 384. Como Ollama debe rehacer el runner cuando cambia num_ctx, el primer turno tras cada arranque de la GPU paga la recarga — el comentario en openai_compatible_client.py:694-710 la mide en 101 s de mediana sobre cinco observaciones. Existe un mecanismo de rearme (realign_runner_if_drifted), pero OLLAMA_RUNNER_REALIGN_SECONDS no está en el entorno de producción, así que toma su default 0.0 = desactivado.
+
+Corrobora la deriva la medición del propio código: mismo modelo a num_ctx 16 384 ocupa 16 926 501 764 B y a 65 536 ocupa 18 889 436 036 B. Lo que observé el 11-ago fue 19 079 165 377 B, coherente con 65 536, no con 16 384.
+
+Utilización: se usa el 25 % del contexto que el runner tenía cargado (16 384 / 65 536). Frente al máximo del modelo, el porcentaje es incalculable mientras ese máximo siga DESCONOCIDO.
+
+D. Presupuesto de prompt por modo
+
+Fórmula verificada en token_budget.py:157-168: input_token_budget = max_input_tokens, con el invariante max_input_tokens + num_predict + reserve ≤ num_ctx.
+
+┌──────────────────────┬────────────────────┬──────────┬─────────┐
+│       Concepto       │      General       │ Selected │ History │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ num_ctx              │ 16 384             │ 16 384   │ 16 384  │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Entrada máxima       │ 12 000             │ 12 000   │ 12 000  │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Salida reservada     │ 1 280              │ 1 280    │ 1 280   │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Reserva fija         │ 256                │ 256      │ 256     │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Holgura sin usar     │ 2 848              │ 2 848    │ 2 848   │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Temperature          │ 0.3                │ 0.15     │ 0.15    │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Historial            │ 12 turnos          │ 12       │ 12      │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ RAG máximo           │ 3 000 caracteres   │ ídem     │ ídem    │
+├──────────────────────┼────────────────────┼──────────┼─────────┤
+│ Pregunta del usuario │ ≤ 2 000 caracteres │ ídem     │ ídem    │
+└──────────────────────┴────────────────────┴──────────┴─────────┘
+
+Los tres overrides CHAT_PROFILE_*_CONTEXT_LENGTH están vacíos, así que los tres modos heredan 16 384. Sólo difiere la temperatura.
+
+Tokenización exacta, no estimada: CHAT_TOKENIZER_JSON=/app/backend/app/assets/tokenizer_qwen3_6.json, sha256 5f9e4d49…. Con CHAT_TOKENIZER_REQUIRED=0, si el fichero faltara degrada a una estimación conservadora max(léxica, bytes UTF-8 / 3).
+
+E. Salida y criterios de terminación
+
+┌───────────────────────────────────────────────────────┬───────────────────────────────────────────┬─────────────┐
+│                        Límite                         │                   Valor                   │  Etiqueta   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ num_predict normal                                    │ 1 280                                     │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ num_predict en reparación                             │ 1 024                                     │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ Intentos de generación                                │ 2 (CHAT_MAX_GENERATION_ATTEMPTS)          │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ Reintentos HTTP                                       │ 1 (OLLAMA_MAX_RETRIES, tope duro le=1)    │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ Timeout de llamada                                    │ 120 s                                     │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ Timeout total de turno                                │ 240 s                                     │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ format / structured output                            │ activo (CHAT_STRUCTURED_OUTPUT_ENABLED=1) │ EXPLÍCITO   │
+├───────────────────────────────────────────────────────┼───────────────────────────────────────────┼─────────────┤
+│ done_reason, eval_count, prompt_eval_count observados │ —                                         │ DESCONOCIDO │
+└───────────────────────────────────────────────────────┴───────────────────────────────────────────┴─────────────┘
+
+num_predict es positivo y explícito, así que no aplica la advertencia de "salida infinita". Entrada y salida no compiten: el invariante reserva 1 280 tokens de forma fija.
+
+format y tools son mutuamente excluyentes por diseño; el código lo documenta y lo impone.
+
+F. Parámetros de generación efectivos
+
+┌───────────────────────────────────────────────────────────┬──────────────────┬─────────────────────────────────────────────┬─────────────────────────────────────────────────────────────┬───────────┐
+│                         Parámetro                         │      Valor       │                   Origen                    │                     Efecto cualitativo                      │ Confianza │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ temperature                                               │ 0.3 / 0.15 / 0.1 │ EXPLÍCITO                                   │ poco creativo, casi determinista en clínico                 │ Alto      │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ top_p                                                     │ 0.8              │ EXPLÍCITO                                   │ núcleo estrecho                                             │ Alto      │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ top_k                                                     │ 20 (sampling)    │ EXPLÍCITO                                   │ no confundir con RAG_TOP_K=3                                │ Alto      │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ repeat_penalty                                            │ 1.0 =            │ EXPLÍCITO                                   │ sin control de repetición en el turno normal                │ Alto      │
+│                                                           │ desactivado      │                                             │                                                             │           │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ repeat_penalty reparación                                 │ 1.1              │ EXPLÍCITO                                   │ sí penaliza al reparar                                      │ Alto      │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ think                                                     │ false            │ EXPLÍCITO                                   │ frontera de privacidad: evita que el borrador caiga en      │ Alto      │
+│                                                           │                  │                                             │ content                                                     │           │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ keep_alive                                                │ -1               │ EXPLÍCITO                                   │ el modelo nunca sale de VRAM                                │ Alto      │
+├───────────────────────────────────────────────────────────┼──────────────────┼─────────────────────────────────────────────┼─────────────────────────────────────────────────────────────┼───────────┤
+│ seed, min_p, mirostat, presence/frequency_penalty,        │ no enviados      │ DEFAULT VERSIONADO (valor exacto            │ —                                                           │ Bajo      │
+│ logprobs                                                  │                  │ DESCONOCIDO)                                │                                                             │           │
+└───────────────────────────────────────────────────────────┴──────────────────┴─────────────────────────────────────────────┴─────────────────────────────────────────────────────────────┴───────────┘
+
+Como no se fija seed, la misma pregunta puede dar respuestas distintas, aunque con temperatura 0.15-0.3 la variación es baja.
+
+G–H. Prompt, RAG y memoria
+
+API real: POST /api/chat nativa de Ollama (CHAT_LLM_PROVIDER=ollama). Existe una ruta OpenAI-compatible en el mismo fichero (max_tokens, repetition_penalty), pero está inactiva.
+
+RAG — todos son defaults de código, no aparecen en el entorno:
+
+┌─────────────────────────┬────────────────────────────────────────────────────────┐
+│        Parámetro        │                         Valor                          │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Colección Chroma        │ hemovet_canine_hematology_v2__6832f37d4287 (EXPLÍCITO) │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ RAG_FETCH_K → RAG_TOP_K │ 10 → 3                                                 │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Umbral de relevancia    │ 0.38                                                   │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Reranker                │ activado, top_n 20, fusión RRF k=60                    │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Chunking                │ 90 palabras, solapamiento 15                           │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Máximo por fuente       │ 2                                                      │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Presupuesto             │ 3 000 caracteres                                       │
+├─────────────────────────┼────────────────────────────────────────────────────────┤
+│ Expansión a vecinos     │ desactivada                                            │
+└─────────────────────────┴────────────────────────────────────────────────────────┘
+
+Memoria: TTL de sesión 3 600 s, 12 turnos, extractos recortados (pregunta 240 car., respuesta 420), hasta 24 hechos clínicos y 12 tópicos, resumen tope 3 200 caracteres. Requiere session_id de navegador (CHAT_REQUIRE_BROWSER_SESSION_ID=1).
+
+I–J. Runtime, timeouts y ciclo de vida
+
+┌─────────┬───────────────────────────────┬──────────────────────────────────────────┬────────────────────────┐
+│  Capa   │           Parámetro           │                  Valor                   │      Qué termina       │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Backend │ OLLAMA_CONNECT/WRITE/POOL     │ 5 / 15 / 5 s                             │ la conexión            │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Backend │ OLLAMA_TIMEOUT_SECONDS        │ 120 s                                    │ la generación          │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Backend │ CHAT_TOTAL_TIMEOUT_SECONDS    │ 240 s                                    │ el turno completo      │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Backend │ CHAT_QUEUE_TIMEOUT_SECONDS    │ 60 s                                     │ la espera en cola      │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Backend │ pool HTTP                     │ 8 conexiones, 4 keep-alive, expiry 30 s  │ —                      │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Ollama  │ OLLAMA_KEEP_ALIVE             │ -1                                       │ nunca descarga de VRAM │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Ollama  │ NUM_PARALLEL / MAX_QUEUE      │ 1 / 32                                   │ rechaza al saturar     │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Ollama  │ KV cache / Flash Attention    │ q8_0 / activado                          │ —                      │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Docker  │ healthcheck                   │ 15 s, 10 s, 20 reintentos, arranque 30 s │ reinicia el contenedor │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ Docker  │ restart / grace               │ unless-stopped / 30 s                    │ —                      │
+├─────────┼───────────────────────────────┼──────────────────────────────────────────┼────────────────────────┤
+│ systemd │ hemovet-gpu.service OnFailure │ hemovet-gpu-failure-shutdown.service     │ apaga la VM            │
+└─────────┴───────────────────────────────┴──────────────────────────────────────────┴────────────────────────┘
+
+Distinción explícita: OLLAMA_KEEP_ALIVE=-1 significa que el modelo jamás se descarga de VRAM por inactividad. No existe apagado por inactividad de la VM. El único apagado automático es fail-closed: si la validación de arranque falla, la VM se apaga sola. Descarga de VRAM, reinicio de contenedor, reinicio de servicio y apagado de VM son cuatro eventos distintos y sólo el último detiene la máquina.
+
+M. Máximo vs uso actual
+
+┌──────────────┬─────────────┬──────────┬──────────┬────────────────┬──────────┬────────────────────────────┐
+│  Dimensión   │ Máx. modelo │  Ollama  │ App pide │   Observado    │ Efectivo │        Utilización         │
+├──────────────┼─────────────┼──────────┼──────────┼────────────────┼──────────┼────────────────────────────┤
+│ Contexto     │ DESCONOCIDO │ 65 536   │ 16 384   │ 65 536 cargado │ 16 384   │ 25 % de lo cargado         │
+├──────────────┼─────────────┼──────────┼──────────┼────────────────┼──────────┼────────────────────────────┤
+│ Entrada útil │ —           │ —        │ 12 000   │ —              │ 12 000   │ 73 % del contexto efectivo │
+├──────────────┼─────────────┼──────────┼──────────┼────────────────┼──────────┼────────────────────────────┤
+│ Salida       │ sin tope    │ sin tope │ 1 280    │ —              │ 1 280    │ 7,8 %                      │
+├──────────────┼─────────────┼──────────┼──────────┼────────────────┼──────────┼────────────────────────────┤
+│ Paralelismo  │ —           │ 1        │ 1        │ —              │ 1        │ 100 %                      │
+├──────────────┼─────────────┼──────────┼──────────┼────────────────┼──────────┼────────────────────────────┤
+│ Cola         │ —           │ 32       │ —        │ —              │ 32       │ DESCONOCIDO                │
+└──────────────┴─────────────┴──────────┴──────────┴────────────────┴──────────┴────────────────────────────┘
+
+Limitante dominante: la aplicación, vía options.num_ctx=16384 en cada request — gana sobre el 65 536 del servidor porque el override de request tiene precedencia. Segundo limitante: CHAT_MAX_INPUT_TOKENS=12000. Quedan 2 848 tokens de holgura sin asignar dentro del contexto efectivo.
+
+N. Contradicciones y desconocidos
+
+1. Runner a 65 536 vs request a 16 384 → gana la request; coste medido ~101 s en el primer turno tras arrancar la GPU. El rearme automático existe pero está desactivado (OLLAMA_RUNNER_REALIGN_SECONDS ausente → 0.0).
+2. El código afirma que /api/ps no publica num_ctx, pero en Ollama 0.32.6 sí observé context_length: 65536. El comentario quedó obsoleto respecto a la versión desplegada; el rodeo por size_vram sigue funcionando pero ya no es la única señal disponible.
+3. repeat_penalty=1.0 en el turno normal desactiva el control de repetición, mientras la reparación sí usa 1.1. Lo documento sin corregirlo.
+4. DESCONOCIDOS (todos exigirían encender la GPU, prohibido): máximo arquitectónico del modelo, model_info completo, template, system del Modelfile, /api/tags, residencia actual, done_reason y métricas eval_count/prompt_eval_count de producción. Tampoco verifiqué defaults oficiales de Ollama 0.32.6 contra fuente primaria.
+
+P. Confirmación de inmutabilidad
+
+┌────────────────────────┬───────────────┬──────────────────────────────────────────┐
+│        Control         │    Inicial    │                  Final                   │
+├────────────────────────┼───────────────┼──────────────────────────────────────────┤
+│ HEAD                   │ f9deedb009f5… │ f9deedb009f5…                            │
+├────────────────────────┼───────────────┼──────────────────────────────────────────┤
+│ git status --porcelain │ vacío         │ vacío                                    │
+├────────────────────────┼───────────────┼──────────────────────────────────────────┤
+│ GPU                    │ TERMINATED    │ TERMINATED                               │
+├────────────────────────┼───────────────┼──────────────────────────────────────────┤
+│ CPU                    │ RUNNING       │ RUNNING                                  │
+├────────────────────────┼───────────────┼──────────────────────────────────────────┤
+│ Contenedores           │ 5 healthy     │ 5 healthy, RestartCount = 0 en los cinco │
+└────────────────────────┴───────────────┴──────────────────────────────────────────┘
+
+Los StartedAt son anteriores a esta auditoría (21:01 y 21:22 UTC) y no cambiaron. No encendí la GPU, no reinicié nada, no ejecuté docker compose, no generé ninguna inferencia —sólo GET /api/version, /api/ps y lecturas de entorno—, no creé ni edité archivos, no toqué GCP, GitHub, secretos ni workflows.
+
+Dos advertencias operativas que se deducen de lo anterior, sin que implique recomendación de cambio: el próximo arranque de la GPU volverá a cargar el runner a 65 536 y el primer turno real pagará la recarga a 16 384; y con keep_alive=-1 el modelo ocupará VRAM indefinidamente mientras la VM esté encendida, así que el coste lo determina el ciclo de vida de la VM, no el del modelo.

@@ -37,6 +37,18 @@ class OutputValidation:
     meets_intent: bool = True
     coverage: int = 0
     required_coverage: int = 0
+    # Telemetría, y SOLO telemetría. Deliberadamente separado de ``detail``
+    # porque ``detail`` alimenta el bloque de corrección de la reparación
+    # (``send_chat_message.py`` §correction), y el GOAL prohíbe tocar ese
+    # prompt: el contenido del feedback está medido y es indistinguible de un
+    # placebo. Este campo no lo lee ninguna ruta de generación.
+    #
+    # Existe porque una clase de rechazo cuyo motivo no se puede desglosar no
+    # se puede corregir: ``indirect_treatment_recommendation`` fue 12 de los 48
+    # fallos de la campaña del 14-ago y hasta hoy era imposible distinguir
+    # «el modelo explicó una causa nutricional» de «el modelo recomendó un
+    # suplemento», que necesitan arreglos opuestos.
+    telemetry_detail: str | None = None
 
     @property
     def disposition(self) -> str:
@@ -226,6 +238,7 @@ class OutputValidator:
                 text="",
                 reason=indirect_reason,
                 removed_invalid_citations=removed_invalid_citations,
+                telemetry_detail=self._indirect_treatment_terms(cleaned),
             )
         if self._unsafe.search(cleaned) and (
             self._contains_positive_dose_instruction(cleaned)
@@ -352,6 +365,89 @@ class OutputValidator:
             self._definitive.search(protected)
             or self._definitive_named_subject.search(protected)
         )
+
+    def _indirect_treatment_terms(self, text: str) -> str | None:
+        """Qué términos dispararon la conjunción. NO decide nada: solo informa.
+
+        ``indirect_treatment_recommendation`` salta cuando coinciden **a la vez**
+        una lista de sustantivos (hierro, b12, folato, suplementos, corticoides…)
+        y una de verbos y modales (puede, debe, conviene, necesita…), **buscadas
+        sobre el texto entero y sin exigir cercanía**.
+
+        `[MEDIDO]` Sobre las 198 respuestas publicadas de la campaña del 14-ago,
+        el modal aparece en el **82,8 %** y el sustantivo en el **3,0 %**: en la
+        práctica la conjunción equivale a «¿aparece alguna palabra de la lista de
+        sustantivos?», porque la segunda condición no discrimina.
+
+        Eso deja indistinguibles dos frases opuestas:
+
+            «la deficiencia de HIERRO PUEDE causar anemia»   ← etiología
+            «CONVIENE darle un SUPLEMENTO de HIERRO»          ← recomendación
+
+        La primera es información clínica legítima; la segunda es el validador
+        haciendo su trabajo. Sin saber cuál de las dos produce los 12 rechazos no
+        se puede corregir nada sin ir a ciegas — y este proyecto ya pagó cuatro
+        veces por ir a ciegas.
+
+        Privacidad: los dos vocabularios son **cerrados y genéricos** —palabras
+        del español, no datos del paciente— y solo se emiten los términos que
+        casaron, nunca el texto que los rodea. El recorte a 192 caracteres de
+        ``_safe_operational_log_payload`` sigue intacto y no se toca.
+        """
+        sustantivo = self._indirect_treatment.search(text)
+        modal = self._actionable_indirect_treatment.search(text)
+        if not (sustantivo and modal):
+            return None
+        # Separador `+` a propósito: `|` y `:` ya significan algo en
+        # `first_validation_reason` (`r=…|safe=…|intent=…|d=…` y
+        # `clase:parametro`), y reutilizarlos partiría ese campo al parsearlo.
+        crudo = sustantivo.group(0).lower()
+        par = f"{crudo}+{modal.group(0).lower()}"
+        acepcion = self._acepcion_ambigua(crudo, text)
+        return par if acepcion is None else f"{par}+{acepcion}"
+
+    # `hierro` y `plasma` son las DOS palabras que producen el 95,8 % de esta
+    # clase (23 de 24 en la campaña v3), y las dos son ambiguas en un asistente
+    # de hemogramas: `plasma` es un compartimento sanguíneo antes que una
+    # transfusión, y `hierro` es una etiología antes que un suplemento.
+    #
+    # Distinguir las dos acepciones NO se puede hacer luego: el backend no
+    # persiste el texto que rechaza, así que si el dato no sale aquí no sale
+    # nunca. Se emite una **etiqueta de vocabulario cerrado** —`terap`/`desnudo`—
+    # y jamás el texto que rodea a la palabra: la invariante de privacidad del
+    # docstring se mantiene intacta.
+    _COLOCACION_TERAPEUTICA = {
+        "plasma": re.compile(
+            r"\b(transfusi[oó]n(?:es)?\s+(?:de\s+)?plasma"
+            r"|plasma\s+(?:fresco|congelado|rico\s+en\s+plaquetas)"
+            r"|(?:administrar|dar|darle|poner)\s+(?:le\s+)?plasma)\b",
+            re.IGNORECASE,
+        ),
+        "hierro": re.compile(
+            r"\b(suplement\w*\s+(?:de\s+|con\s+)?hierro"
+            r"|hierro\s+(?:dextrano|oral|inyectable|parenteral|suplementario|hemo)"
+            r"|(?:dar|darle|administrar|suministrar|a[ñn]adir|agregar)"
+            r"\s+(?:le\s+)?hierro)\b",
+            re.IGNORECASE,
+        ),
+    }
+
+    def _acepcion_ambigua(self, sustantivo: str, text: str) -> str | None:
+        """`terap` o `desnudo` para las dos palabras ambiguas; `None` para el resto.
+
+        Devolver `None` fuera de esas dos es deliberado: el formato de las otras
+        22 alternativas queda **byte a byte igual** que en la campaña v3, así que
+        la taxonomía por `codigo_error` sigue siendo comparable entre campañas
+        salvo justo en las dos palabras que se están investigando.
+
+        Esto **no decide nada**. `_contains_indirect_treatment` no lo consulta y
+        el veredicto no cambia: es un campo de telemetría para poder responder,
+        en la siguiente campaña, una pregunta que hoy no tiene dato.
+        """
+        colocacion = self._COLOCACION_TERAPEUTICA.get(sustantivo)
+        if colocacion is None:
+            return None
+        return "terap" if colocacion.search(text) else "desnudo"
 
     def _contains_indirect_treatment(self, text: str) -> str | None:
         if self._clinical_decision.search(text):

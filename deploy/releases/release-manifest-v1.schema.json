@@ -3,26 +3,31 @@
     "ApplicationRelease": {
       "additionalProperties": false,
       "properties": {
+        "revision": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Revision",
+          "type": "string"
+        },
         "backend": {
           "$ref": "#/$defs/ImmutableImage"
         },
-        "caddy_configuration_digest": {
-          "pattern": "^sha256:[0-9a-f]{64}$",
-          "title": "Caddy Configuration Digest",
-          "type": "string"
+        "frontend": {
+          "$ref": "#/$defs/ImmutableImage"
         },
         "configuration_digest": {
           "pattern": "^sha256:[0-9a-f]{64}$",
           "title": "Configuration Digest",
           "type": "string"
         },
-        "frontend": {
-          "$ref": "#/$defs/ImmutableImage"
-        },
-        "revision": {
-          "pattern": "^[0-9a-f]{40}$",
-          "title": "Revision",
+        "caddy_configuration_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Caddy Configuration Digest",
           "type": "string"
+        },
+        "chat_server_writes": {
+          "default": false,
+          "title": "Chat Server Writes",
+          "type": "boolean"
         }
       },
       "required": [
@@ -38,19 +43,6 @@
     "GpuRuntimeRelease": {
       "additionalProperties": false,
       "properties": {
-        "apply_on": {
-          "const": "next_boot",
-          "title": "Apply On",
-          "type": "string"
-        },
-        "initial_validation_state": {
-          "const": "pending_boot_validation",
-          "title": "Initial Validation State",
-          "type": "string"
-        },
-        "model": {
-          "$ref": "#/$defs/ModelRelease"
-        },
         "revision": {
           "pattern": "^[0-9a-f]{40}$",
           "title": "Revision",
@@ -68,6 +60,19 @@
           "maxLength": 100,
           "minLength": 3,
           "title": "Startup Contract Version",
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/$defs/ModelRelease"
+        },
+        "apply_on": {
+          "const": "next_boot",
+          "title": "Apply On",
+          "type": "string"
+        },
+        "initial_validation_state": {
+          "const": "pending_boot_validation",
+          "title": "Initial Validation State",
           "type": "string"
         },
         "update_while_running": {
@@ -92,14 +97,14 @@
     "ImmutableImage": {
       "additionalProperties": false,
       "properties": {
-        "digest": {
-          "pattern": "^sha256:[0-9a-f]{64}$",
-          "title": "Digest",
-          "type": "string"
-        },
         "reference": {
           "pattern": "^[^\\s@]+@sha256:[0-9a-f]{64}$",
           "title": "Reference",
+          "type": "string"
+        },
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Digest",
           "type": "string"
         }
       },
@@ -113,15 +118,15 @@
     "ModelRelease": {
       "additionalProperties": false,
       "properties": {
-        "digest": {
-          "pattern": "^sha256:[0-9a-f]{64}$",
-          "title": "Digest",
-          "type": "string"
-        },
         "name": {
           "maxLength": 200,
           "minLength": 3,
           "title": "Name",
+          "type": "string"
+        },
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Digest",
           "type": "string"
         },
         "quantization": {
@@ -141,6 +146,10 @@
     "RagRelease": {
       "additionalProperties": false,
       "properties": {
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
         "collection_name": {
           "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$",
           "title": "Collection Name",
@@ -150,6 +159,17 @@
           "maxLength": 200,
           "minLength": 1,
           "title": "Corpus Revision",
+          "type": "string"
+        },
+        "index_fingerprint": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Index Fingerprint",
+          "type": "string"
+        },
+        "schema_version": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Schema Version",
           "type": "string"
         },
         "embedding_model": {
@@ -162,21 +182,6 @@
           "maxLength": 200,
           "minLength": 1,
           "title": "Embedding Revision",
-          "type": "string"
-        },
-        "index_fingerprint": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Index Fingerprint",
-          "type": "string"
-        },
-        "required": {
-          "title": "Required",
-          "type": "boolean"
-        },
-        "schema_version": {
-          "maxLength": 100,
-          "minLength": 1,
-          "title": "Schema Version",
           "type": "string"
         }
       },
@@ -195,6 +200,11 @@
     "ReleaseContractVersions": {
       "additionalProperties": false,
       "properties": {
+        "release_manifest": {
+          "const": "hemovet.release/v1",
+          "title": "Release Manifest",
+          "type": "string"
+        },
         "availability": {
           "const": "hemovet.availability/v1",
           "title": "Availability",
@@ -203,11 +213,6 @@
         "llm_provider": {
           "const": "hemovet.llm-provider/v1",
           "title": "Llm Provider",
-          "type": "string"
-        },
-        "release_manifest": {
-          "const": "hemovet.release/v1",
-          "title": "Release Manifest",
           "type": "string"
         }
       },
@@ -222,11 +227,6 @@
     "ReleaseSource": {
       "additionalProperties": false,
       "properties": {
-        "created_at": {
-          "format": "date-time",
-          "title": "Created At",
-          "type": "string"
-        },
         "github_sha": {
           "pattern": "^[0-9a-f]{40}$",
           "title": "Github Sha",
@@ -239,15 +239,20 @@
           "title": "Repository",
           "type": "string"
         },
+        "workflow_run_id": {
+          "minimum": 1,
+          "title": "Workflow Run Id",
+          "type": "integer"
+        },
         "workflow_run_attempt": {
           "minimum": 1,
           "title": "Workflow Run Attempt",
           "type": "integer"
         },
-        "workflow_run_id": {
-          "minimum": 1,
-          "title": "Workflow Run Id",
-          "type": "integer"
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
         }
       },
       "required": [
@@ -263,11 +268,21 @@
   },
   "additionalProperties": false,
   "properties": {
+    "schema_version": {
+      "const": "hemovet.release/v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "release_id": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Release Id",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/ReleaseSource"
+    },
     "application": {
       "$ref": "#/$defs/ApplicationRelease"
-    },
-    "contracts": {
-      "$ref": "#/$defs/ReleaseContractVersions"
     },
     "gpu_runtime": {
       "$ref": "#/$defs/GpuRuntimeRelease"
@@ -275,18 +290,8 @@
     "rag": {
       "$ref": "#/$defs/RagRelease"
     },
-    "release_id": {
-      "pattern": "^[0-9a-f]{40}$",
-      "title": "Release Id",
-      "type": "string"
-    },
-    "schema_version": {
-      "const": "hemovet.release/v1",
-      "title": "Schema Version",
-      "type": "string"
-    },
-    "source": {
-      "$ref": "#/$defs/ReleaseSource"
+    "contracts": {
+      "$ref": "#/$defs/ReleaseContractVersions"
     }
   },
   "required": [

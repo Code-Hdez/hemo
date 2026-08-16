@@ -263,4 +263,3 @@ El backend usa la cookie HttpOnly `hemovet_session` como mecanismo principal del
 ## Modelo
 
 XGBoost multilabel v3 — 7 etiquetas predictivas + 2 basadas en regla, 43 features (analitos CBC, flags clínicos, ratios hematológicos, reticulocitos). Calibración Platt scaling por etiqueta.
-# hemo

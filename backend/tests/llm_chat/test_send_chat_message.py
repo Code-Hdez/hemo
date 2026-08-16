@@ -628,20 +628,24 @@ def test_conversational_prompt_omits_rag_and_clinical_contracts() -> None:
     )
 
     assert "¿Eres una persona?" in request.user_prompt
-    # generation_instruction now governs the turn from the system role (a
-    # directive lands stronger there than buried in the user turn), so it no
-    # longer duplicates into the user prompt.
-    assert "Explica que eres la IA de HemoVet." in request.system_prompt
-    assert "Explica que eres la IA de HemoVet." not in request.user_prompt
+    # generation_instruction viaja en la COLA VOLATIL del prompt de usuario,
+    # justo antes de la pregunta. Estuvo en el rol system hasta la Fase 2, pero
+    # un system que cambia cada turno rompe el prefijo cacheable en su primera
+    # linea variable y deja todo el prompt de usuario sin reutilizar. La
+    # garantia que este test protege —que la instruccion llega al modelo y en
+    # una posicion de alta atencion— se conserva; cambia el sitio.
+    assert "Explica que eres la IA de HemoVet." in request.user_prompt
+    assert "Explica que eres la IA de HemoVet." not in request.system_prompt
+    assert request.user_prompt.index("Explica que eres la IA de HemoVet.") < (
+        request.user_prompt.index("¿Eres una persona?")
+    ), "la instruccion debe preceder inmediatamente a la pregunta"
     assert "EVIDENCIA VETERINARIA" not in request.user_prompt
     assert "HECHOS AUTORIZADOS DEL HEMOGRAMA" not in request.user_prompt
     assert "EVIDENCE_USED" not in request.user_prompt
     assert request.prompt_stats["rag_context_chars"] == 0
     # conversational_es.txt (mode-specific) is far smaller than system_es.txt's,
-    # but both share the same large core_policy block, and generation_instruction
-    # now folds into the system role too (see _compose_system_prompt), so the
-    # conversational prompt no longer stays under half of the full clinical
-    # prompt; it does stay meaningfully smaller overall (~0.57x here).
+    # but both share the same large core_policy block, so the conversational
+    # prompt does not drop below half of the full one.
     assert len(request.system_prompt) < len(builder.system_prompt) * 0.8
 
 
@@ -2901,9 +2905,27 @@ def test_general_rag_does_not_override_empty_or_invalid_attribution(
     assert use_case.llm.calls == 2
 
 
-def test_missing_attribution_triggers_one_specific_repair_and_exposes_used_source() -> (
-    None
-):
+def test_two_retained_sources_no_longer_cost_a_repair_generation() -> None:
+    """Antes exigía una segunda generación; ahora se resuelve en el servidor.
+
+    Este test fijaba la conducta contraria: con DOS fuentes retenidas y sin
+    marcador del modelo, el turno se reparaba y publicaba solo `chunk-1` —el
+    que el modelo declarase—. Se cambia, no se borra, y esto es lo que se
+    pierde y lo que se gana, medido:
+
+    - **Se pierde:** que el modelo elija cuál de las fuentes retenidas se
+      publica. Era autodeclaración, que I-3 prohíbe: el modelo puede nombrar
+      una fuente que no leyó y omitir la que sí usó.
+    - **Se gana:** una generación entera por turno. En la batería del 13-ago
+      `missing_evidence_attribution` fue el motivo de GEN-13, y antes lo fue
+      de 2 de las 10 reparaciones de la batería del 10-ago.
+
+    Lo que se publica ahora son las fuentes **consultadas** —hecho del
+    servidor—, nunca prueba de cada afirmación. Ninguna comprobación clínica
+    cambia: la coherencia con los hechos autorizados se sigue validando en
+    `_validate_case_facts`, y los turnos con paciente en contexto siguen
+    exigiendo atribución estricta.
+    """
     chunks = [
         RetrievedChunk(
             id="chunk-1",
@@ -2939,9 +2961,8 @@ def test_missing_attribution_triggers_one_specific_repair_and_exposes_used_sourc
         use_case.execute(_command("¿Qué significa tener los leucocitos altos?"))
     )
 
-    assert [source.id for source in result.sources] == ["chunk-1"]
-    assert use_case.llm.calls == 2
-    assert "missing_evidence_attribution" in use_case.llm.last_request.user_prompt
+    assert [source.id for source in result.sources] == ["chunk-1", "chunk-2"]
+    assert use_case.llm.calls == 1
 
 
 def test_patient_rag_does_not_infer_single_source_or_weaken_claim_validation() -> None:
@@ -5189,3 +5210,81 @@ def test_nearby_veterinary_care_without_pet_skips_lookup_and_asks_to_select_one(
     assert calls["nearby_lookup"] == 0
     assert '"status": "no_pet_selected"' in llm.last_request.user_prompt
     assert result.context["nearby_veterinary_care"]["status"] == "no_pet_selected"
+
+
+def test_general_rag_attributes_every_retained_source_without_a_model_marker() -> None:
+    """El servidor sabe qué fuentes retuvo; el modelo no tiene que repetirlas.
+
+    `missing_evidence_attribution` rechazaba un turno porque el modelo no
+    escribía `[[EVIDENCE_USED:S1,S2]]`. Ese marcador es autodeclaración: el
+    modelo puede citar una fuente que no leyó u omitir la que sí usó, así que
+    exigirlo no aporta fundamento. Con DOS fuentes retenidas el sistema
+    rechazaba el turno (GEN-13 de la batería del 13-ago); con una sola ya lo
+    recuperaba. Esa asimetría no tiene defensa: en los dos casos el hecho del
+    servidor es el mismo.
+
+    Lo que se atribuye son «fuentes consultadas» —lo que se metió en el
+    prompt—, **nunca** prueba de cada afirmación. La comprobación de que el
+    texto no contradiga los hechos autorizados es otra y sigue intacta.
+    """
+    sources = [
+        RetrievedChunk(
+            id="chunk-1",
+            text="Los eritrocitos transportan oxígeno.",
+            source_id="book-1",
+            title="Libro uno",
+            heading_path="Eritrocitos",
+            source_path="one.md",
+            score=0.9,
+        ),
+        RetrievedChunk(
+            id="chunk-2",
+            text="El hemograma evalúa tamaño y forma eritrocitaria.",
+            source_id="book-2",
+            title="Libro dos",
+            heading_path="Índices",
+            source_path="two.md",
+            score=0.8,
+        ),
+    ]
+    use_case, _, _, _ = build_use_case(sources, "unused", require_source=False)
+    decision = SafetyPolicy().evaluate(
+        message="¿Qué significa RBC?",
+        has_analysis_context=False,
+    )
+    resolved = ResolvedQuestion(
+        original="¿Qué significa RBC?",
+        standalone="¿Qué significa RBC?",
+        is_follow_up=False,
+        referenced_parameter=None,
+    )
+    policy = ResponsePolicy(
+        route=ResponseRoute.DATABASE_RAG,
+        intent=SafetyIntent.EDUCATIONAL_ALLOWED,
+        use_rag=True,
+        use_clinical_context=False,
+        include_sources=True,
+    )
+
+    validation, used = use_case._validate(
+        ModelResponse(
+            text=(
+                "RBC son los glóbulos rojos, las células que transportan "
+                "oxígeno desde los pulmones hacia los tejidos."
+            ),
+            model="qwen-test",
+            usage=TokenUsage(prompt_tokens=20, completion_tokens=10),
+            duration_ms=12,
+            finish_reason="stop",
+        ),
+        [],
+        decision,
+        sources,
+        clinical=ClinicalContext(mode="general"),
+        resolved=resolved,
+        policy=policy,
+        allowed_source_ids={"S1", "S2"},
+    )
+
+    assert validation.reason != "missing_evidence_attribution"
+    assert used == ("S1", "S2")

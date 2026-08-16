@@ -20,6 +20,9 @@ from app.modules.llm_chat.domain.provider_contract import (
     PROVIDER_CORRELATION_HEADER,
 )
 from app.modules.llm_chat.domain.exceptions import ChatRuntimeUnavailable
+from app.modules.llm_chat.domain.provider_call_ledger import (
+    record_provider_call,
+)
 
 logger = logging.getLogger("uvicorn.error.hemovet.llm_chat")
 
@@ -51,6 +54,25 @@ def _generation_timeout(
         read=request.timeout_seconds,
         write=configured.write,
         pool=configured.pool,
+    )
+
+
+def _record_generation_call(request: ModelRequest) -> int | None:
+    """Anota la llamada JUSTO ANTES del POST.
+
+    Se cuenta aquí, y no al recibir la respuesta, porque una petición que sale y
+    muere por red también consumió su llamada. Contar solo las que responden
+    ocultaría exactamente el caso que hay que vigilar.
+
+    Devuelve el índice 1-based dentro del turno, o ``None`` si la llamada ocurre
+    fuera de un turno de usuario (calentamiento, salud, sondeos de runtime).
+    """
+    return record_provider_call(
+        route=request.generation_route,
+        num_ctx=request.num_ctx,
+        num_predict=request.num_predict,
+        profile_name=request.profile_name,
+        structured=request.response_schema is not None,
     )
 
 
@@ -108,6 +130,7 @@ class OpenAICompatibleLLMClient:
                     "schema": request.response_schema,
                 },
             }
+        _record_generation_call(request)
         started = time.perf_counter()
         try:
             response = await self.http_client.post(
@@ -193,6 +216,7 @@ class OpenAICompatibleLLMClient:
                     "schema": request.response_schema,
                 },
             }
+        _record_generation_call(request)
         started = time.perf_counter()
         usage = TokenUsage()
         finish_reason = "stop"
@@ -365,6 +389,7 @@ class OllamaNativeLLMClient:
 
     async def generate(self, request: ModelRequest) -> ModelResponse:
         payload = self._payload(request, stream=False)
+        call_index = _record_generation_call(request)
         started = time.perf_counter()
         try:
             response = await self.http_client.post(
@@ -418,7 +443,12 @@ class OllamaNativeLLMClient:
             or round((time.perf_counter() - started) * 1000)
         )
         await self._refresh_runtime_after_generation_if_stale()
-        self._log_metrics(metrics, duration_ms=duration_ms)
+        self._log_metrics(
+            metrics,
+            duration_ms=duration_ms,
+            request=request,
+            call_index=call_index,
+        )
         return ModelResponse(
             text=text,
             model=str(body.get("model") or request.model),
@@ -431,6 +461,7 @@ class OllamaNativeLLMClient:
 
     async def stream(self, request: ModelRequest) -> AsyncIterator[ModelStreamChunk]:
         payload = self._payload(request, stream=True)
+        call_index = _record_generation_call(request)
         started = time.perf_counter()
         saw_terminal = False
         try:
@@ -461,7 +492,12 @@ class OllamaNativeLLMClient:
                             or round((time.perf_counter() - started) * 1000)
                         )
                         await self._refresh_runtime_after_generation_if_stale()
-                        self._log_metrics(metrics, duration_ms=duration_ms)
+                        self._log_metrics(
+                            metrics,
+                            duration_ms=duration_ms,
+                            request=request,
+                            call_index=call_index,
+                        )
                         yield ModelStreamChunk(
                             done=True,
                             model=str(body.get("model") or request.model),
@@ -924,13 +960,38 @@ class OllamaNativeLLMClient:
             value = body.get(key)
             if value is not None:
                 metrics[key] = int(value)
+        done_reason = body.get("done_reason")
+        if isinstance(done_reason, str) and done_reason:
+            metrics["done_reason"] = done_reason
+        # Residuo = total − (carga + prefill + decode). Es el tiempo que el
+        # proveedor gastó fuera de las tres fases que sí desglosa: compilación
+        # de la gramática, serialización, cola. Sin él, un turno lento parece
+        # inexplicable aunque las tres fases sumen poco.
+        total = metrics.get("total_duration_ms")
+        if isinstance(total, (int, float)):
+            fases = sum(
+                float(metrics.get(key) or 0.0)
+                for key in (
+                    "load_duration_ms",
+                    "prompt_eval_duration_ms",
+                    "eval_duration_ms",
+                )
+            )
+            metrics["residual_duration_ms"] = round(float(total) - fases, 3)
         return metrics
 
     @staticmethod
     def _nanoseconds_to_ms(value: object) -> float:
         return round(float(value) / 1_000_000, 3)
 
-    def _log_metrics(self, metrics: dict[str, object], *, duration_ms: int) -> None:
+    def _log_metrics(
+        self,
+        metrics: dict[str, object],
+        *,
+        duration_ms: int,
+        request: ModelRequest | None = None,
+        call_index: int | None = None,
+    ) -> None:
         logger.info(
             "llm_chat.ollama_metrics %s",
             json.dumps(
@@ -942,8 +1003,31 @@ class OllamaNativeLLMClient:
                     "prompt_eval_duration_ms": metrics.get("prompt_eval_duration_ms"),
                     "eval_count": metrics.get("eval_count"),
                     "eval_duration_ms": metrics.get("eval_duration_ms"),
+                    "residual_duration_ms": metrics.get("residual_duration_ms"),
+                    "done_reason": metrics.get("done_reason"),
+                    # Segregación por ruta: sin ella, las cuatro vías de
+                    # generación se mezclan en una única media que no dice nada.
+                    "generation_route": (
+                        request.generation_route if request is not None else None
+                    ),
+                    "provider_call_index": call_index,
+                    "num_ctx_requested": (
+                        request.num_ctx if request is not None else None
+                    ),
+                    "num_predict_requested": (
+                        request.num_predict if request is not None else None
+                    ),
+                    "structured_output": (
+                        request.response_schema is not None
+                        if request is not None
+                        else None
+                    ),
+                    "profile_name": (
+                        request.profile_name if request is not None else None
+                    ),
                     "gpu_active": self._runtime_snapshot.get("gpu_active"),
                     "gpu_memory_bytes": self._runtime_snapshot.get("gpu_memory_bytes"),
+                    "size_vram": self._warmed_vram,
                     "inference_device": self._runtime_snapshot.get("inference_device"),
                 },
                 sort_keys=True,

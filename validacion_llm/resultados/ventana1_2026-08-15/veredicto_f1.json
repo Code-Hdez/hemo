@@ -1,0 +1,468 @@
+{
+  "modelo": "qwen3.6:27b-q4_K_M",
+  "num_ctx": 16384,
+  "semilla_base": 20260815,
+  "pareado": [
+    {
+      "sonda": "aritmetica",
+      "prior": "cuatro",
+      "enum": [
+        "siete",
+        "nueve",
+        "once"
+      ],
+      "libre": {
+        "texto": "cuatro",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 3,
+        "ms": 1564.1
+      },
+      "restringido": {
+        "texto": "{ \"valor\": \"siete\" }",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 12,
+        "ms": 1282.8
+      },
+      "valor_extraido": "siete",
+      "dentro_del_enum": true,
+      "concluyente": true
+    },
+    {
+      "sonda": "capital",
+      "prior": "París",
+      "enum": [
+        "Lisboa",
+        "Oslo",
+        "Varsovia"
+      ],
+      "libre": {
+        "texto": "La capital de Francia es **París**.",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 10,
+        "ms": 1540.1
+      },
+      "restringido": {
+        "texto": "{\n  \"valor\": \"Lisboa\"\n}",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 14,
+        "ms": 1303.1
+      },
+      "valor_extraido": "Lisboa",
+      "dentro_del_enum": true,
+      "concluyente": true
+    },
+    {
+      "sonda": "leucocitos",
+      "prior": "8.40",
+      "enum": [
+        "4.52",
+        "6.10",
+        "15.20"
+      ],
+      "libre": {
+        "texto": "8.40 × 10³/µL",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 13,
+        "ms": 1504.9
+      },
+      "restringido": {
+        "texto": "{ \"valor\": \"15.20\" }",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 14,
+        "ms": 1414.2
+      },
+      "valor_extraido": "15.20",
+      "dentro_del_enum": true,
+      "concluyente": true
+    }
+  ],
+  "recuento": {
+    "n": 30,
+    "evaluables": 30,
+    "vacias": 0,
+    "violaciones": 0,
+    "cota_superior": 0.09503385285530419,
+    "salidas": [
+      {
+        "i": 0,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 1,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 2,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 3,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 4,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 5,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 6,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 7,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 8,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 9,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 10,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 11,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 12,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 13,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 14,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 15,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 16,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 17,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 18,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 19,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 20,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 21,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 22,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 23,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 24,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 25,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 26,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 27,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 28,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      },
+      {
+        "i": 29,
+        "texto": "{ \"valor\": \"15.20\" }",
+        "valor": "15.20",
+        "fuera": false,
+        "vacia": false,
+        "trae_thinking": false,
+        "error": null
+      }
+    ]
+  },
+  "coste": {
+    "enum_corto_ms": 1400.1,
+    "enum_largo_ms": 2573.8,
+    "enum_largo_tam": 300,
+    "enum_largo_valor": "2.52",
+    "patron": {
+      "salida": {
+        "texto": "{\n  \"valor\": \"HCT=45.0\"\n}",
+        "trae_thinking": false,
+        "done_reason": "stop",
+        "eval_count": 18,
+        "ms": 2081.7
+      },
+      "valor": "HCT=45.0",
+      "casa": true
+    }
+  },
+  "fuzz": [
+    {
+      "esquema": "enum_vacio",
+      "resultado": {
+        "texto": "{\n  \"v\":",
+        "trae_thinking": false,
+        "done_reason": "length",
+        "eval_count": 8,
+        "ms": 1810.7
+      },
+      "servidor_vivo": true
+    },
+    {
+      "esquema": "patron_invalido",
+      "resultado": {
+        "error": "http 400",
+        "detalle": "{\"error\":\"{\\\"error\\\":{\\\"code\\\":400,\\\"message\\\":\\\"Field 'json_schema': \\\\\\\"json_schema\\\\\\\": JSON schema conversion failed:\\\\nPattern must start with '^' and end with '$'\\\",\\\"type\\\":\\\"invalid_request_error\\\"}}\"}",
+        "ms": 535.4
+      },
+      "servidor_vivo": true
+    },
+    {
+      "esquema": "recursivo",
+      "resultado": {
+        "error": "http 400",
+        "detalle": "{\"error\":\"{\\\"error\\\":{\\\"code\\\":400,\\\"message\\\":\\\"Field 'json_schema': \\\\\\\"json_schema\\\\\\\": JSON schema conversion failed:\\\\nUnsupported ref: #\\\",\\\"type\\\":\\\"invalid_request_error\\\"}}\"}",
+        "ms": 524.7
+      },
+      "servidor_vivo": true
+    },
+    {
+      "esquema": "profundo",
+      "resultado": {
+        "texto": "{\n  \"v\": \"",
+        "trae_thinking": false,
+        "done_reason": "length",
+        "eval_count": 8,
+        "ms": 1118.8
+      },
+      "servidor_vivo": true
+    }
+  ],
+  "dos_pasadas": {
+    "condiciones": {
+      "sin_format": {
+        "reloj_ms": 2747.1,
+        "total_duration_ms": 2744.1,
+        "load_duration_ms": 516.3,
+        "prompt_eval_duration_ms": 219.6,
+        "eval_duration_ms": 1599.9,
+        "prompt_eval_count": 52,
+        "eval_count": 64,
+        "residuo_ms": 2.9,
+        "residuo_frac": 0.001,
+        "trae_thinking": true,
+        "texto": ""
+      },
+      "format_think_nulo": {
+        "reloj_ms": 2822.7,
+        "total_duration_ms": 2819.7,
+        "load_duration_ms": 538.2,
+        "prompt_eval_duration_ms": 220.0,
+        "eval_duration_ms": 1624.4,
+        "prompt_eval_count": 52,
+        "eval_count": 64,
+        "residuo_ms": 2.9,
+        "residuo_frac": 0.001,
+        "trae_thinking": true,
+        "texto": ""
+      },
+      "format_think_false": {
+        "reloj_ms": 1444.4,
+        "total_duration_ms": 1441.6,
+        "load_duration_ms": 514.1,
+        "prompt_eval_duration_ms": 262.7,
+        "eval_duration_ms": 598.3,
+        "prompt_eval_count": 54,
+        "eval_count": 14,
+        "residuo_ms": 2.8,
+        "residuo_frac": 0.002,
+        "trae_thinking": false,
+        "texto": "{ \"valor\": \"15.20\" }"
+      }
+    },
+    "veredicto": "SIN DOBLE PASADA — el residuo con `format` no se distingue del control. La lógica de dos pasadas de routes.go no se activa aquí."
+  },
+  "veredicto": "PROPAGA — 3/3 parejas concluyentes y 30/30 dentro del enum. La cota superior 95 % de la tasa de violación es 9.50 %, que es lo máximo afirmable con n=30: NO es «garantizado», es «no refutado a este n». Los Bloques H e I son viables en el motor actual."
+}

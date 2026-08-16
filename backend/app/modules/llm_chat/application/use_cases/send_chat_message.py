@@ -99,6 +99,12 @@ from app.modules.llm_chat.application.services.turn_guard import (
     GuardCheck,
     TurnGuard,
 )
+from app.modules.llm_chat.application.services.slot_rendering import (
+    AfirmacionSlot,
+    construir_esquema_de_turno,
+    renderizar_afirmaciones,
+    sanear_prosa,
+)
 from app.modules.llm_chat.application.services.structured_response import (
     FACT_BASED_CLAIM_TYPES,
     ClaimType,
@@ -119,6 +125,11 @@ from app.modules.llm_chat.domain.clinical import (
 )
 from app.modules.llm_chat.domain.context_bundle import ContextBundle
 from app.modules.llm_chat.domain.entities import (
+    GENERATION_ROUTE_LAST_RESORT,
+    GENERATION_ROUTE_MAIN,
+    GENERATION_ROUTE_REPAIR,
+    GENERATION_ROUTE_STEER,
+    GENERATION_ROUTE_TOOL,
     ChatMessageRecord,
     ChatTurnReservation,
     ModelRequest,
@@ -129,10 +140,21 @@ from app.modules.llm_chat.domain.entities import (
     ToolCall,
     ToolResult,
 )
+from app.modules.llm_chat.application.services.fact_attribution import (
+    atribuir_hechos,
+)
+from app.modules.llm_chat.application.services.source_attribution import (
+    atribuir_fuentes,
+)
 from app.modules.llm_chat.domain.exceptions import (
     ChatContextRevisionConflict,
     ChatRuntimeUnavailable,
     ChatTurnInProgress,
+)
+from app.modules.llm_chat.domain.provider_call_ledger import (
+    ProviderCallLedger,
+    current_ledger,
+    turn_ledger,
 )
 from app.modules.llm_chat.domain.generation_config import (
     EffectiveGenerationProfile,
@@ -343,11 +365,122 @@ def dump_structured_failure(
         logger.warning("structured_debug_dump_failed", exc_info=True)
 
 
+_EVIDENCE_ATTRIBUTION_DETALLES = frozenset(
+    {
+        "marker_absent",
+        "marker_declared_but_empty",
+        "marker_declared_unresolvable",
+    }
+)
+
+
+def _evidence_attribution_detail(
+    *,
+    evidence_marker_found: bool,
+    declared_source_ids: tuple[str, ...],
+) -> str:
+    """Separa las DOS causas que hoy se cuentan como una sola.
+
+    ``missing_evidence_attribution`` fue 6 de los 48 fallos de contrato de la
+    campaña del 14-ago, y su causa no se podía diagnosticar: el detalle era una
+    constante —``retained_rag_evidence_without_valid_source_reference``— y
+    además ``_validation_detail_code`` no proyecta esta clase, así que el motivo
+    llegaba al `.jsonl` con ``d=-``.
+
+    Debajo hay dos situaciones distintas con dos arreglos distintos:
+
+    - ``marker_absent``: el modelo no escribió marcador. El servidor **sí** sabe
+      qué fuentes retuvo, así que esto es recuperable sin preguntarle a nadie —
+      y es justo lo que hace ``_infer_single_general_source_attribution``.
+    - ``marker_declared_*``: el modelo **sí** declaró algo, y estaba vacío o no
+      resolvía a ninguna fuente permitida. Respetar esa declaración en vez de
+      pisarla es una decisión deliberada del módulo de atribución, no un olvido.
+
+    Contarlas juntas hacía imposible saber si la clase se arregla con más
+    recuperación del servidor o con otra cosa. El vocabulario es cerrado y no
+    lleva texto del modelo: es telemetría, y la privacidad clínica manda.
+
+    Por qué importa el tamaño de esta clase, aunque sean 6 casos: con ella sin
+    resolver, G.1, H e I tienen que salir al 100 % para que la Puerta C acepte
+    —al 95 % ya suspende—. Resolviéndola, el plan tolera un 85 % en todo.
+    """
+    if not evidence_marker_found:
+        return "marker_absent"
+    if not declared_source_ids:
+        return "marker_declared_but_empty"
+    return "marker_declared_unresolvable"
+
+
+_PATRON_TERMINOS_TRATAMIENTO = re.compile(r"^[a-záéíóúñ ]{1,40}\+[a-záéíóúñ ]{1,40}$")
+_NO_APTO_EN_CODIGO = re.compile(r"[^a-z0-9_:]+")
+
+
+def _terminal_error_code(validation: OutputValidation) -> str:
+    """El código del fallo terminal, CON su detalle.
+
+    Los turnos terminales son los más difíciles del corpus y son justo los que
+    llegaban peor instrumentados. `855566ff` recuperó su **clase** —antes eran
+    `invalid` a secas—, pero el **detalle** se seguía perdiendo: en la campaña
+    del 14-ago los 27 terminales llevaban solo la clase y los 198 con cuerpo
+    llevaban `r=…|safe=…|intent=…|d=…` entero.
+
+    `[MEDIDO]` La consecuencia: de los 6 `unsupported_numeric_claim`, **5 eran
+    terminales y llegaron sin parámetro**; el único con `hct` es el que se
+    reparó. Igual con `unsupported_status_claim`. Es decir, el desglose por
+    parámetro solo existía para los turnos que el sistema logró salvar, que son
+    precisamente los que menos hace falta diagnosticar.
+
+    El detalle se **saneca al alfabeto del código público** —``[a-z0-9_:]``—
+    porque `_terminal_validation_reason` del router valida contra ese patrón y
+    devuelve ``None`` si no casa: componer un código que no pase el filtro
+    perdería también la clase, que es peor que el estado actual.
+    """
+    razon = str(validation.reason or "unknown").strip() or "unknown"
+    detalle = _validation_detail_code(validation) or ""
+    # El detalle ya viene con la clase delante en varias familias
+    # (`unsupported_numeric_claim:hct`): no se duplica.
+    if detalle.startswith(f"{razon}:"):
+        detalle = detalle[len(razon) + 1 :]
+    if detalle:
+        limpio = _NO_APTO_EN_CODIGO.sub("_", detalle.lower()).strip("_")
+        if limpio:
+            razon = f"{razon}:{limpio}"
+    return f"invalid_output_{razon}"[:135]
+
+
 def _validation_detail_code(validation: OutputValidation) -> str | None:
     """Project validator detail into low-cardinality, non-clinical telemetry."""
+    # `telemetry_detail` va aparte de `detail` a propósito: `detail` alimenta el
+    # bloque de corrección de la reparación, y el GOAL prohíbe tocar ese prompt.
+    # Este canal solo lo lee la telemetría.
+    if validation.reason == "indirect_treatment_recommendation":
+        terminos = str(validation.telemetry_detail or "")
+        if _PATRON_TERMINOS_TRATAMIENTO.fullmatch(terminos):
+            return terminos
+        return None
     detail = str(validation.detail or "")
     if not detail:
         return None
+    if (
+        validation.reason == "missing_evidence_attribution"
+        and detail in _EVIDENCE_ATTRIBUTION_DETALLES
+    ):
+        return detail
+    # `internal_material_exposed` es de SEGURIDAD y aparecio por primera vez en
+    # la campana v3 (1 de 400, terminal, en SEL-05). Su `detail` YA lleva el
+    # fragmento que caso —`internal_match.group(0)[:80]`— pero no se proyectaba,
+    # asi que la unica aparicion llego sin causa.
+    #
+    # Saber si el modelo escribio «system_prompt» o simplemente «analysis_id» son
+    # dos incidentes de gravedad muy distinta, y una clase de seguridad es
+    # precisamente donde menos se puede permitir no saberlo.
+    #
+    # El vocabulario es cerrado: sale de la alternacion de `_internal_material`,
+    # son identificadores del sistema y ninguno es dato del paciente.
+    if validation.reason == "internal_material_exposed" and re.fullmatch(
+        r"[A-Za-z0-9_/ -]{1,80}", detail
+    ):
+        return detail.strip().replace(" ", "_").lower()
     if validation.reason == "unsupported_clinical_interpretation" and re.fullmatch(
         r"[A-Za-z0-9_:-]{1,120}", detail
     ):
@@ -569,6 +702,12 @@ _ACTIVE_TURN_LEASE: ContextVar[_ActiveTurnLease | None] = ContextVar(
     default=None,
 )
 
+# Vocabulario cerrado de `done_reason`. El campo viaja al contrato público, así
+# que no se reenvía lo que diga el proveedor: se admite lo conocido y lo demás
+# se calla. Ollama emite "stop" al terminar por EOS y "length" al agotar
+# num_predict; "load" y "unload" aparecen en respuestas sin generación.
+_PUBLIC_DONE_REASONS = frozenset({"stop", "length", "load", "unload"})
+
 
 class AnalysisContextRepository(Protocol):
     async def get_owned_snapshot(
@@ -661,6 +800,9 @@ class SendChatMessageUseCase:
             structured_response_service or StructuredResponseService()
         )
         self.structured_output_enabled = generation_settings.structured_output_enabled
+        # M.2/M.3 — «que escriba el servidor». Con esto apagado la ruta de
+        # generacion es EXACTAMENTE la de hoy: ni un `if` mas se evalua a True.
+        self.server_writes_enabled = generation_settings.server_writes_enabled
         self.queue_timeout_seconds = generation_settings.runtime.queue_timeout_seconds
         self.total_timeout_seconds = generation_settings.runtime.total_timeout_seconds
         self.heartbeat_seconds = generation_settings.runtime.heartbeat_seconds
@@ -679,6 +821,12 @@ class SendChatMessageUseCase:
         if not command.request_id:
             command = replace(command, request_id=str(uuid4()))
         lease_token = _ACTIVE_TURN_LEASE.set(None)
+        # Fase 0: el registro se abre aquí, en el único punto de entrada del
+        # turno, para que TODA llamada al proveedor caiga dentro sea cual sea la
+        # ruta. Fuera de este bloque (calentamiento, salud) no hay registro y no
+        # se cuenta nada, que es justo lo que se quiere.
+        ledger_context = turn_ledger()
+        ledger = ledger_context.__enter__()
         result: ChatResult | None = None
         try:
             bind_context = (
@@ -786,7 +934,59 @@ class SendChatMessageUseCase:
                 exc.bind_turn(lease.conversation_id, lease.attempt)
             raise
         finally:
+            self._log_provider_call_ledger(command, ledger)
+            ledger_context.__exit__(None, None, None)
             _ACTIVE_TURN_LEASE.reset(lease_token)
+
+    @staticmethod
+    def _provider_call_trace() -> dict[str, object]:
+        """Las llamadas de este turno, para el contrato público.
+
+        Devuelve vacío fuera de un turno en lugar de inventar un cero: no es lo
+        mismo «no se llamó al proveedor» que «no hay registro».
+        """
+        ledger = current_ledger()
+        if ledger is None:
+            return {}
+        return {
+            "provider_calls": ledger.count,
+            "provider_call_routes": [call.route for call in ledger.calls],
+            "first_validation_reason": ledger.primera_validacion,
+            # Métrica del Bloque G.2: el parámetro que la pregunta nombraba y
+            # que el paciente no tiene. Su regla revierte G.2 por encima del
+            # 2 % de los turnos, así que hay que poder contarlo desde el arnés.
+            "requested_parameter_absent": ledger.parametro_pedido_ausente,
+        }
+
+    def _log_provider_call_ledger(
+        self,
+        command: ChatCommand,
+        ledger: ProviderCallLedger,
+    ) -> None:
+        """Emite el recuento del turno y la aserción del invariante.
+
+        Fase 0 solo REGISTRA. Convertir la violación en excepción es trabajo de
+        la Fase 4, cuando el contrato ya esté simplificado: hacerlo antes
+        convertiría los turnos que hoy se reparan en turnos fallidos, que es
+        exactamente el error que el orden de fases existe para impedir.
+        """
+        if ledger.count == 0:
+            # Un turno que no llegó al proveedor —autorización denegada,
+            # presupuesto excedido, proveedor caído antes de enviar— cuenta 0.
+            # Es un valor legítimo del invariante, no una anomalía.
+            return
+        self._log_event(
+            "provider_call_ledger",
+            request_id=command.request_id,
+            **ledger.summary(),
+        )
+        if ledger.exceeded_single_call:
+            self._log_event(
+                "single_call_invariant_violated",
+                request_id=command.request_id,
+                **ledger.summary(),
+                enforcement="observe_only_until_phase_4",
+            )
 
     async def _execute(
         self,
@@ -1031,6 +1231,15 @@ class SendChatMessageUseCase:
                 output_budget=profile.generation.num_predict,
             ),
         )
+        # Métrica del Bloque G.2, al registro del turno y NO al prompt: el
+        # parámetro que la pregunta nombraba y que el paciente no tiene. Su
+        # regla de decisión revierte G.2 por encima del 2 % de los turnos, y
+        # hasta ahora el caso no dejaba ningún rastro que contar.
+        _ledger_seleccion = current_ledger()
+        if _ledger_seleccion is not None:
+            _ledger_seleccion.parametro_pedido_ausente = (
+                selection.parametro_pedido_ausente
+            )
         snapshot: ClinicalContextSnapshot | None = None
         has_typed_authorization = (
             clinical.mode == "general"
@@ -1668,10 +1877,12 @@ class SendChatMessageUseCase:
             )
         generation_attempts = 1
         candidates: list[_ValidatedCandidate] = []
+        _ledger_turno = current_ledger()
         try:
             generated = await self._generate(
                 request,
                 generation_attempt=1,
+                generation_route=GENERATION_ROUTE_MAIN,
                 on_chunk=None,
             )
             await self._mark_turn_stage(
@@ -1720,6 +1931,27 @@ class SendChatMessageUseCase:
                     request=request,
                 ),
             )
+            if _ledger_turno is not None and _ledger_turno.primera_validacion is None:
+                # La razon de la PRIMERA validacion, antes de que ninguna ruta de
+                # rescate la sustituya. Es el dato que faltaba para corregir el
+                # prompt con evidencia en vez de a ciegas.
+                # `reason` es el codigo REAL del validador
+                # (unsafe_instruction, content_free_answer, ...). El
+                # `disposition` solo dice «invalid», y con eso 6 de 10 fallos
+                # de la Puerta 3 quedaron sin nombre. El detail va detras
+                # cuando existe, para no perder el parametro implicado.
+                _v = initial_candidate.validation
+                _detalle = _validation_detail_code(_v)
+                # Crudo: `reason` a secas dejo tres turnos como «invalid» sin
+                # nombre. Se anaden is_safe y meets_intent porque `disposition`
+                # se deriva de ellos, y con los tres juntos si se puede decir
+                # que comprobacion rechazo el turno.
+                _ledger_turno.primera_validacion = (
+                    f"r={_v.reason or '-'}"
+                    f"|safe={int(bool(_v.is_safe))}"
+                    f"|intent={int(bool(_v.meets_intent))}"
+                    f"|d={_detalle or '-'}"
+                )
             needs_repair = (
                 generated.finish_reason == "length" or validation.disposition != "valid"
             )
@@ -1813,6 +2045,7 @@ class SendChatMessageUseCase:
                 repaired_piece = await self._generate(
                     repair_request,
                     generation_attempt=2,
+                    generation_route=GENERATION_ROUTE_REPAIR,
                     on_chunk=None,
                 )
                 repaired = (
@@ -2028,7 +2261,7 @@ class SendChatMessageUseCase:
             )
         if selected is None:
             terminal_validation = candidates[-1].validation
-            error_code = f"invalid_output_{terminal_validation.reason or 'unknown'}"
+            error_code = _terminal_error_code(terminal_validation)
             await self._mark_turn_failed(
                 conversation_id,
                 command.client_message_id,
@@ -2538,7 +2771,9 @@ class SendChatMessageUseCase:
     ) -> ModelRequest:
         prompt_started = time.perf_counter()
         schema_provider = (
-            self._contract_provider(
+            self._slot_schema_provider(facts=facts)
+            if self.server_writes_enabled
+            else self._contract_provider(
                 policy=policy,
                 facts=facts,
                 plan=plan,
@@ -2725,6 +2960,99 @@ class SendChatMessageUseCase:
             history_count=len(history),
         )
         return request
+
+    def _slot_schema_provider(
+        self,
+        *,
+        facts: list[dict[str, object]],
+    ) -> Callable[[tuple[str, ...], frozenset[str]], tuple[dict[str, Any] | None, str]]:
+        """M.2 — el esquema de slots del turno, y **ningun bloque de prompt**.
+
+        Devuelve `""` como bloque a proposito. El GOAL cierra con *«no instruyas
+        al modelo: quitale la ocasion»*, y anadir una explicacion del formato
+        seria justo lo contrario: la gramatica hace el trabajo, no una linea mas
+        de texto. Ademas mantiene el prefijo cacheable intacto.
+
+        Los `enum` se construyen con los hechos que sobreviven al presupuesto,
+        igual que el contrato del sobre: si un estudio sale del prompt, sus
+        valores salen del esquema.
+        """
+
+        def proveedor(
+            source_ids: tuple[str, ...],
+            analysis_ids: frozenset[str],
+        ) -> tuple[dict[str, Any] | None, str]:
+            vigentes = [
+                fact
+                for fact in facts
+                if not analysis_ids
+                or str(fact.get("analysis_id") or "") in analysis_ids
+            ]
+            return construir_esquema_de_turno(vigentes), ""
+
+        return proveedor
+
+    def _decode_slot_generation(
+        self,
+        generated: ModelResponse,
+        *,
+        facts: list[dict[str, object]],
+    ) -> ModelResponse:
+        """M.2/M.3 — el servidor escribe las cifras; el modelo, el resto.
+
+        Si el JSON no se puede leer, **se devuelve el texto tal cual** y que lo
+        juzgue el validador de siempre. Inventar aqui un fallback silencioso
+        seria persistir una respuesta degradada sin que nadie la contara, que es
+        exactamente lo que la Fase 5 existe para impedir.
+        """
+        crudo = (generated.text or "").strip()
+        if not crudo:
+            return generated
+        try:
+            datos = json.loads(crudo)
+        except json.JSONDecodeError:
+            return generated
+        if not isinstance(datos, dict):
+            return generated
+
+        slots: list[AfirmacionSlot] = []
+        for bruto in datos.get("afirmaciones") or []:
+            if not isinstance(bruto, dict):
+                continue
+            parametro = str(bruto.get("parametro") or "").strip()
+            estado = str(bruto.get("estado") or "").strip()
+            if not parametro or not estado:
+                continue
+            slots.append(
+                AfirmacionSlot(
+                    parametro=parametro,
+                    estado=estado,
+                    valor=(
+                        str(bruto.get("valor")).strip()
+                        if bruto.get("valor") is not None
+                        else None
+                    ),
+                    fecha=(
+                        str(bruto.get("fecha")).strip()
+                        if bruto.get("fecha") is not None
+                        else None
+                    ),
+                )
+            )
+
+        afirmaciones = renderizar_afirmaciones(slots, list(facts))
+        prosa = sanear_prosa(str(datos.get("explicacion") or ""))
+        partes = [p for p in (afirmaciones, prosa.texto) if p.strip()]
+        ensamblado = "\n\n".join(partes)
+        metricas = {
+            **generated.provider_metrics,
+            "slots_emitidos": len(slots),
+            # El sobre-rechazo de M.5 se lee de aqui: cuantas oraciones se
+            # recortaron y por que. Sin este dato, el coste seria invisible.
+            "prosa_oraciones_quitadas": prosa.oraciones_quitadas,
+            "prosa_motivos_recorte": ",".join(sorted(set(prosa.motivos))),
+        }
+        return replace(generated, text=ensamblado, provider_metrics=metricas)
 
     def _contract_provider(
         self,
@@ -3281,8 +3609,13 @@ class SendChatMessageUseCase:
         request: ModelRequest,
         *,
         generation_attempt: int,
+        generation_route: str = GENERATION_ROUTE_MAIN,
         on_chunk: Callable[[str], Awaitable[None]] | None = None,
     ) -> ModelResponse:
+        # I-6: la ruta se declara, no se deduce del número de intento. Hoy hay
+        # cinco vías que llegan aquí y `generation_attempt` no las distingue:
+        # reconducción y último recurso comparten numeración con la reparación.
+        request = replace(request, generation_route=generation_route)
         lease = _ACTIVE_TURN_LEASE.get()
         if bool(request.prompt_stats.get("budget_exceeded")):
             self._log_event(
@@ -4465,6 +4798,7 @@ class SendChatMessageUseCase:
                 generated = await self._generate(
                     request,
                     generation_attempt=1,
+                    generation_route=GENERATION_ROUTE_TOOL,
                     on_chunk=None,
                 )
             except ChatRuntimeUnavailable:
@@ -4588,6 +4922,7 @@ class SendChatMessageUseCase:
             generated = await self._generate(
                 request,
                 generation_attempt=generation_attempt,
+                generation_route=GENERATION_ROUTE_LAST_RESORT,
                 on_chunk=None,
             )
         except ChatRuntimeUnavailable:
@@ -4727,6 +5062,7 @@ class SendChatMessageUseCase:
             generated = await self._generate(
                 steered_request,
                 generation_attempt=generation_attempt,
+                generation_route=GENERATION_ROUTE_STEER,
                 on_chunk=None,
             )
         except ChatRuntimeUnavailable:
@@ -4779,7 +5115,13 @@ class SendChatMessageUseCase:
     ) -> _ValidatedCandidate:
         envelope: GeneratedResponseEnvelope | None = None
         candidate = generated
-        if self.structured_output_enabled:
+        if self.server_writes_enabled:
+            # M.2/M.3. No pasa por el sobre: el sobre pedia metadatos que el
+            # servidor ya sabe y perdio la medicion del 13-ago en todos los ejes.
+            # Aqui solo se leen los slots y se ensambla. `_validate` sigue
+            # corriendo detras, sin cambios.
+            candidate = self._decode_slot_generation(generated, facts=coverage_facts)
+        elif self.structured_output_enabled:
             try:
                 candidate, envelope = self._decode_structured_generation(
                     generated,
@@ -4841,7 +5183,17 @@ class SendChatMessageUseCase:
             claim_ids=(
                 tuple(claim.claim_id for claim in envelope.claims) if envelope else ()
             ),
-            verified_fact_ids=envelope.used_fact_ids if envelope else (),
+            # Sin sobre, la atribución NO se pierde: se deriva. El servidor sabe
+            # qué hechos inyectó y comprueba cuáles usó el texto, en vez de
+            # pedirle al modelo que se los devuelva. Es verificación, no
+            # autodeclaración — y de las 10 reparaciones del 10-ago, 3 fueron
+            # justamente el modelo omitiendo un identificador que el servidor
+            # ya conocía.
+            verified_fact_ids=(
+                envelope.used_fact_ids
+                if envelope
+                else atribuir_hechos(candidate.text, coverage_facts).fact_ids
+            ),
             response_type=envelope.response_type if envelope else None,
         )
 
@@ -5655,7 +6007,10 @@ class SendChatMessageUseCase:
                     is_safe=False,
                     text="",
                     reason="missing_evidence_attribution",
-                    detail="retained_rag_evidence_without_valid_source_reference",
+                    detail=_evidence_attribution_detail(
+                        evidence_marker_found=sanitized.evidence_marker_found,
+                        declared_source_ids=sanitized.used_source_ids,
+                    ),
                 ),
                 used_source_ids,
             )
@@ -5698,15 +6053,25 @@ class SendChatMessageUseCase:
         evidence_marker_found: bool,
         used_source_ids: tuple[str, ...],
     ) -> tuple[str, ...]:
-        """Recover unambiguous attribution omitted by a small local model.
+        """Recover attribution omitted by a small local model.
 
         The source marker is transport metadata, not part of the visible answer.
-        For a non-patient RAG turn with exactly one retained source, the
-        application already knows which evidence was available to generation,
-        so requiring the model to echo its synthetic ``S1`` identifier adds no
-        grounding information.  Keep patient-backed turns and ambiguous
-        multi-source turns strict, and never override an explicit empty or
-        invalid declaration from the model.
+        For a non-patient RAG turn the application already knows which evidence
+        it retained and put in the prompt, so requiring the model to echo the
+        synthetic ``S1``/``S2`` identifiers adds no grounding information.  What
+        is recovered here are **sources consulted** — a server fact — and never
+        proof that any one of them supports a given sentence; that distinction
+        is the one `source_attribution.py` exists to protect.
+
+        The one-source restriction this used to carry had no defence: with a
+        single retained source the turn was recovered, with two it was rejected
+        as ``missing_evidence_attribution`` even though the server fact is
+        identical in both cases.  That asymmetry cost GEN-13 of the 13-ago
+        battery a whole extra generation.
+
+        Patient-backed turns stay strict — ``policy.use_clinical_context``
+        still bails out — and an explicit empty or invalid declaration from the
+        model is still never overridden.
         """
         if (
             used_source_ids
@@ -5723,7 +6088,7 @@ class SendChatMessageUseCase:
             for index in range(1, len(sources) + 1)
             if (source_id := f"S{index}") in allowed_source_ids
         )
-        return retained if len(retained) == 1 else used_source_ids
+        return retained or used_source_ids
 
     @staticmethod
     def _retain_supported_veterinary_questions(
@@ -6594,12 +6959,23 @@ class SendChatMessageUseCase:
             "queue_wait_ms",
             "ttft_ms",
             "generation_attempts",
+            # Residuo = total − (carga + prefill + decode). Sin él un turno lento
+            # parece inexplicable aunque las tres fases desglosadas sumen poco.
+            "residual_duration_ms",
         )
         safe_provider_metrics = {
             key: provider_metrics[key]
             for key in metric_keys
             if isinstance(provider_metrics.get(key), (int, float))
         }
+        # `done_reason` es texto, así que el filtro numérico de arriba lo
+        # descartaría. Es la métrica que decide si el bucle de reparación
+        # funcionó alguna vez: si domina "length", reparar reproduce el
+        # truncamiento que debía arreglar. Se acota a un vocabulario cerrado
+        # para que el proveedor no pueda inyectar texto arbitrario al público.
+        done_reason = provider_metrics.get("done_reason")
+        if isinstance(done_reason, str) and done_reason in _PUBLIC_DONE_REASONS:
+            safe_provider_metrics["done_reason"] = done_reason
         prompt_eval_duration_ms = safe_provider_metrics.get(
             "prompt_eval_duration_ms"
         )
@@ -6666,6 +7042,19 @@ class SendChatMessageUseCase:
             "prompt_tokens": usage.prompt_tokens,
             "generated_tokens": usage.completion_tokens,
             "provider_metrics": safe_provider_metrics,
+            # I-3: las fuentes las sabe el SERVIDOR, no hacen falta del modelo.
+            # `consultadas` es un hecho —lo que se retuvo y se metió en el
+            # prompt— y se etiqueta como tal. NO es prueba de cada afirmación:
+            # presentarlo así es una señal de desvío declarada del proyecto.
+            # No depende del texto: es lo que el servidor retuvo, se cite o no.
+            "sources_consulted": list(
+                atribuir_fuentes("", list(public_sources)).consultadas
+            ),
+            # El invariante del rediseño, medido y expuesto: cuántas veces se
+            # llamó de verdad al modelo en este turno y por qué rutas. Se lee
+            # del registro del adaptador, no se deduce de generation_attempts,
+            # que no distingue reconducción de último recurso.
+            **self._provider_call_trace(),
             "prompt_tokens_per_second": prompt_tokens_per_second,
             "generation_tokens_per_second": generation_tokens_per_second,
             "structured_response_type": response_type,

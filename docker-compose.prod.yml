@@ -131,6 +131,12 @@ services:
       CHAT_LLM_PROVIDER: "${CHAT_LLM_PROVIDER:-ollama}"
       CHAT_SUMMARY_MAX_TOKENS: "${CHAT_SUMMARY_MAX_TOKENS:-800}"
       CHAT_MAX_INPUT_TOKENS: "${CHAT_MAX_INPUT_TOKENS:-3200}"
+      # FASE 3 — contrato minimo. El sobre estructurado se apaga: el modelo
+      # devuelve Markdown y el servidor deriva fact_ids, source_ids y las
+      # banderas de seguridad, que ya sabia. Apagarlo desactiva ademas
+      # _last_resort_candidate, que en la Puerta 0 salvo 9 de 45 turnos, asi
+      # que la Puerta 3 (validez de primera pasada >= 98 %) es la comprobacion
+      # de que esa red ya no hace falta. Revertir = poner 1 aqui.
       CHAT_STRUCTURED_OUTPUT_ENABLED: "${CHAT_STRUCTURED_OUTPUT_ENABLED:-1}"
       CHAT_REQUIRE_BROWSER_SESSION_ID: "${CHAT_REQUIRE_BROWSER_SESSION_ID:-1}"
       # El tokenizador exacto de Qwen3.6 va dentro de la imagen (backend/app/

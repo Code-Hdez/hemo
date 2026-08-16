@@ -1,0 +1,55 @@
+{
+  "modelo": "qwen3.6:27b-q4_K_M",
+  "semilla": 20260814,
+  "num_ctx": 65536,
+  "caracteres_prompt": 14818,
+  "base_fria": {
+    "prompt_eval_count": 3664,
+    "prompt_eval_ms": 3193.469,
+    "ms_por_token": 0.8716,
+    "eval_count": 8,
+    "load_ms": 110681.6,
+    "segundos_reloj": 114.128
+  },
+  "A": {
+    "prompt_eval_count": 3664,
+    "prompt_eval_ms": 219.938,
+    "ms_por_token": 0.06,
+    "eval_count": 8,
+    "load_ms": 534.2,
+    "segundos_reloj": 0.972
+  },
+  "B": {
+    "prompt_eval_count": 3664,
+    "prompt_eval_ms": 662.891,
+    "ms_por_token": 0.1809,
+    "eval_count": 8,
+    "load_ms": 549.6,
+    "segundos_reloj": 1.429
+  },
+  "C": {
+    "prompt_eval_count": 3664,
+    "prompt_eval_ms": 3072.547,
+    "ms_por_token": 0.8386,
+    "eval_count": 8,
+    "load_ms": 538.7,
+    "segundos_reloj": 4.391
+  },
+  "raw_1": {
+    "prompt_eval_count": 3654,
+    "prompt_eval_ms": 3063.906,
+    "ms_por_token": 0.8385,
+    "eval_count": 8,
+    "load_ms": 617.8,
+    "segundos_reloj": 4.339
+  },
+  "raw_2": {
+    "prompt_eval_count": 3654,
+    "prompt_eval_ms": 219.023,
+    "ms_por_token": 0.0599,
+    "eval_count": 8,
+    "load_ms": 626.5,
+    "segundos_reloj": 1.05
+  },
+  "veredicto": "CACHE SANA — el problema es el CONTENIDO del prompt, no el motor. Toca estabilizar lo que cambia al principio."
+}

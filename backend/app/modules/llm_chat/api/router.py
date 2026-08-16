@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import hashlib
 import hmac
+import re
 from collections.abc import AsyncIterator
 from typing import cast
 from uuid import UUID, uuid4
@@ -287,11 +288,13 @@ def _error_envelope(
     turn_id: str | None = None,
     attempt: int | None = None,
     retry_after_ms: int | None = None,
+    first_validation_reason: str | None = None,
 ) -> ChatErrorEnvelope:
     return ChatErrorEnvelope(
         code=code,
         message=message,
         detail=detail or message,
+        first_validation_reason=first_validation_reason,
         category=category,
         retryable=retryable,
         recovery_action=recovery_action,
@@ -309,6 +312,31 @@ def _error_envelope(
         retry_after_ms=retry_after_ms,
         http_status=http_status,
     )
+
+
+_VALIDATION_REASON_PATTERN = re.compile(r"^[a-z0-9_:]{1,120}$")
+
+
+def _terminal_validation_reason(exc: ChatRuntimeUnavailable) -> str | None:
+    """Rescata el motivo real que `_runtime_code` colapsa en el código público.
+
+    El caso de uso levanta `invalid_output_{validation.reason}`; el vocabulario
+    público lo reduce a `invalid_model_output` para que el proveedor no pueda
+    inyectar texto en el contrato. Reducirlo está bien; **perderlo no**: los
+    turnos que mueren de forma terminal son los más difíciles del corpus y eran
+    los únicos que llegaban sin motivo, con lo que la puerta de contrato no se
+    podía dirigir a nada concreto.
+
+    El motivo lo escribe `OutputValidator`, no el modelo, pero se sanea igual
+    contra un patrón cerrado: el que publica no debe confiar en el que produce.
+    """
+    raw = str(getattr(exc, "code", "") or "").strip()
+    if not raw.startswith("invalid_output_"):
+        return None
+    reason = raw.removeprefix("invalid_output_")
+    if not reason or not _VALIDATION_REASON_PATTERN.fullmatch(reason):
+        return None
+    return reason
 
 
 def _runtime_envelope(
@@ -338,6 +366,7 @@ def _runtime_envelope(
         conversation_id=exc.conversation_id,
         attempt=exc.attempt,
         retry_after_ms=retry_after_ms,
+        first_validation_reason=_terminal_validation_reason(exc),
     )
 
 

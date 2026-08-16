@@ -152,3 +152,7 @@ rollout-*.jsonl
 # (ANALISIS_SOCRATIC_TUTOR_2026-08-06.md cita sus rutas). Son 53 MB de código
 # ajeno con su propio historial: se consulta, no se versiona aquí.
 /socratic-tutor/
+
+# Sobres de revision ciega: artefactos derivados, reproducibles con la semilla
+# declarada en REVISION_CIEGA_PREREGISTRO.md. La CLAVE no se versiona.
+validacion_llm/revision_ciega/

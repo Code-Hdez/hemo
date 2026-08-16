@@ -30,6 +30,11 @@ DERIVED_ENVIRONMENT_KEYS = (
     "HEMOVET_FRONTEND_IMAGE",
     "OLLAMA_BASE_URL",
     "RAG_COLLECTION_NAME",
+    # Se deriva del manifiesto, igual que las cinco de arriba. El intento
+    # anterior la inyecto SIN llevarla al manifiesto, y por eso el renderizador
+    # de la VM no podia reconstruir el mismo texto y el digest dejaba de cuadrar.
+    # El control no estaba de mas: estaba senalando que faltaba la fuente.
+    "CHAT_SERVER_WRITES_ENABLED",
 )
 RAG_BASE_COLLECTION = "hemovet_canine_hematology_v2"
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -118,6 +123,9 @@ def prepare_release(
     workflow_run_attempt: int,
     created_at: str,
     ollama_base_url: str,
+    # Falla CERRADO: quien no lo pida explicitamente prepara un release con
+    # la condicion de medicion apagada. Es la unica direccion segura.
+    chat_server_writes: bool = False,
     candidate_environment: Path,
     release_manifest: Path,
 ) -> ReleaseManifest:
@@ -158,6 +166,7 @@ def prepare_release(
             "HEMOVET_FRONTEND_IMAGE": frontend_image,
             "OLLAMA_BASE_URL": ollama_base_url,
             "RAG_COLLECTION_NAME": collection_name,
+            "CHAT_SERVER_WRITES_ENABLED": "1" if chat_server_writes else "0",
         },
     )
     environment, duplicates = _environment_values(
@@ -202,6 +211,7 @@ def prepare_release(
                 "caddy_configuration_digest": _sha256(
                     caddy_configuration.read_bytes()
                 ),
+                "chat_server_writes": chat_server_writes,
             },
             "gpu_runtime": {
                 "revision": github_sha,
@@ -265,6 +275,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--workflow-run-attempt", required=True, type=int)
     parser.add_argument("--created-at", required=True)
     parser.add_argument("--ollama-base-url", required=True)
+    parser.add_argument("--chat-server-writes", action="store_true")
     parser.add_argument("--candidate-environment", required=True, type=Path)
     parser.add_argument("--release-manifest", required=True, type=Path)
     return parser
@@ -284,6 +295,7 @@ def main() -> int:
         workflow_run_attempt=args.workflow_run_attempt,
         created_at=args.created_at,
         ollama_base_url=args.ollama_base_url,
+        chat_server_writes=args.chat_server_writes,
         candidate_environment=args.candidate_environment,
         release_manifest=args.release_manifest,
     )

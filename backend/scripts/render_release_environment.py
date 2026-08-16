@@ -27,6 +27,12 @@ def render_release_environment(
             "HEMOVET_FRONTEND_IMAGE": release.application.frontend.reference,
             "OLLAMA_BASE_URL": ollama_base_url,
             "RAG_COLLECTION_NAME": release.rag.collection_name,
+            # Del MANIFIESTO, no de un argumento: es lo que hace que este
+            # renderizado y el del runner produzcan el mismo texto y el mismo
+            # sha256. La cadena de confianza no se rodea; se le anade una entrada.
+            "CHAT_SERVER_WRITES_ENABLED": (
+                "1" if release.application.chat_server_writes else "0"
+            ),
         },
     )
     actual_digest = f"sha256:{hashlib.sha256(rendered).hexdigest()}"

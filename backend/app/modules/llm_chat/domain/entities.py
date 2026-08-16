@@ -125,6 +125,28 @@ class ToolResult:
     error: str | None = None
 
 
+# Vocabulario de rutas de generación. Vive en el dominio porque describe el
+# flujo del turno, no el transporte: la infraestructura lo importa para
+# etiquetar cada POST, y el caso de uso para marcar desde dónde nace la
+# petición. Hoy existen cinco; el objetivo del rediseño es que solo quede
+# ``GENERATION_ROUTE_MAIN``.
+GENERATION_ROUTE_MAIN = "main"
+GENERATION_ROUTE_REPAIR = "repair"
+GENERATION_ROUTE_STEER = "steer"
+GENERATION_ROUTE_LAST_RESORT = "last_resort"
+GENERATION_ROUTE_TOOL = "tool"
+
+GENERATION_ROUTES = frozenset(
+    {
+        GENERATION_ROUTE_MAIN,
+        GENERATION_ROUTE_REPAIR,
+        GENERATION_ROUTE_STEER,
+        GENERATION_ROUTE_LAST_RESORT,
+        GENERATION_ROUTE_TOOL,
+    }
+)
+
+
 @dataclass(frozen=True, slots=True)
 class ModelRequest:
     system_prompt: str
@@ -161,6 +183,10 @@ class ModelRequest:
     # the previous behaviour byte-identical while the new flow is switched off.
     tools: tuple[ToolDefinition, ...] = ()
     tool_exchanges: tuple[tuple[ToolCall, ToolResult], ...] = ()
+    # Desde qué ruta del turno nace esta petición. Solo se usa para contar y
+    # segregar la telemetría: el adaptador no cambia de comportamiento según su
+    # valor. El defecto mantiene byte-idéntico a todo llamante que no lo fije.
+    generation_route: str = GENERATION_ROUTE_MAIN
 
 
 @dataclass(frozen=True, slots=True)

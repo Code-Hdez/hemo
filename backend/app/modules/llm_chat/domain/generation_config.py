@@ -288,6 +288,10 @@ class GenerationProfileSettings:
     repair_thinking: bool
     max_generation_attempts: int
     structured_output_enabled: bool
+    # M.2/M.3 — «que escriba el servidor». Sin default a proposito: el
+    # dataclass no admite un campo con default antes de otros sin el, y
+    # ademas obliga a que todo constructor lo declare explicitamente.
+    server_writes_enabled: bool
     tools_enabled: bool
     tool_max_rounds: int
     clinical_fact_min_count: int
@@ -350,6 +354,7 @@ class GenerationProfileSettings:
             repair_thinking=settings.CHAT_REPAIR_THINK,
             max_generation_attempts=settings.CHAT_MAX_GENERATION_ATTEMPTS,
             structured_output_enabled=settings.CHAT_STRUCTURED_OUTPUT_ENABLED,
+            server_writes_enabled=settings.CHAT_SERVER_WRITES_ENABLED,
             tools_enabled=settings.CHAT_TOOLS_ENABLED,
             tool_max_rounds=settings.CHAT_TOOL_MAX_ROUNDS,
             clinical_fact_min_count=settings.CHAT_CLINICAL_FACT_MIN_COUNT,

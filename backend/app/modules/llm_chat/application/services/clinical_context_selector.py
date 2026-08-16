@@ -57,6 +57,22 @@ class ClinicalContextSelection:
     # set means that no patient values are needed for this turn.
     parameter_codes: frozenset[str] | None
     history_sufficient: bool
+    # El parámetro que la pregunta nombraba y que NO está en los datos
+    # autorizados del paciente. `None` = no hubo tal caso.
+    #
+    # Existe porque la regla de decisión del Bloque G.2 lo exige y hoy es
+    # invisible: `_resolve_available_parameter` devuelve el código canónico
+    # **aunque el parámetro no esté presente**, así que `filter_facts` acaba
+    # devolviendo lista vacía y el turno sigue con la pregunta identificada y
+    # cero hechos. Nadie lo cuenta.
+    #
+    # G.2 acota el contexto por dominio para reducir distractores, y su riesgo
+    # declarado es el contrario al de G.1: G.1 quita un dato que sobra, G.2
+    # puede quitar uno que hacía falta. Sin esta métrica no se puede saber si
+    # ese riesgo se materializó, y su regla revierte por encima del 2 %.
+    #
+    # Es un código de parámetro —`hct`, `neu`—, no un dato del paciente.
+    parametro_pedido_ausente: str | None = None
 
     @property
     def is_complete_summary(self) -> bool:
@@ -242,15 +258,28 @@ class ClinicalContextSelector:
         history_sufficient = self._history_sufficient(clinical, parameter)
         limit = max(1, parameter_limit or self.parameter_limit)
 
+        # ¿La pregunta nombró un parámetro que el paciente NO tiene?
+        #
+        # `_resolve_available_parameter` devuelve el código canónico aunque no
+        # esté presente —su última línea es `return code`—, así que a partir de
+        # aquí el turno cree tener un parámetro seleccionado y `filter_facts`
+        # devolverá lista vacía. Es exactamente el fallo del selector que la
+        # regla del Bloque G.2 obliga a contar antes de medir nada, y hasta hoy
+        # no dejaba rastro.
+        ausente: str | None = None
+        if parameter and parameter not in set(self._present_codes(clinical)):
+            ausente = parameter
+
         if not clinical.has_data:
-            return ClinicalContextSelection(detection, frozenset(), False)
+            return ClinicalContextSelection(detection, frozenset(), False, ausente)
         if detection.intent is FunctionalIntent.FULL_HEMOGRAM_SUMMARY:
-            return ClinicalContextSelection(detection, None, history_sufficient)
+            return ClinicalContextSelection(detection, None, history_sufficient, ausente)
         if parameter:
             return ClinicalContextSelection(
                 detection,
                 frozenset({parameter}),
                 history_sufficient,
+                ausente,
             )
         if detection.intent is FunctionalIntent.VET_QUESTIONS:
             return self._selection(detection, clinical, history_sufficient, limit=limit)

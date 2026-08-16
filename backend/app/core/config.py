@@ -209,6 +209,10 @@ class Settings(BaseSettings):
 
     CHAT_MESSAGE_MAX_CHARS: int = Field(default=2000, ge=100, le=10000)
     CHAT_STRUCTURED_OUTPUT_ENABLED: bool = True
+    # M.2/M.3 — «que escriba el servidor». Apagado por defecto: se enciende
+    # para la ventana de medicion y su regla sellada decide si se conserva.
+    # Con el apagado, la ruta de generacion es EXACTAMENTE la de hoy.
+    CHAT_SERVER_WRITES_ENABLED: bool = False
     # Let the model choose which authorized values it needs, by calling a
     # tool, instead of receiving the whole materialized panel in the prompt.
     # Off by default: it changes the shape of a clinical turn, and the only

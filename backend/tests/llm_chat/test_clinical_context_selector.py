@@ -85,7 +85,9 @@ _PANEL = frozenset({"WBC", "NEU", "LYM", "RBC", "HGB", "HCT", "PLT", "MPV"})
 _ABNORMAL = frozenset({"NEU", "PLT"})
 
 
-def test_vet_questions_see_the_whole_authorized_panel_not_only_the_abnormal_head() -> None:
+def test_vet_questions_see_the_whole_authorized_panel_not_only_the_abnormal_head() -> (
+    None
+):
     """A broad clinical question receives every authorized parameter.
 
     This used to assert ``frozenset({"NEU", "PLT"})``: the abnormal head only,
@@ -212,9 +214,7 @@ def test_bare_differential_reference_uses_percentage_when_absolute_is_absent() -
         date="2026-07-15",
         label="Hemograma",
         laboratory=None,
-        parameters=(
-            _parameter("NEU_PCT", "80", "40", "75", unit="%"),
-        ),
+        parameters=(_parameter("NEU_PCT", "80", "40", "75", unit="%"),),
     )
 
     selection = ClinicalContextSelector().select(
@@ -227,3 +227,49 @@ def test_bare_differential_reference_uses_percentage_when_absolute_is_absent() -
     )
 
     assert selection.parameter_codes == frozenset({"NEU_PCT"})
+
+
+# ── La metrica que el Bloque G.2 exige y no existia ─────────────────────────
+
+
+def _selector_para_prueba():
+    from app.modules.llm_chat.application.services.clinical_context_selector import (
+        ClinicalContextSelector,
+    )
+
+    return ClinicalContextSelector()
+
+
+def test_el_selector_declara_cuando_la_pregunta_pide_un_parametro_ausente() -> None:
+    """`_resolve_available_parameter` devuelve el codigo AUNQUE no este presente.
+
+    Su ultima linea es `return code`, asi que el turno sigue con un parametro
+    «seleccionado» y `filter_facts` devuelve lista vacia. La regla de decision
+    del Bloque G.2 revierte el cambio si eso pasa en mas del 2 % de los turnos,
+    y hasta ahora no dejaba ningun rastro que contar.
+    """
+    from app.modules.llm_chat.application.services.clinical_context_selector import (
+        ClinicalContextSelection,
+    )
+
+    # El campo es aditivo y con valor por defecto: los constructores que ya
+    # existian siguen siendo validos.
+    sin_ausencia = ClinicalContextSelection(None, frozenset({"HCT"}), True)
+    assert sin_ausencia.parametro_pedido_ausente is None
+
+    con_ausencia = ClinicalContextSelection(None, frozenset({"EOS"}), True, "EOS")
+    assert con_ausencia.parametro_pedido_ausente == "EOS"
+
+
+def test_el_parametro_ausente_deja_la_seleccion_sin_hechos() -> None:
+    """La consecuencia que hace util la metrica: cero hechos para el modelo."""
+    from app.modules.llm_chat.application.services.clinical_context_selector import (
+        ClinicalContextSelection,
+    )
+
+    seleccion = ClinicalContextSelection(None, frozenset({"EOS"}), True, "EOS")
+    hechos = [{"code": "HCT", "value": 63.6}, {"code": "HGB", "value": 21.0}]
+    assert seleccion.filter_facts(hechos) == []
+    # Y por eso importa saberlo: sin la marca, este turno es indistinguible de
+    # uno en el que el selector acerto y el paciente simplemente no tenia datos.
+    assert seleccion.parametro_pedido_ausente == "EOS"

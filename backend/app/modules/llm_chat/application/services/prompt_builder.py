@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-import re
 from typing import Any, Callable
 
 from app.modules.llm_chat.domain.entities import (
@@ -181,6 +180,14 @@ class PromptBuilder:
         system_prompt = self._compose_system_prompt(
             self.conversational_system_prompt, policy
         )
+        _instruction = str(policy.get("generation_instruction") or "").strip()
+        turn_instruction_block = (
+            "\nINSTRUCCIÓN OBLIGATORIA PARA ESTE TURNO (define el enfoque de esta "
+            "respuesta; no anula las reglas de seguridad anteriores):\n"
+            + _instruction
+            if _instruction
+            else ""
+        )
 
         def render() -> str:
             return (
@@ -193,6 +200,11 @@ class PromptBuilder:
                 + json.dumps(state, ensure_ascii=False)
                 + "\nTURNOS RECIENTES:\n"
                 + json.dumps(history_rows, ensure_ascii=False)
+                # La instrucción del turno va en la cola volátil, justo antes de
+                # la pregunta. Vivía al final del rol system hasta la Fase 2,
+                # pero un system que cambia cada turno rompe el prefijo
+                # cacheable y deja todo el prompt de usuario sin reutilizar.
+                + turn_instruction_block
                 + "\nPREGUNTA ACTUAL:\n"
                 + json.dumps(question, ensure_ascii=False)
                 + "\nEntrega únicamente la respuesta final para el usuario."
@@ -626,24 +638,20 @@ class PromptBuilder:
                 groups.append([message])
             else:
                 groups[position].append(message)
+        # Los N turnos MÁS RECIENTES, en orden cronológico estricto y solo
+        # añadiendo por el final.
+        #
+        # Antes se elegían por solapamiento léxico con la pregunta
+        # (`overlap * 100 + index`). Eso hacía que los turnos aparecieran y
+        # desaparecieran del prompt según las palabras de cada pregunta, de modo
+        # que el bloque de historial cambiaba de contenido en cada turno y
+        # **ninguna** reutilización de prefijo era posible desde ahí.
+        #
+        # La ganancia de calidad del re-ranking es dudosa y no está medida; el
+        # coste de caché sí lo está: en la Puerta 0 el prefill se pagaba entero
+        # en cada turno. Se elige lo cierto sobre lo dudoso.
         max_groups = max(1, limit // 2)
-        terms = {
-            token
-            for token in re.findall(r"[a-záéíóúñ0-9]+", question.casefold())
-            if len(token) > 2
-        }
-        ranked: list[tuple[int, int]] = []
-        for index, group in enumerate(groups):
-            content = " ".join(item.content for item in group).casefold()
-            overlap = sum(1 for term in terms if term in content)
-            ranked.append((overlap * 100 + index, index))
-        chosen = {index for _, index in sorted(ranked, reverse=True)[:max_groups]}
-        selected = [
-            item
-            for index, group in enumerate(groups)
-            if index in chosen
-            for item in group
-        ]
+        selected = [item for group in groups[-max_groups:] for item in group]
         return selected[-limit:]
 
     @staticmethod
@@ -657,22 +665,25 @@ class PromptBuilder:
 
     @staticmethod
     def _compose_system_prompt(base: str, policy: dict[str, Any]) -> str:
-        """Fold the per-turn routing instruction into the system role.
+        """Devuelve el rol *system* SIN nada que cambie de turno a turno.
 
-        A directive buried inside a JSON blob in the user turn (labeled "do
-        not copy") competes poorly against the always-on base rules for a
-        small model's attention. Promoting it to the system role, where the
-        base rules already live, lets it govern tone/emphasis for that turn
-        without re-litigating the underlying safety rules.
+        Antes se plegaba aquí la instrucción de enrutado del turno, con el
+        argumento —correcto en sí— de que una directiva enterrada en un JSON del
+        rol *user* compite mal por la atención de un modelo pequeño.
+
+        El coste de hacerlo ahí resultó ser mayor que el beneficio, y está
+        medido: el rol *system* precede a TODO el prompt de usuario, así que un
+        system que cambia cada turno rompe el prefijo cacheable en su primera
+        línea variable y deja **todo** lo que viene después sin poder
+        reutilizarse. En la Puerta 0, los turnos 2+ costaron entre el 72 % y el
+        1 368 % del prefill del turno 1; el prefijo no se reutilizaba nunca.
+
+        El argumento de atención se conserva sin pagar ese precio: la
+        instrucción viaja ahora en la cola volátil del prompt de usuario,
+        inmediatamente antes de la pregunta, que es la posición de mayor
+        atención del prompt — no menor que el final del *system*.
         """
-        instruction = str(policy.get("generation_instruction") or "").strip()
-        if not instruction:
-            return base
-        return (
-            base + "\n\nINSTRUCCIÓN OBLIGATORIA PARA ESTE TURNO (define el enfoque de "
-            "esta respuesta; no anula las reglas de seguridad anteriores):\n"
-            + instruction
-        )
+        return base
 
     @staticmethod
     def _extract_observations(clinical_context: dict[str, Any] | None) -> list[str]:
@@ -752,15 +763,25 @@ class PromptBuilder:
             if corpus_catalog
             else ""
         )
-        # generation_instruction already governs this turn from the system
-        # role (see _compose_system_prompt); dropping it here avoids paying
-        # for the same directive twice in the token budget.
+        # La instrucción del turno viaja en la cola volátil, justo antes de la
+        # pregunta: es la posición de mayor atención y, a diferencia del rol
+        # system, no invalida el prefijo cacheable de todo lo anterior.
         policy_for_prompt = {
             key: value
             for key, value in policy.items()
             if key != "generation_instruction"
         }
+        instruction = str(policy.get("generation_instruction") or "").strip()
+        turn_instruction_block = (
+            "\nINSTRUCCIÓN OBLIGATORIA PARA ESTE TURNO (define el enfoque de esta "
+            "respuesta; no anula las reglas de seguridad anteriores):\n"
+            + instruction
+            + "\n"
+            if instruction
+            else ""
+        )
         return self.rag_template.format(
+            turn_instruction_block=turn_instruction_block,
             case_facts_json=json.dumps(facts, ensure_ascii=False),
             sources_json=json.dumps(sources, ensure_ascii=False),
             history_json=json.dumps(history, ensure_ascii=False),

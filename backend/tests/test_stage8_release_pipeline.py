@@ -77,6 +77,7 @@ def _prepare(
     *,
     base_content: str | None = None,
     ollama_base_url: str = OLLAMA_BASE_URL,
+    chat_server_writes: bool = False,
 ) -> tuple[Path, Path, Path]:
     base_environment = tmp_path / "base.env"
     base_environment.write_text(
@@ -100,6 +101,7 @@ def _prepare(
         workflow_run_attempt=1,
         created_at="2026-08-02T18:00:00Z",
         ollama_base_url=ollama_base_url,
+        chat_server_writes=chat_server_writes,
         candidate_environment=candidate,
         release_manifest=release,
     )
@@ -500,3 +502,61 @@ def test_build_metadata_digest_expression_is_executable(tmp_path: Path) -> None:
     )
 
     assert result.stdout.strip() == digest
+
+
+@pytest.mark.parametrize("encendido", [False, True])
+def test_la_condicion_de_medicion_viaja_por_el_manifiesto_y_el_digest_cuadra(
+    tmp_path: Path, encendido: bool
+) -> None:
+    """El flag va al MANIFIESTO, y por eso los dos renderizados coinciden.
+
+    El intento anterior lo inyecto solo en `prepare_release`, sin llevarlo al
+    manifiesto: el renderizador de la VM no podia reconstruir el mismo texto y
+    el digest dejaba de cuadrar. El control no estaba de mas — senalaba que
+    faltaba la fuente de verdad.
+
+    Se prueba en las DOS posiciones. Un flag comprobado solo en una direccion
+    puede estar clavado a un literal y nadie se entera.
+    """
+    base, candidate, release = _prepare(tmp_path, chat_server_writes=encendido)
+
+    esperado = "CHAT_SERVER_WRITES_ENABLED=1" if encendido else (
+        "CHAT_SERVER_WRITES_ENABLED=0"
+    )
+    assert esperado in candidate.read_text(encoding="utf-8")
+
+    manifiesto = load_release_manifest(release)
+    assert manifiesto.application.chat_server_writes is encendido
+
+    # Lo que decide todo: el renderizado de la VM, desde el manifiesto, produce
+    # EXACTAMENTE el mismo texto — y por tanto el mismo sha256.
+    salida = tmp_path / "rendered.env"
+    render_release_environment(base, release, OLLAMA_BASE_URL, salida)
+    assert salida.read_text(encoding="utf-8") == candidate.read_text(encoding="utf-8")
+    assert esperado in salida.read_text(encoding="utf-8")
+
+
+def test_la_condicion_de_medicion_esta_APAGADA_si_nadie_la_pide(
+    tmp_path: Path,
+) -> None:
+    """Falla cerrado: un despliegue normal no enciende una condicion clinica."""
+    _, candidate, release = _prepare(tmp_path)
+    assert "CHAT_SERVER_WRITES_ENABLED=0" in candidate.read_text(encoding="utf-8")
+    assert load_release_manifest(release).application.chat_server_writes is False
+
+
+def test_un_manifiesto_ANTERIOR_al_campo_sigue_cargando(tmp_path: Path) -> None:
+    """El campo es aditivo: el contrato sigue en v1 a proposito.
+
+    Subir a v2 invalidaria el `Literal` de todos los manifiestos ya emitidos,
+    incluidos los de rollback. Un campo con valor por defecto es compatible
+    hacia atras, y esto lo comprueba en vez de suponerlo.
+    """
+    _, _, release = _prepare(tmp_path)
+    crudo = json.loads(release.read_text(encoding="utf-8"))
+    del crudo["application"]["chat_server_writes"]
+    antiguo = tmp_path / "manifiesto-antiguo.json"
+    antiguo.write_text(json.dumps(crudo), encoding="utf-8")
+
+    cargado = load_release_manifest(antiguo)
+    assert cargado.application.chat_server_writes is False

@@ -61,6 +61,30 @@ class ApplicationRelease(ContractModel):
     frontend: ImmutableImage
     configuration_digest: str = Field(pattern=_SHA256_PATTERN)
     caddy_configuration_digest: str = Field(pattern=_SHA256_PATTERN)
+    # Condicion de MEDICION del chat, no ajuste de producto.
+    #
+    # Vive aqui y no en el secreto `PRODUCTION_ENV_B64` por un motivo de
+    # categoria, no de comodidad: un booleano que decide si el servidor escribe
+    # las cifras de la historia clinica **no es un secreto**. No es una
+    # credencial, no se rota, su divulgacion no compromete nada, y su valor
+    # **debe ser legible para un auditor**. Guardarlo en un almacen de secretos
+    # le da las propiedades equivocadas —rotacion silenciosa, opacidad, sin
+    # historial legible— y le quita las necesarias: revision, atribucion y
+    # reproducibilidad.
+    #
+    # Al vivir en el manifiesto queda cubierto por el MISMO `sha256` que ya
+    # protege el resto de la configuracion, asi que la cadena de confianza no se
+    # rodea: se le anade una entrada. Y el commit que lo cambia es el registro
+    # de cuando entro en vigor.
+    #
+    # Por defecto APAGADO. Un ajuste que cambia lo que el sistema escribe en la
+    # historia clinica no se activa por omision en ninguna rama.
+    #
+    # Campo ADITIVO y opcional: el contrato sigue en `hemovet.release/v1` a
+    # proposito. Subir a v2 invalidaria el `Literal` de todos los manifiestos ya
+    # emitidos —incluidos los de rollback—, que es un coste real a cambio de
+    # nada: un campo con valor por defecto es compatible hacia atras.
+    chat_server_writes: bool = False
 
 
 class ModelRelease(ContractModel):

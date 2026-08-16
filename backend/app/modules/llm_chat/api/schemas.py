@@ -54,6 +54,10 @@ PUBLIC_ROUTE_TRACE_KEYS = frozenset(
         "primary_intent",
         "prompt_tokens",
         "prompt_tokens_per_second",
+        "first_validation_reason",
+        "provider_call_routes",
+        "provider_calls",
+        "sources_consulted",
         "provider_metrics",
         "quantization",
         "rag_invoked",
@@ -403,6 +407,18 @@ class ChatErrorEnvelope(BaseModel):
     ]
     request_id: str
     client_message_id: str
+    # Qué comprobación rechazó la generación que acabó en este error terminal.
+    #
+    # El `code` público es un vocabulario cerrado a propósito: todo lo que el
+    # validador rechaza colapsa en `invalid_model_output`. Eso está bien para el
+    # contrato del cliente y fue exactamente lo que dejó ciega la medición: los
+    # turnos que fallan de forma terminal son los MÁS difíciles del corpus, y
+    # eran justo los que llegaban sin motivo. En `puerta3j`, 6 de los 10 fallos
+    # de contrato no tenían nombre por esto.
+    #
+    # Es un dato del servidor, derivado de `OutputValidation.reason`, y viaja
+    # saneado contra un patrón cerrado — nunca texto del proveedor.
+    first_validation_reason: str | None = None
     conversation_id: str | None = None
     turn_id: str | None = None
     attempt: int | None = Field(default=None, ge=1)
